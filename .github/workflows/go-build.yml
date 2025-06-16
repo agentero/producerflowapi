@@ -32,9 +32,6 @@ jobs:
       run: |
         echo "Testing Go code compilation..."
         if [ -d "gen/go" ]; then
-          cd gen/go
-          go mod init generated-test || true
-          go mod tidy || true
           go build ./...
           echo "✅ Go generated code compiles successfully"
         else
