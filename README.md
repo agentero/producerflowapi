@@ -1,5 +1,7 @@
 # Producer Flow API
 
+[![GoDoc](https://godoc.org/github.com/agentero/producerflowapi?status.svg)](https://godoc.org/github.com/agentero/producerflowapi)
+
 > **⚠️ Under Construction**  
 > This project is currently under active development. APIs and features may change without notice until the first stable release.
 

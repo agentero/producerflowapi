@@ -1,0 +1,41 @@
+name: Proto Validation
+
+on:
+  push:
+    paths:
+      - 'proto/**'
+    branches: [ main ]
+  pull_request:
+    paths:
+      - 'proto/**'
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  proto-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        # Fetch full history for breaking change detection
+        fetch-depth: 0
+    - name: Setup buf
+      uses: bufbuild/buf-setup-action@v1
+
+    - name: Lint protobuf files
+      run: |
+        echo "Validating protobuf files..."
+        buf lint
+        echo "✅ Proto files pass validation"
+
+    - name: Check for breaking changes
+      run: |
+        echo "Checking for breaking changes..."
+        if git rev-parse --verify origin/main >/dev/null 2>&1; then
+          buf breaking --against '.git#branch=origin/main'
+          echo "✅ No breaking changes detected"
+        else
+          echo "⚠️  Cannot check breaking changes - no main branch reference found"
+        fi 

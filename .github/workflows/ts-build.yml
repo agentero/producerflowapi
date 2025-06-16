@@ -1,0 +1,38 @@
+name: TypeScript Build Test
+
+on:
+  push: 
+    branches: [ main ]
+    paths:
+      - 'gen/ts/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'gen/ts/**'
+  workflow_dispatch:
+
+jobs:
+  ts-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Check TypeScript compilation
+      run: |
+        if [ -d "gen/ts" ] && [ "$(find gen/ts -name "*.ts" | wc -l)" -gt 0 ]; then
+          echo "Setting up TypeScript compilation test..."
+          cd gen/ts
+          echo "Type-checking TypeScript files..."
+          npm run typecheck
+          echo "✅ TypeScript type-checks successfully"
+        else
+          echo "❌ No generated TypeScript files found in gen/ts"
+          exit 1
+        fi 
