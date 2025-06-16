@@ -51,10 +51,6 @@ Development setup and contribution guidelines will be documented as the project 
 
 The API is defined using Protocol Buffers and follows industry-standard practices for both gRPC and REST interfaces. Detailed API documentation will be available upon the first stable release.
 
-## Contributing
-
-We welcome contributions! Please see our contributing guidelines (coming soon) for details on how to submit pull requests, report issues, and contribute to the project.
-
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org/). See the [changelog](CHANGELOG.md) for release history.
