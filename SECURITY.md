@@ -10,7 +10,7 @@ We take the security of our producer flow API service seriously. If you discover
 
 Instead, please report them via one of the following methods:
 
-1. **Email**: Send an email to [security@yourcompany.com](mailto:security@yourcompany.com)
+1. **Email**: Send an email to [support@agentero.com](mailto:support@agentero.com)
 2. **GitHub Security Advisories**: Use the [GitHub Security Advisory](https://github.com/yourusername/producerflowapi/security/advisories/new) feature
 3. **Encrypted Communication**: For sensitive vulnerabilities, you may request our PGP key for encrypted communication
 
@@ -85,13 +85,12 @@ We will not pursue legal action against security researchers who:
 
 For security-related inquiries and reports:
 
-- **Email**: security@yourcompany.com
 - **Response Time**: 48 hours
 - **Encryption**: PGP key available upon request
 
 For general questions about this security policy:
 
-- **Email**: support@yourcompany.com
+- **Email**: [support@agentero.com](mailto:support@agentero.com)
 - **GitHub Issues**: General security questions (not vulnerabilities)
 
 ---

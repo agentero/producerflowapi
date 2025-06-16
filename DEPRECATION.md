@@ -191,6 +191,6 @@ For questions about deprecations:
 
 ---
 
-*This deprecation policy is subject to change. Updates will be communicated through our standard channels.*
+This deprecation policy is subject to change. Updates will be communicated through our standard channels.
 
-*Last updated: 2025-06-16*
+Last updated: 2025-06-16
