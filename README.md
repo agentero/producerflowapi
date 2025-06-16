@@ -1,6 +1,9 @@
 # Producer Flow API
 
 [![GoDoc](https://godoc.org/github.com/agentero/producerflowapi?status.svg)](https://godoc.org/github.com/agentero/producerflowapi)
+[![Go Build Test](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml)
+[![TypeScript Build Test](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml)
+[![Proto Validation](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml)
 
 > **⚠️ Under Construction**  
 > This project is currently under active development. APIs and features may change without notice until the first stable release.
