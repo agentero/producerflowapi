@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: producer/v1/producer.proto
+// source: producerflow/producer/v1/producer.proto
 
 package producerv1
 
@@ -1095,5 +1095,5 @@ var ProducerService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "producer/v1/producer.proto",
+	Metadata: "producerflow/producer/v1/producer.proto",
 }

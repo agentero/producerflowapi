@@ -1,21 +1,11 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
 version: v2
-modules:
-  - path: proto/producerflow
-    name: buf.build/producerflow/producerflowapi
-    lint:
-      use:
-        - STANDARD
-      except:
-        - FIELD_NOT_REQUIRED
-        - PACKAGE_NO_IMPORT_CYCLE
-      disallow_comment_ignores: true
-    breaking:
-      use:
-        - FILE
-      except:
-        - EXTENSION_NO_DELETE
-        - FIELD_SAME_DEFAULT
+lint:
+  use:
+    - STANDARD
+breaking:
+  use:
+    - FILE
 deps:
   - buf.build/bufbuild/protovalidate
   - buf.build/googleapis/googleapis
-
