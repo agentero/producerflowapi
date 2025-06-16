@@ -1,4 +1,4 @@
-# Producer Flow API
+# Producerflow API
 
 [![GoDoc](https://godoc.org/github.com/agentero/producerflowapi?status.svg)](https://godoc.org/github.com/agentero/producerflowapi)
 [![Go Build Test](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml)
