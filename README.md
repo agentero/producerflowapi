@@ -29,7 +29,6 @@ producerflowapi/
 ├── docs/              # Documentation
 ├── .github/           # GitHub workflows and templates
 │   └── workflows/     # CI/CD workflows
-└── scripts/           # Build and development scripts
 ```
 
 ## Documentation
