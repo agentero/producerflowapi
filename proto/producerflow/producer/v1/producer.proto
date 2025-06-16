@@ -1,0 +1,1378 @@
+syntax = "proto3";
+
+package producerflow.producer.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/dayofweek.proto";
+import "google/type/timeofday.proto";
+
+// ProducerService provides a comprehensive API for managing insurance producers
+// and agencies, including onboarding, data synchronization, and integration with
+// external systems like NIPR for license verification.
+service ProducerService {
+  // RPCs for starting the onboarding agency process.
+
+  // CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency.
+  // The URL contains encoded information about the agency defaults and tenant context.
+  // Returns a URL string that can be shared with the agency for self-onboarding.
+  rpc CreateAgencyOnboardingURL(CreateAgencyOnboardingURLRequest) returns (CreateAgencyOnboardingURLResponse);
+
+  // NewAgency creates a new agency, optionally with associated producers.
+  // It performs the following validation checks:
+  // - Ensures all required fields are present and valid
+  // - Checks whether the NPN is already registered
+  // - Verifies agency and principal information with NIPR
+  //
+  // Business rules:
+  // - Sole proprietors can't have an agency NPN or additional producers
+  // - Regular agencies must provide either an NPN or a FEIN
+  //
+  // If validation passes, it creates the agency, principal, and any producers.
+  // Returns the IDs of the created agency, principal, and producers.
+  rpc NewAgency(NewAgencyRequest) returns (NewAgencyResponse);
+
+  // NewProducer creates a new producer and associates them with an existing agency.
+  // It validates the producer's information and checks that the email is unique.
+  // Returns the ID of the created producer.
+  rpc NewProducer(NewProducerRequest) returns (NewProducerResponse);
+
+  // NewProducers creates multiple producers and associates them with the specified agency.
+  // It performs the same validations as NewProducer for each entry.
+  // Returns the IDs of all created producers.
+  rpc NewProducers(NewProducersRequest) returns (NewProducersResponse);
+
+  // GetAgencyAndProducers retrieves details for an agency and all associated producers.
+  // Returns the agency information and a list of producers.
+  rpc GetAgencyAndProducers(GetAgencyAndProducersRequest) returns (GetAgencyAndProducersResponse);
+
+  // GetProducer retrieves detailed information about a specific producer.
+  // The producer can be found by ID, NPN, or email.
+  // Returns the producer's information, including NIPR data and agency association.
+  rpc GetProducer(GetProducerRequest) returns (GetProducerResponse);
+
+  // GetAgencyFiles returns URLs for accessing files associated with an agency, such as contracts.
+  rpc GetAgencyFiles(GetAgencyFilesRequest) returns (GetAgencyFilesResponse);
+
+  // UpdateProducer updates information for an existing producer.
+  // Supports updating contact details, background check responses,
+  // employment history, and non-uniform licensing questions.
+  // Information from NIPR and other third-party sources cannot be updated.
+  // Validates email uniqueness if the email is changed.
+  rpc UpdateProducer(UpdateProducerRequest) returns (UpdateProducerResponse);
+
+  // ApproveProducer changes a producer's onboarding state to APPROVED.
+  // This typically happens after all verification steps are complete.
+  // This method is deprecated. Use SyncProducerWithNIPR instead.
+  rpc ApproveProducer(ApproveProducerRequest) returns (ApproveProducerResponse) {
+    option deprecated = true;
+  }
+
+  // RejectProducer changes a producer's onboarding state to REJECTED.
+  // An optional reason for rejection can be provided.
+  // This method is deprecated. Use StopSyncAgencyWithNIPR instead.
+  rpc RejectProducer(RejectProducerRequest) returns (RejectProducerResponse) {
+    option deprecated = true;
+  }
+
+  // NewContact creates a new contact associated with an agency.
+  // Contacts represent non-producer individuals linked to the agency.
+  // Returns the ID of the created contact.
+  rpc NewContact(NewContactRequest) returns (NewContactResponse);
+
+  // NewContacts creates multiple contacts in a single request.
+  // Each contact is associated with the specified agency.
+  // Returns the IDs of all created contacts.
+  rpc NewContacts(NewContactsRequest) returns (NewContactsResponse);
+
+  // SetExternalID sets an external identifier for a producer or contact.
+  // Useful for integrating with external systems that use different ID schemes.
+  rpc SetExternalID(SetExternalIDRequest) returns (SetExternalIDResponse);
+
+  // ValidateProducerNPN checks whether a producer’s National Producer Number (NPN) is valid.
+  // It performs a lookup against NIPR and applies internal validation rules.
+  // Returns a validity flag and any associated error messages.
+  rpc ValidateProducerNPN(ValidateProducerNPNRequest) returns (ValidateProducerNPNResponse);
+
+  // ValidateAgencyNPN checks whether an agency’s National Producer Number (NPN) is valid.
+  // It performs a lookup against NIPR and applies internal validation rules.
+  // Returns a validity flag and any associated error messages.
+  rpc ValidateAgencyNPN(ValidateAgencyNPNRequest) returns (ValidateAgencyNPNResponse);
+
+  // LookupNPNByFEIN finds an NPN using a Federal Employer Identification Number.
+  // Used to help agencies that know their FEIN but not their NPN.
+  // Returns the NPN if found or an error message.
+  rpc LookupNPNByFEIN(LookupNPNByFEINRequest) returns (LookupNPNByFEINResponse);
+
+  // ResyncProducer triggers a manual resynchronization of a producer’s data.
+  // This can be used to refresh data after external changes.
+  //
+  // WARNING: This call counts as an additional NPN lookup for billing purposes.
+  // Most billing plans are based on unique NPNs per month, so using this
+  // method may result in extra charges.
+  rpc ResyncProducer(ResyncProducerRequest) returns (ResyncProducerResponse);
+
+  // ResyncAgency triggers a manual resynchronization of an agency’s data.
+  // Similar to ResyncProducer, this can be used to refresh data after external changes.
+  //
+  // WARNING: This call counts as an additional NPN lookup for billing purposes.
+  // Most billing plans are based on unique NPNs per month, so using this
+  // method may result in extra charges.
+  rpc ResyncAgency(ResyncAgencyRequest) returns (ResyncAgencyResponse);
+
+  // SyncAgencyWithNIPR synchronizes an producer’s data with the NIPR system.
+  // Fetches the latest producer information and appointments.
+  //
+  // WARNING: This call counts as an extra NPN lookup against your billing.
+  // Most billing plans are based on unique NPNs per month, so using this
+  // method may result in additional charges.
+  rpc SyncProducerWithNIPR(SyncProducerWithNIPRRequest) returns (SyncProducerWithNIPRResponse);
+
+  // SyncAgencyWithNIPR synchronizes an agency’s data with the NIPR system.
+  // Fetches the latest agency information and appointments.
+  //
+  // WARNING: This call counts as an extra NPN lookup against your billing.
+  // Most billing plans are based on unique NPNs per month, so using this
+  // method may result in additional charges.
+  rpc SyncAgencyWithNIPR(SyncAgencyWithNIPRRequest) returns (SyncAgencyWithNIPRResponse);
+
+  // StopSyncProducerWithNIPR stops the synchronization process with NIPR for a producer.
+  // Use this to prevent further automatic updates from NIPR.
+  rpc StopSyncProducerWithNIPR(StopSyncProducerWithNIPRRequest) returns (StopSyncProducerWithNIPRResponse);
+
+  // StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
+  // Use this to prevent further automatic updates from NIPR.
+  rpc StopSyncAgencyWithNIPR(StopSyncAgencyWithNIPRRequest) returns (StopSyncAgencyWithNIPRResponse);
+}
+
+// EntityType defines the business entity type for an agency.
+enum EntityType {
+  // Default unspecified value. Do not use.
+  ENTITY_TYPE_UNSPECIFIED = 0;
+
+  // An individual producer operating as their own agency.
+  // For this type, an agency NPN is not allowed, and additional producers are not supported.
+  ENTITY_TYPE_SOLE_PROPRIETOR = 1;
+
+  // A standard insurance agency that can have multiple producers.
+  // For this type, either NPN or FEIN is required.
+  ENTITY_TYPE_AGENCY = 2;
+
+  // Ask during onboarding because the entity type is not known when the agency onboarding url is created.
+  // The UI will ask the user to select the entity type.
+  ENTITY_TYPE_ASK_DURING_ONBOARDING = 3;
+}
+
+// Address represents a physical location with standard address components.
+// Used for mailing, physical, and invoicing addresses throughout the API.
+message Address {
+  // Street address including house/building number and street name
+  string street = 1 [(buf.validate.field).string.min_len = 1];
+  // City of the address
+  string city = 2 [(buf.validate.field).string.min_len = 1];
+  // State of the address
+  string state = 3 [(buf.validate.field).string.len = 2];
+  // Zip code of the address
+  string zip = 4 [
+    (buf.validate.field).string.min_len = 1,
+    (buf.validate.field).string.max_len = 10
+  ];
+  // County of the address
+  string county = 5;
+}
+
+// CreateAgencyOnboardingURLRequest contains information needed to generate
+// an agency onboarding URL. This includes basic agency information and defaults.
+message CreateAgencyOnboardingURLRequest {
+  // Agency contains the information about the agency to be onboarded
+  message Agency {
+    // Name of the agency
+    string name = 1 [
+      (buf.validate.field).required = true,
+      (buf.validate.field).string.min_len = 1
+    ];
+    // Entity type of the agency: Sole Proprietor, Agency or Ask during onboarding
+    EntityType entity_type = 2 [(buf.validate.field).enum = {
+      in: [
+        1,
+        2,
+        3
+      ]
+    }];
+    // Tenant agency id is a unique identifier for the agency used by the tenant
+    // this is used to identify the agency in the tenant system not in the producerflow system
+    string tenant_agency_id = 3;
+    // DocuSign template id is the id of the docusign template used to send the contract to the agency
+    string docusign_template_id = 4;
+    // FEIN (Federal Employer Identification Number) of the agency
+    string fein = 5;
+    // Email of the agency
+    string email = 6;
+    // Phone of the agency
+    string phone = 7;
+    // Fax of the agency
+    string fax = 8;
+    // Website of the agency
+    string website = 9;
+    // NPN of the agency. Note that if the entity type is Sole Proprietor the NPN will be ignored
+    string npn = 10;
+    // Mailing address of the agency
+    Address mailing_address = 11;
+    // Physical address of the agency
+    Address physical_address = 12;
+    // Invoicing address of the agency
+    Address invoicing_address = 13;
+
+    // Principal is the person responsible for the agency
+    message Principal {
+      // Tenant ID of the principal
+      string tenant_id = 1;
+      // First name of the principal
+      string first_name = 2;
+      // Last name of the principal
+      string last_name = 3;
+      // Middle name of the principal
+      string middle_name = 4;
+      // Email of the principal
+      string email = 5;
+      // Phone of the principal
+      string phone = 6;
+      // NPN of the principal
+      string npn = 7;
+      // Address of the principal
+      Address address = 8;
+    }
+    Principal principal = 14;
+  }
+
+  Agency agency = 1;
+}
+
+// CreateAgencyOnboardingURLResponse contains the generated URL for agency onboarding
+message CreateAgencyOnboardingURLResponse {
+  // URL that can be shared with the agency for self-onboarding
+  string url = 1;
+}
+
+// NewAgencyRequest contains complete information for creating a new agency
+message NewAgencyRequest {
+  // Agency contains all information about the agency to be created
+  message Agency {
+    // The name of the agency.
+    string name = 1 [(buf.validate.field).string.min_len = 1];
+
+    // The email address of the agency.
+    string email = 2 [(buf.validate.field).string.email = true];
+
+    // National Producer Number for the agency
+    // Required for ENTITY_TYPE_AGENCY if FEIN is not provided
+    // Not allowed for ENTITY_TYPE_SOLE_PROPRIETOR
+    string npn = 3;
+
+    // The phone number of the agency.
+    string phone = 5 [
+      (buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$",
+      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
+    ];
+
+    // The website of the agency.
+    string website = 6;
+
+    // Principal is a data structure that represents the principal of a agency.
+    // A principal is the person or entity that is responsible for the day-to-day operations of the agency.
+    // The principal is usually the CEO or CFO of the agency.nThe principal is also known as the "owner" of the agency.
+    message Principal {
+      // The first name of the principal.
+      string first_name = 1 [(buf.validate.field).string.min_len = 1];
+      // The last name of the principal.
+      string last_name = 2 [(buf.validate.field).string.min_len = 1];
+      // The middle name of the principal.
+      string middle_name = 13;
+      // The email address of the principal.
+      string email = 3 [(buf.validate.field).string.email = true];
+      // The phone number of the principal.
+      string phone = 4 [
+        (buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$",
+        (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
+      ];
+      // The National Producer Number (NPN) of the principal.
+      string npn = 5 [
+        (buf.validate.field).string.min_len = 1,
+        (buf.validate.field).string.max_len = 10
+      ];
+      string tenant_id = 6;
+    }
+
+    // Information about the agency's principal.
+    // This is a required field as each agency must have a principal.
+    Principal principal = 7 [(buf.validate.field).required = true];
+
+    // BankAccount contains banking information for commission payments
+    // This is used to store the bank account information for the agency
+    message BankAccount {
+      enum AccountType {
+        // Default unspecified value. Avoid using this.
+        ACCOUNT_TYPE_UNSPECIFIED = 0;
+        // Standard checking account
+        ACCOUNT_TYPE_CHECKING = 1;
+        // Savings account
+        ACCOUNT_TYPE_SAVINGS = 2;
+      }
+      // Account number for the bank account
+
+      string account_number = 1 [
+        (buf.validate.field).string.min_len = 8,
+        (buf.validate.field).string.max_len = 17
+      ];
+      // Routing number for the bank account
+      string routing_number = 2 [(buf.validate.field).string.len = 9];
+      // Type of account (checking or savings)
+      AccountType account_type = 3 [(buf.validate.field).required = true];
+      // Name of the account holder
+      string account_holder_name = 4 [(buf.validate.field).string.min_len = 1];
+    }
+    BankAccount bank_account = 9;
+
+    // EOInfo contains Errors & Omissions insurance information
+    message EOInfo {
+      // Insurance carrier providing the E&O coverage
+      string carrier = 1 [(buf.validate.field).string.min_len = 1];
+      // Date when the E&O coverage will expire
+      google.protobuf.Timestamp expiration_date = 2 [(buf.validate.field).timestamp.gt_now = true];
+      // Amount of coverage provided by the E&O policy
+      string coverage_amount = 3 [(buf.validate.field).string.min_len = 1];
+      // Date when the E&O coverage will become effective
+      google.protobuf.Timestamp effective_date = 4 [(buf.validate.field).required = true];
+    }
+    EOInfo eo_info = 10;
+
+    // BusinessHours contains the business hours of the agency
+    message BusinessHours {
+      message BusinessHour {
+        // Days of the week when the agency is open
+        repeated google.type.DayOfWeek week_days = 1 [
+          (buf.validate.field).required = true,
+          (buf.validate.field).repeated.min_items = 1,
+          (buf.validate.field).repeated.max_items = 7
+        ];
+        // Time when the agency opens
+        google.type.TimeOfDay opening_time = 2 [(buf.validate.field).required = true];
+        // Time when the agency closes
+        google.type.TimeOfDay closing_time = 3 [(buf.validate.field).required = true];
+      }
+      // Timezone of the agency
+      string timezone = 1 [(buf.validate.field).string.min_len = 1];
+      repeated BusinessHour business_hours = 2 [(buf.validate.field).required = true];
+    }
+    BusinessHours business_hours = 11;
+
+    // List of producers associated with the agency
+    repeated NewProducer producers = 12;
+
+    // PointOfContact contains contact information for the agency. Each point of contact
+    // consists of an email address with an associated role. Carriers will send specific
+    // information to these email addresses based on their roles. For example, if an email
+    // is assigned the COMMUNICATION_ROLE_ACCOUNTING role, all accounting information from
+    // the carrier will be sent to that email address.
+    message PointOfContact {
+      enum CommunicationRole {
+        // Default unspecified value. Avoid using this.
+        COMMUNICATION_ROLE_UNSPECIFIED = 0;
+        // Accounting role
+        COMMUNICATION_ROLE_ACCOUNTING = 1;
+        // Licensing role
+        COMMUNICATION_ROLE_LICENSING = 2;
+        // Reporting role
+        COMMUNICATION_ROLE_REPORTING = 3;
+        // Sales role
+        COMMUNICATION_ROLE_SALES = 4;
+        // Customer service role
+        COMMUNICATION_ROLE_CUSTOMER_SERVICE = 5;
+        // All roles
+        COMMUNICATION_ROLE_ALL = 6;
+      }
+      // Email address of the point of contact
+      string email = 1 [(buf.validate.field).string.email = true];
+      // Role of the point of contact
+      CommunicationRole role = 2 [(buf.validate.field).required = true];
+    }
+    repeated PointOfContact points_of_contact = 13;
+
+    // RootOrganizationID represents the ID of the root organization that the agency belongs to.
+    // An example of a root organization is an Aggregator (Like AgencyHero) or an Agency Network.
+    // We currently don't support multiple levels of organizations or agencies.
+    // Agencies are not always part of an organization, so this field is optional.
+    optional string root_organization_id = 14 [
+      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE,
+      (buf.validate.field).string.min_len = 1,
+      (buf.validate.field).string.max_len = 36
+    ];
+
+    // EntityType represents the type of business entity for an agency.
+    EntityType entity_type = 15 [(buf.validate.field).enum = {
+      in: [
+        1,
+        2
+      ]
+    }];
+
+    // FEIN represents the Federal Employer Identification Number of the agency.
+    // Required for ENTITY_TYPE_AGENCY
+    // Not allowed for ENTITY_TYPE_SOLE_PROPRIETOR
+    optional string fein = 16 [
+      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE,
+      (buf.validate.field).string.len = 9
+    ];
+
+    // MailingAddress represents the mailing address of the agency.
+    Address mailing_address = 8;
+
+    // PhysicalAddress represents the physical address of the agency.
+    Address physical_address = 17;
+
+    // InvoicingAddress represents the invoicing address of the agency.
+    Address invoicing_address = 18;
+
+    // TenantAgencyID represents the ID of the agency in the tenant.
+    // This is used to link the agency to the tenant.
+    string tenant_agency_id = 19;
+  }
+
+  Agency agency = 1 [(buf.validate.field).required = true];
+
+  // Determines if the agency should be auto approved.
+  bool auto_approve = 2 [deprecated = true];
+}
+
+// NewAgencyResponse contains the IDs of created resources after a successful agency creation
+message NewAgencyResponse {
+  // Unique identifier for the created agency
+  string agency_id = 1;
+
+  // List of unique identifiers for any producers created with the agency
+  repeated string producer_ids = 2;
+
+  // Unique identifier for the principal producer
+  string principal_id = 3;
+}
+
+// GetProducerRequest allows retrieving producer information through one of three
+// possible lookup methods: by ID, by NPN, or by email address.
+message GetProducerRequest {
+  // ProducerIDLookup allows looking up a producer by their unique identifier.
+  message ProducerIDLookup {
+    // The UUID of the producer to retrieve.
+    // Must be a valid UUID format.
+    string producer_id = 1 [(buf.validate.field).string.uuid = true];
+  }
+
+  // ProducerNPNLookup allows looking up a producer by their National Producer Number (NPN).
+  message ProducerNPNLookup {
+    // The National Producer Number (NPN) of the producer to retrieve.
+    // Must be a non-empty string.
+    string producer_npn = 1 [(buf.validate.field).string.min_len = 1];
+  }
+
+  // EmailLookup allows looking up a producer by their email address.
+  message EmailLookup {
+    // The email address of the producer to retrieve.
+    // Must be a valid email format.
+    string email = 1 [(buf.validate.field).string.email = true];
+  }
+  // Only one lookup method can be specified.
+  oneof lookup_method {
+    // Look up producer by ID.
+    ProducerIDLookup producer_id_lookup = 1;
+
+    // Look up producer by NPN.
+    ProducerNPNLookup npn_lookup = 2;
+
+    // Look up producer by email.
+    EmailLookup email_lookup = 3;
+  }
+}
+
+// GetProducerResponse contains the producer information retrieved by the GetProducer RPC.
+message GetProducerResponse {
+  // The complete producer information including personal details, agency association,
+  // and NIPR data.
+  Producer producer = 1;
+}
+
+// GetAgencyAndProducersRequest requests information about an agency and all associated producers.
+message GetAgencyAndProducersRequest {
+  // The UUID of the agency to retrieve information for.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// GetAgencyAndProducersResponse contains the agency information and all associated producers.
+message GetAgencyAndProducersResponse {
+  // Complete agency information including contact details, principal, and bank account.
+  Agency agency = 1;
+
+  // List of all producers associated with the specified agency.
+  repeated Producer producers = 2;
+}
+
+// GetAgencyFilesRequest requests URLs for files associated with an agency.
+message GetAgencyFilesRequest {
+  // The UUID of the agency to retrieve files for.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// GetAgencyFilesResponse contains URLs for various documents associated with an agency.
+message GetAgencyFilesResponse {
+  // URL of the Errors & Omissions (E&O) insurance document.
+  string eo_doc_url = 1;
+
+  // URL of the bank voided check document.
+  // It's used to safely share bank account information for
+  // electronic transfers.
+  string voided_check_doc_url = 2;
+
+  // TODO(@eduardo-lobo-ag): check if the following documents are required
+  // and where we should put them in the onboarding wizard.
+
+  // URL of the W9 form document.
+  // It's a U.S. internal revenue service form, an identification
+  // document used in the onboarding process for tax reporting purposes.
+  string w9_doc_url = 3;
+
+  // URL of the license document.
+  // An identification document that shows that the agency
+  // is licensed to carry out its operations in the relevant jurisdictions.
+  string license_doc_url = 4;
+
+  // URL of the broker bond document.
+  // It's a surety bond that a broker needs to operate legally,
+  // providing financial security for clients.
+  string broker_bond_doc_url = 5;
+}
+
+// UpdateProducerRequest contains the fields that can be updated in a producer record.
+// Only information collected during the onboarding process can be updated.
+// Information from NIPR and other third-party sources cannot be updated directly.
+message UpdateProducerRequest {
+  // Producer contains the fields that can be updated for a producer.
+  // All fields are optional, allowing partial updates.
+  message Producer {
+    // First name of the producer.
+    // If provided, must be non-empty.
+    optional string first_name = 1 [(buf.validate.field).string.min_len = 1];
+
+    // Last name of the producer.
+    // If provided, must be non-empty.
+    optional string last_name = 2 [(buf.validate.field).string.min_len = 1];
+
+    // Middle name of the producer.
+    // If provided, must be non-empty.
+    optional string middle_name = 10 [(buf.validate.field).string.min_len = 1];
+
+    // Email address of the producer.
+    // If provided, must be a valid email format.
+    // Must be unique within the tenant.
+    optional string email = 3 [(buf.validate.field).string.email = true];
+
+    // National Producer Number (NPN) of the producer.
+    // If provided, must be non-empty.
+    optional string npn = 4 [(buf.validate.field).string.min_len = 1];
+
+    // Phone number of the producer.
+    // If provided, must be a valid phone number format.
+    optional string phone = 5 [(buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$"];
+
+    // Street address of the producer.
+    // If provided, must be non-empty.
+    optional string street = 6 [(buf.validate.field).string.min_len = 1];
+
+    // City of the producer.
+    // If provided, must be non-empty.
+    optional string city = 7 [(buf.validate.field).string.min_len = 1];
+
+    // State of the producer.
+    // If provided, must be non-empty.
+    optional string state = 8 [(buf.validate.field).string.min_len = 1];
+
+    // ZIP code of the producer's address.
+    // If provided, must be at least 5 characters.
+    optional string zip = 9 [(buf.validate.field).string.min_len = 5];
+  }
+
+  // The ID of the producer to update.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // The producer information to update.
+  // The field is required.
+  Producer producer = 2 [(buf.validate.field).required = true];
+}
+
+// UpdateProducerResponse is the empty response returned after successfully updating a producer.
+message UpdateProducerResponse {}
+
+// ListNewProducersRequest requests a list of new producers, optionally filtered by agency.
+message ListNewProducersRequest {
+  // Optional agency ID to filter producers by.
+  // If provided, only producers belonging to this agency will be returned.
+  // If not provided, producers from all agencies will be returned.
+  optional string agency_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// ListNewProducersResponse contains a list of new producers that match the filter criteria.
+message ListNewProducersResponse {
+  // List of new producers matching the filter criteria.
+  // These are producers typically in the NEW or pending onboarding state.
+  repeated Producer new_producers = 1;
+}
+
+// ApproveProducerRequest requests approval for a producer in the onboarding process.
+message ApproveProducerRequest {
+  option deprecated = true;
+  // The UUID of the producer to approve.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// ApproveProducerResponse is the empty response returned after successfully approving a producer.
+message ApproveProducerResponse {}
+
+// RejectProducerRequest requests rejection of a producer in the onboarding process.
+message RejectProducerRequest {
+  // The UUID of the producer to reject.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // The reason for rejecting the producer.
+  // Must be non-empty to provide context for the rejection.
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
+}
+
+// RejectProducerResponse is the empty response returned after successfully rejecting a producer.
+message RejectProducerResponse {}
+
+// ProducerOnboardingState defines the possible states in the producer onboarding workflow.
+// This enum is deprecated and should not be used in new code.
+enum ProducerOnboardingState {
+  option deprecated = true;
+
+  PRODUCER_ONBOARDING_STATE_UNSPECIFIED = 0;
+  // The producer has been added to the agency and is awaiting approval from the tenant.
+  PRODUCER_ONBOARDING_STATE_NEW = 1;
+  // The producer has been approved by the tenant.
+  PRODUCER_ONBOARDING_STATE_APPROVED_BY_TENANT = 2;
+  // The producer has been rejected by the tenant.
+  PRODUCER_ONBOARDING_STATE_REJECTED_BY_TENANT = 3;
+}
+
+// Agency represents a complete agency entity with all associated information.
+message Agency {
+  // Unique identifier for the agency.
+  string agency_id = 1;
+
+  // AgencyInfo contains contact and identification information for an agency.
+  message AgencyInfo {
+    // The unique identifier for the onboarding process.
+    // Used to track the agency through the onboarding flow.
+    string onboarding_id = 1;
+
+    // The organization ID represents the ID of the root organization that the agency belongs to.
+    // An example of a root organization is an Aggregator (Like AgencyHero) or an Agency Network.
+    // We currently don't support multiple levels of organizations or agencies.
+    // Agencies are not always part of an organization, so this field is optional.
+    string root_organization_id = 2;
+
+    // The official name of the agency.
+    // This is typically the legal name of the entity.
+    string agency_name = 3;
+
+    // Federal Employer Identification Number (FEIN) of the agency.
+    // This is a unique nine-digit number assigned by the Internal
+    // Revenue Service (IRS) to businesses operating in the United States.
+    string agency_fein = 4;
+
+    // Primary email address for the agency.
+    // Used for communication and must be unique.
+    string email = 5;
+
+    // Phone number for the agency.
+    string phone = 6;
+
+    // Fax number for the agency.
+    string fax = 7;
+
+    // Website URL for the agency, if available.
+    string website = 8;
+
+    // National Producer Number (NPN) of the agency.
+    // This is a unique identifier assigned by the National Association of Insurance Commissioners (NAIC).
+    string npn = 9;
+
+    // Indicates whether the agency is enabled to be synchronized with NIPR API.
+    // When true, the system will regularly check for updates from NIPR.
+    bool pdb_alerts_sync_enabled = 10;
+  }
+
+  // AgencyInfo type field named agency_info
+  AgencyInfo agency_info = 2;
+
+  // Address is a data structure that represents a physical or mailing
+  // location.
+  message Address {
+    // Street name and number of the location.
+    string street = 1;
+    // City where the location resides.
+    string city = 2;
+    // State/Province where the location resides.
+    string state = 3;
+    // ZIP/Postal code of the location.
+    string zip = 4;
+  }
+  // Address type field named address.
+  Address address = 3;
+  // Address type field named mailing_address.
+  Address mailing_address = 4;
+
+  // BankAccount contains information about a bank account for commission payments.
+  message BankAccount {
+    // The type of account.
+    enum AccountType {
+      // Default unspecified value. Avoid using this.
+      ACCOUNT_TYPE_UNSPECIFIED = 0;
+      // Standard checking account.
+      ACCOUNT_TYPE_CHECKING = 1;
+      // Savings account.
+      ACCOUNT_TYPE_SAVINGS = 2;
+    }
+
+    // Account number for the bank account.
+    string account_number = 1;
+    // Routing number for the bank.
+    // This is a nine-digit code identifying the financial institution.
+    string routing_number = 2;
+    // Type of account (checking or savings).
+    // Indicates how the account should be treated for electronic transfers.
+    AccountType account_type = 3;
+    // Name of the account holder as it appears on bank records.
+    string account_holder_name = 4;
+  }
+  // Banking information for commission payments.
+  // Used for electronic transfers of commissions and other payments.
+  BankAccount bank_account = 5;
+
+  // EOInfo contains Errors & Omissions insurance information
+  message EOInfo {
+    // Insurance carrier providing the E&O coverage
+    string carrier = 1;
+    // Date when the E&O coverage will expire
+    google.protobuf.Timestamp expiration_date = 2;
+    // Amount of coverage provided by the E&O policy
+    string coverage_amount = 3;
+  }
+
+  EOInfo eo_info = 6;
+
+  // Principal is a data structure that represents the principal of a agency.
+  // A principal is the person or entity that is responsible for the day-to-day operations of the agency.
+  // The principal is usually the CEO or CFO of the agency.nThe principal is also known as the "owner" of the agency.
+  message Principal {
+    // Unique identifier for the principal (as a producer).
+    string id = 1;
+    // First name of the principal.
+    string first_name = 2;
+    // Last name of the principal.
+    string last_name = 3;
+    // Middle name of the principal.
+    string middle_name = 9;
+    // Email address of the principal.
+    // Must be unique and is used for communication.
+    string email = 4;
+    // The NPN of the principal. This is used to
+    // retrieve the license information
+    // of the principal from the NIPR API.
+    string npn = 5;
+
+    // Phone number of the principal.
+    // Used for communication.
+    string phone = 6;
+
+    // Mailing address of the principal.
+    // This may differ from the agency address.
+    Address mailing_address = 8;
+  }
+
+  // Information about the agency's principal.
+  // This is a required field as each agency must have a principal.
+  Principal principal = 7;
+
+  // IvansAccount contains information for IVANS integration.
+  // IVANS is a system for electronic communication between insurance agencies and carriers.
+  message IvansAccount {
+    // Account number for the IVANS service.
+    string account_number = 1;
+    // Software used for IVANS communication.
+    string ams_software = 2;
+    // Version of the IVANS software.
+    string ams_version = 3;
+    // Mailbox number for the IVANS service.
+    // Used for routing electronic messages.
+    string mailbox_number = 4;
+  }
+  // IVANS account information for electronic carrier communication.
+  // This is optional and only used if the agency uses IVANS.
+  IvansAccount ivans_account = 8;
+}
+
+// Producer represents a producer that has been onboarded.
+message Producer {
+  // Internal ID of the producer.
+
+  string id = 1;
+  // The full name of the producer.
+
+  string name = 2;
+  // The email address of the producer.
+  // Used for communication and must be unique within the tenant.
+  // Must be a valid email format.
+  string email = 3;
+
+  // The National Producer Number (NPN) of the producer.
+  // This is used to retrieve license information from the NIPR API.
+  // Must be non-empty.
+  string npn = 4;
+
+  // Indicates whether the producer is enabled to be synchronized with NIPR API.
+  // When true, the system will regularly check for updates from NIPR.
+  bool pdb_alerts_sync_enabled = 13;
+
+  // Agency contains basic information about the agency this producer is associated with.
+  message Agency {
+    // Unique identifier for the associated agency.
+    string agency_id = 1;
+
+    // Name of the associated agency.
+    string name = 2;
+  }
+
+  // Basic information about the agency this producer is associated with.
+  Agency agency = 7;
+
+  // NIPR contains data synchronized from the National Insurance Producer Registry.
+  message NIPR {
+    // License contains information about a producer's insurance license.
+    message License {
+      // LicenseStatus defines the possible statuses of an insurance license.
+      enum LicenseStatus {
+        // Default unspecified value. Avoid using this.
+        LICENSE_STATUS_UNSPECIFIED = 0;
+        // The license has expired and is no longer valid.
+        LICENSE_STATUS_EXPIRED = 1;
+        // License is currently active.
+        LICENSE_STATUS_VALID = 2;
+        // The license exists but is not in an active state.
+        // This could be due to suspension, revocation, or other reasons.
+        LICENSE_STATUS_NOT_ACTIVE = 3;
+      }
+
+      // The license number assigned by the state regulatory authority.
+      string license_number = 1;
+
+      // The state that issued the license.
+      // Typically a two-letter state code.
+      string license_state = 2;
+
+      // Indicates whether this is a resident or non-resident license.
+      // Values are typically "Resident" or "Non-Resident".
+      string residency_status = 3;
+
+      // Indicates whether the license is currently active.
+      bool active = 4;
+
+      // The current status of the license (valid, expired, etc.).
+      LicenseStatus status = 5;
+
+      // The date when the license will expire if not renewed.
+      google.protobuf.Timestamp expiration_date = 6;
+
+      // The last time this license information was updated from NIPR.
+      google.protobuf.Timestamp updated_at = 7;
+    }
+
+    // List of all licenses held by the producer across different states.
+    repeated License licenses = 6;
+
+    // Biographic contains personal and identifying information about the producer.
+    message Biographic {
+      // Last name of the producer as recorded in NIPR.
+      string last_name = 1;
+
+      // First name of the producer as recorded in NIPR.
+      string first_name = 2;
+
+      // Middle name of the producer as recorded in NIPR.
+      string middle_name = 3;
+
+      // Date of birth of the producer.
+      google.protobuf.Timestamp date_of_birth = 4;
+      // Federal Employer Identification Number if the producer is a business entity.
+      string fein = 7;
+
+      // Company name if the producer is a business entity.
+      string company_name = 8;
+
+      // State of domicile (resident state) for the producer.
+      // This is the state where the producer is primarily located.
+      string state_domicile = 9;
+    }
+    // Biographic information of the producer from NIPR
+    Biographic biographic = 8;
+
+    // ProducerRegulatoryInfo contains regulatory information about a producer,
+    // including any regulatory actions taken against them.
+    message ProducerRegulatoryInfo {
+      // RegulatoryAction represents a regulatory action taken against a producer.
+      message RegulatoryAction {
+        // Unique identifier for the regulatory action.
+        string action_id = 1;
+
+        // The regulatory body that originated the action.
+        // Typically a state insurance department or FINRA.
+        string origin_of_action = 2;
+
+        // The reason why the regulatory action was taken.
+        string reason_for_action = 3;
+
+        // The outcome or resolution of the regulatory action.
+        string disposition = 4;
+
+        // The date when the regulatory action was taken.
+        google.protobuf.Timestamp date_of_action = 5;
+
+        // The date when the regulatory action became effective.
+        google.protobuf.Timestamp effective_date = 6;
+
+        // The date when the producer entered into the regulatory action.
+        google.protobuf.Timestamp enter_date = 7;
+
+        // Reference number for the regulatory action file.
+        string file_ref = 8;
+
+        // Any financial penalties associated with the regulatory action.
+        string penalty_fine_forfeiture = 9;
+
+        // Duration of any orders associated with the regulatory action.
+        string length_of_order = 10;
+      }
+
+      // Map of regulatory actions by state.
+      // The key is the state code, and the value is the regulatory action.
+      map<string, RegulatoryAction> regulatory_actions_by_state = 1;
+
+      // Clearance certification information for the producer.
+      string clearance_certification_info = 2;
+
+      // Details about NASD/FINRA examinations taken by the producer.
+      string nasd_exam_details = 3;
+    }
+    // Producer's regulatory information from NIPR
+    ProducerRegulatoryInfo regulatory_info = 9;
+
+    // Appointment represents a relationship between a producer and an insurance carrier.
+    message Appointment {
+      string branch_id = 1;
+
+      // Name of the insurance company for this appointment.
+      string company_name = 2;
+
+      // Federal Employer Identification Number of the producer's company.
+      string fein = 3;
+
+      // Company code for the insurance carrier.
+      string co_code = 4;
+
+      // Line of authority for this appointment (e.g., Life, Property, Casualty).
+      // Indicates what types of insurance the producer can sell.
+      string line_of_authority = 5;
+
+      // Code for the line of authority for this appointment.
+      string loa_code = 6;
+
+      // Current status of the appointment (e.g., Active, Terminated).
+      string status = 7;
+
+      // Reason for termination if the appointment has been terminated.
+      string termination_reason = 8;
+
+      // Date associated with the current status or reason.
+      google.protobuf.Timestamp status_reason_date = 9;
+
+      // Date when the appointment will renew.
+      google.protobuf.Timestamp appointment_renewal_date = 10;
+
+      // Additional affiliations or roles the producer has with the agency.
+      string agency_affiliations = 11;
+    }
+
+    // List of carrier appointments held by the producer in NIPR.
+    // These represent relationships with insurance carriers that allow
+    // the producer to sell their products.
+    repeated Appointment appointments = 10;
+  }
+
+  // Data synchronized from the NIPR service.
+  // Contains license information, biographic data, regulatory actions,
+  // and carrier appointments.
+  NIPR nipr = 6;
+
+  // The status of the producer onboarding process.
+  // This field is deprecated and should not be used in new code.
+  ProducerOnboardingState onboarding_status = 11 [deprecated = true];
+
+  // Indicates whether this producer is the principal of an agency.
+  // A principal producer has additional responsibilities and permissions.
+  bool is_principal = 12;
+}
+
+// NewProducer represents the data needed to create a new producer in the system.
+message NewProducer {
+  // First name of the producer.
+  // Required and must be non-empty.
+  string first_name = 1 [(buf.validate.field).string.min_len = 1];
+
+  // Last name of the producer.
+  // Required and must be non-empty.
+  string last_name = 2 [(buf.validate.field).string.min_len = 1];
+
+  // Middle name of the producer.
+  // Optional.
+  string middle_name = 7;
+
+  // Email address of the producer.
+  // Required and must be a valid email format.
+  // Must be unique within the tenant.
+  string email = 3 [(buf.validate.field).string.email = true];
+
+  // National Producer Number (NPN) of the producer.
+  // Optional, but recommended for license verification.
+  string npn = 4;
+
+  // Phone number of the producer.
+  // Optional if default value, but if provided must match the pattern of a valid phone number.
+  string phone = 5 [
+    (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE,
+    (buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$"
+  ];
+
+  // Address represents a mailing address for the producer.
+  message Address {
+    // Street address of the producer.
+    // Required and must be non-empty.
+    string street = 1 [(buf.validate.field).string.min_len = 1];
+
+    // City of the producer.
+    // Required and must be non-empty.
+    string city = 2 [(buf.validate.field).string.min_len = 1];
+
+    // State of the producer.
+    // Required and must be a 2-letter state code.
+    string state = 3 [(buf.validate.field).string.len = 2];
+    // Zip code of the producer.
+    // Required and must be between 1 and 10 characters.
+    string zip = 4 [
+      (buf.validate.field).string.min_len = 1,
+      (buf.validate.field).string.max_len = 10
+    ];
+  }
+
+  // Mailing address of the producer.
+  // This is where correspondence will be sent.
+  Address mailing_address = 6;
+
+  // External tenant identifier for the producer.
+  // Used for integration with external systems.
+  string tenant_id = 8;
+
+  // Indicates whether the producer should be automatically approved.
+  // This field is deprecated and should not be used in new code.
+  bool auto_approve = 9 [deprecated = true];
+}
+
+// NewProducerRequest is used to create a new producer and associate it with an agency.
+// This will trigger a call to the NIPR API to retrieve license information of the producer.
+message NewProducerRequest {
+  // The UUID of the agency to associate the producer with.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // Information about the producer to create.
+  // This field is required.
+  NewProducer producer = 2 [(buf.validate.field).required = true];
+}
+
+// NewProducerResponse contains the ID of the created producer.
+message NewProducerResponse {
+  // The UUID of the created producer.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// NewProducersRequest is used to create multiple producers in a single request.
+// All producers will be associated with the specified agency.
+message NewProducersRequest {
+  // The UUID of the agency to associate the producers with.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // List of producers to create.
+  // This field is required and must contain at least one producer.
+  repeated NewProducer producers = 2 [(buf.validate.field).repeated.min_items = 1];
+}
+
+// NewProducersResponse contains the IDs of all created producers.
+message NewProducersResponse {
+  // List of UUIDs for the newly created producers.
+  // The order matches the order of producers in the request.
+  repeated string producer_ids = 1;
+}
+
+// NewContact represents the data needed to create a new contact in the system.
+// Contacts represent non-producer individuals associated with an agency.
+message NewContact {
+  // Address represents a mailing address for the contact.
+  message Address {
+    // Street address of the contact.
+    // Required and must be non-empty.
+    string street = 1 [(buf.validate.field).string.min_len = 1];
+
+    // City of the contact.
+    // Required and must be non-empty.
+    string city = 2 [(buf.validate.field).string.min_len = 1];
+
+    // State of the contact's address.
+    // Required and must be exactly 2 characters (state code).
+    string state = 3 [(buf.validate.field).string.len = 2];
+
+    // Zip code of the contact's address.
+    // Required and must be between 1 and 10 characters.
+    string zip = 4 [
+      (buf.validate.field).string.min_len = 1,
+      (buf.validate.field).string.max_len = 10
+    ];
+  }
+
+  // First name of the contact.
+  // Required and must be non-empty.
+  string first_name = 1 [(buf.validate.field).string.min_len = 1];
+
+  // Last name of the contact.
+  // Required and must be non-empty.
+  string last_name = 2 [(buf.validate.field).string.min_len = 1];
+
+  // Middle name of the contact.
+  // Optional.
+  string middle_name = 3;
+
+  // Email address of the contact.
+  // Required and must be a valid email format.
+  // Must be unique within the tenant.
+  string email = 4 [(buf.validate.field).string.email = true];
+
+  // Phone number of the contact.
+  // Optional if default value, but if provided must match the pattern of a valid phone number.
+  string phone = 5 [
+    (buf.validate.field).string.pattern = "^\\+?[1-9]\\d{1,14}$",
+    (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE
+  ];
+
+  // Mailing address of the contact.
+  Address address = 6;
+
+  // Role or position of the contact within the agency.
+  // Required and must be non-empty.
+  string role = 7 [(buf.validate.field).string.min_len = 1];
+
+  // External tenant identifier for the contact.
+  // Used for integration with external systems.
+  string tenant_id = 8;
+
+  // National Producer Number (NPN) of the contact.
+  string npn = 9;
+}
+
+// NewContactRequest is used to create a new contact and associate it with an agency.
+message NewContactRequest {
+  // The UUID of the agency to associate the contact with.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // Information about the contact to create.
+  NewContact contact = 2 [(buf.validate.field).required = true];
+}
+
+// NewContactResponse contains the ID of the created contact.
+message NewContactResponse {
+  // The UUID of the created contact.
+  // Must be a valid UUID format.
+  string contact_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// NewContactsRequest is used to create multiple contacts in a single request.
+// All contacts will be associated with the specified agency.
+message NewContactsRequest {
+  // The UUID of the agency to associate the contacts with.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // List of contacts to create.
+  // This field is required and must contain at least one contact.
+  repeated NewContact contacts = 2 [(buf.validate.field).repeated.min_items = 1];
+}
+
+// NewContactsResponse contains the IDs of all created contacts.
+message NewContactsResponse {
+  // List of UUIDs for the newly created contacts.
+  // The order matches the order of contacts in the request.
+  repeated string contact_ids = 1;
+}
+
+// SetExternalIDRequest is used to associate an external identifier with a producer, agency, or contact.
+// This allows integration with external systems that use different ID schemes.
+message SetExternalIDRequest {
+  // Only one entity type can be specified.
+
+  oneof entity_id {
+    // The UUID of the producer to set an external ID for.
+    string producer_id = 1 [(buf.validate.field).string.uuid = true];
+
+    // The UUID of the agency to set an external ID for.
+    string agency_id = 2 [(buf.validate.field).string.uuid = true];
+
+    // The UUID of the contact to set an external ID for.
+    string contact_id = 3 [(buf.validate.field).string.uuid = true];
+
+    // This oneof is required; exactly one entity must be specified.
+    option (buf.validate.oneof).required = true;
+  }
+
+  // The external tenant identifier to associate with the entity.
+  // Required and must be non-empty.
+  string tenant_id = 4 [(buf.validate.field).string.min_len = 1];
+}
+
+// SetExternalIDResponse is the empty response returned after successfully setting an external ID.
+message SetExternalIDResponse {}
+
+// ValidateProducerNPNRequest is used to validate a producer's National Producer Number.
+message ValidateProducerNPNRequest {
+  // The National Producer Number (NPN) to validate.
+  // Required and must be non-empty.
+  string npn = 1 [(buf.validate.field).string.min_len = 1];
+
+  // Optional name of the producer to validate.
+  // If provided, the NPN will be validated against this name.
+  optional string name = 2;
+}
+
+// ValidateProducerNPNResponse contains the result of validating a producer's NPN.
+message ValidateProducerNPNResponse {
+  // Indicates whether the NPN is valid.
+  // True if the NPN exists and is valid, false otherwise.
+  bool valid = 1;
+}
+
+// ValidateAgencyNPNRequest is used to validate an agency's National Producer Number.
+message ValidateAgencyNPNRequest {
+  // The National Producer Number (NPN) to validate.
+  // Required and must be non-empty.
+  string npn = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+// ValidateAgencyNPNResponse contains the result of validating an agency's NPN.
+message ValidateAgencyNPNResponse {
+  // Indicates whether the NPN is valid.
+  // True if the NPN exists and is valid, false otherwise.
+  bool valid = 1;
+}
+
+// LookupNPNByFEINRequest is used to look up a producer's National Producer Number by their Federal Employer Identification Number (FEIN).
+message LookupNPNByFEINRequest {
+  // The Federal Employer Identification Number (FEIN) to look up.
+  // Required and must be exactly 9 characters.
+  string fein = 1 [(buf.validate.field).string.len = 9];
+}
+
+// LookupNPNByFEINResponse contains the National Producer Number (NPN) for the producer associated with the given FEIN.
+message LookupNPNByFEINResponse {
+  // The National Producer Number (NPN) for the producer.
+  string npn = 1;
+}
+
+// ResyncAgencyRequest is used to trigger a manual resynchronization of agency data.
+// This will re-fetch all data from the NIPR API for the agency and all associated producers.
+message ResyncAgencyRequest {
+  // The UUID of the agency to resynchronize.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// ResyncAgencyResponse is the empty response returned after successfully triggering a resynchronization.
+message ResyncAgencyResponse {}
+
+// ResyncProducerRequest is used to trigger a manual resynchronization of producer data.
+message ResyncProducerRequest {
+  // The UUID of the producer to resynchronize.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// ResyncProducerResponse is the empty response returned after successfully triggering a resynchronization.
+message ResyncProducerResponse {}
+
+// SyncProducerWithNIPRRequest is used to synchronize a producer's data with the NIPR API.
+message SyncProducerWithNIPRRequest {
+  // The UUID of the producer to synchronize.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// SyncProducerWithNIPRResponse is the empty response returned after successfully synchronizing a producer's data with the NIPR API.
+message SyncProducerWithNIPRResponse {}
+
+// SyncAgencyWithNIPRRequest is used to synchronize an agency's data with the NIPR API.
+message SyncAgencyWithNIPRRequest {
+  // The UUID of the agency to synchronize.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // If true, all producers associated with the agency will be synchronized.
+  // If false, only the agency will be synchronized.
+  bool sync_all_producers = 2;
+}
+
+// SyncAgencyWithNIPRResponse is the empty response returned after successfully synchronizing an agency's data with the NIPR API.
+message SyncAgencyWithNIPRResponse {}
+
+// StopSyncProducerWithNIPRRequest is used to stop synchronizing a producer's data with the NIPR API.
+message StopSyncProducerWithNIPRRequest {
+  // The UUID of the producer to stop synchronizing.
+  // Must be a valid UUID format.
+  string producer_id = 1 [(buf.validate.field).string.uuid = true];
+}
+
+// StopSyncProducerWithNIPRResponse is the empty response returned after successfully stopping the synchronization of a producer's data with the NIPR API.
+message StopSyncProducerWithNIPRResponse {}
+
+// StopSyncAgencyWithNIPRRequest is used to stop synchronizing an agency's data with the NIPR API.
+message StopSyncAgencyWithNIPRRequest {
+  // The UUID of the agency to stop synchronizing.
+  // Must be a valid UUID format.
+  string agency_id = 1 [(buf.validate.field).string.uuid = true];
+
+  // If true, all producers associated with the agency will be stopped from synchronizing.
+  // If false, only the agency will be stopped from synchronizing.
+  bool stop_all_producers = 2;
+}
+
+// StopSyncAgencyWithNIPRResponse is the empty response returned after successfully stopping the synchronization of an agency's data with the NIPR API.
+message StopSyncAgencyWithNIPRResponse {}
