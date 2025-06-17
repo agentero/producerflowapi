@@ -25,10 +25,11 @@ plugins:
       - target=ts
       - import_extension=none
     include_imports: true
+    strategy: all
   - local: protoc-gen-doc
     out: wiki
     opt:
-      - wiki/API-Reference-template.tmpl
+      - markdown
       - API-Reference.md
     strategy: all
 
