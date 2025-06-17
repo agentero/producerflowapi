@@ -11,7 +11,7 @@
 Trusted by insurance companies of all sizes to manage onboarding, licensing, appointments, and ensure compliance—all in one platform. This comprehensive API service provides gRPC and Connect endpoints for managing producer workflows and data flows, built with modern protocol buffer definitions and generating client libraries for multiple languages.
 
 > **⚠️ Notice**  
-> Issues and pull requests are disabled for this repository. For support and questions, please contact our team directly.
+>  Pull requests are disabled for this repository. For support and questions, please contact our team directly.
 
 ## Table of Contents
 
@@ -45,10 +45,10 @@ Trusted by insurance companies of all sizes to manage onboarding, licensing, app
 
 To get started with the Producerflow API, you'll need to generate an API token:
 
-1. Log into your Producerflow dashboard
-2. Navigate to API Settings in your account preferences
-3. Generate a new API token with appropriate permissions
-4. Securely store your token for use in API requests
+1. Log into your Producerflow account.
+2. Navigate to API Keys in your account settings.
+3. Generate a new API key with appropriate expiration date.
+4. Securely store your API key for use in API requests.
 
 For detailed API documentation and examples, visit our [comprehensive API documentation](docs/).
 
