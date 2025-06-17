@@ -13,6 +13,9 @@ permissions:
 
 env:
   NODE_VERSION: 22
+  GO_VERSION: 1.24.0
+  PROTO_GEN_ES_VERSION: 2.5.2
+  PROTO_GEN_CONNECT_ES_VERSION: 1.6.1
 
 jobs:
   buf-generate:
@@ -30,14 +33,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24.0'
+          go-version: ${{ env.GO_VERSION }}
           cache: true
       - name: Download Go dependencies
         run: go mod download
       - name: 'Install @bufbuild/protoc-gen-es'
-        run: npm i -g @bufbuild/protoc-gen-es
+        run: npm i -g @bufbuild/protoc-gen-es@${{ env.PROTO_GEN_ES_VERSION }}
       - name: 'Install @connectrpc/protoc-gen-connect-es'
-        run: npm i -g @connectrpc/protoc-gen-connect-es
+        run: npm i -g @connectrpc/protoc-gen-connect-es@${{ env.PROTO_GEN_CONNECT_ES_VERSION }}
       - name: Check buf version
         run: buf --version
       - name: Run buf generate
