@@ -16,5 +16,3 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: Andrew-Chen-Wang/github-wiki-action@v4
-        with: 
-          token: ${{ secrets.PRODUCERFLOWAPI_PAT }}
