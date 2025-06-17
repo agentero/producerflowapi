@@ -1,0 +1,201 @@
+syntax = "proto3";
+
+package producerflow.appointment.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+
+// AppointmentService manages license appointments through NIPR.
+//
+// The appointment flow in NIPR is as follows:
+// 1. A new appointment (or termination) is requested for a license number.
+// 2. Some time later, NIPR processes the request and returns the final result.
+//
+// Since NIPR does not return results immediately, RequestAppointment and TerminateAppointment
+// RPCs will return a processing status of IN_PROGRESS if the request is accepted by NIPR.
+// When the appointment is finally processed by NIPR, ProducerFlow will notify via a webhook of
+// the final result. Also, any call from this point on to ListAppointments or GetAppointment will
+// also return the final result.
+//
+// Any call to this service must be authenticated using an API key in the request headers.
+service AppointmentService {
+  // Requests a new appointment for the specified license number.
+  // The caller must verify that the license and the producer are eligible for appointment.
+  // If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
+  // If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
+  rpc RequestAppointment(RequestAppointmentRequest) returns (RequestAppointmentResponse);
+
+  // Retrieves the details of an appointment by its ID.
+  rpc GetAppointment(GetAppointmentRequest) returns (GetAppointmentResponse);
+
+  // Lists appointments for the tenant, optionally filtered by processing status.
+  rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse);
+
+  // Terminates an existing appointment by ID, providing a reason.
+  rpc TerminateAppointment(TerminateAppointmentRequest) returns (TerminateAppointmentResponse);
+
+  // Checks whether a license is eligible for appointment.
+  // If not eligible, a list of reasons is provided.
+  rpc CheckAppointmentEligibility(CheckAppointmentEligibilityRequest) returns (CheckAppointmentEligibilityResponse);
+
+  // Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
+  // as integer values in cents. E.g. $10.34 is sent as 1034.
+  rpc GetAppointmentFees(GetAppointmentFeesRequest) returns (GetAppointmentFeesResponse);
+
+  // Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
+  // as integer values in cents. E.g. $10.34 is sent as 1034.
+  rpc GetTerminationFees(GetTerminationFeesRequest) returns (GetTerminationFeesResponse);
+}
+
+// Request to create a new appointment.
+message RequestAppointmentRequest {
+  // Required. License number to appoint.
+  string license_number = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message RequestAppointmentResponse {
+  // The ID of the created appointment.
+  string appointment_id = 1;
+  // Processing status of the appointment request.
+  ProcessingStatus processing_status = 2;
+  // If the appointment was rejected or ineligible, these reasons explain why.
+  repeated string not_eligible_reasons = 3;
+}
+
+// Request to retrieve an appointment by ID.
+message GetAppointmentRequest {
+  // Required. The ID of the appointment to retrieve.
+  string appointment_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetAppointmentResponse {
+  // The appointment details.
+  Appointment appointment = 1;
+}
+
+// Request to list appointments, optionally filtered by processing status.
+message ListAppointmentsRequest {
+  // Optional. Filter results by processing status.
+  repeated ProcessingStatus processing_status = 1;
+  // Optional. Maximum number of results to return.
+  int32 page_size = 2 [(buf.validate.field).int32 = {
+    gte: 1
+    lte: 100
+  }];
+  // Optional. Token for fetching the next page.
+  string page_token = 3;
+}
+
+message ListAppointmentsResponse {
+  // List of appointments.
+  repeated Appointment appointments = 1;
+  // Token for fetching the next page of results.
+  string next_page_token = 2;
+}
+
+// Request to terminate an appointment.
+message TerminateAppointmentRequest {
+  // Required. ID of the appointment to terminate.
+  string appointment_id = 1 [(buf.validate.field).string.min_len = 1];
+  // Required. Reason for termination.
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
+}
+
+message TerminateAppointmentResponse {
+  // Indicates whether the termination was successful.
+  bool success = 1;
+}
+
+// Request to check appointment eligibility for a license.
+message CheckAppointmentEligibilityRequest {
+  // Required. License number to check.
+  string license_number = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message CheckAppointmentEligibilityResponse {
+  // If not eligible, reasons will be returned.
+  repeated string not_eligible_reasons = 1;
+}
+
+// Request to get appointment fees.
+message GetAppointmentFeesRequest {
+  // Required. License number to appoint.
+  string license_number = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetAppointmentFeesResponse {
+  // Total fee for the appointment in cents.
+  int64 fee_in_cents = 1;
+}
+
+// Request to get termination fees.
+message GetTerminationFeesRequest {
+  // Required. Appointment ID.
+  string appointment_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetTerminationFeesResponse {
+  // Total fee for the termination in cents.
+  int64 fee_in_cents = 1;
+}
+
+// Represents an appointment for a license.
+message Appointment {
+  // Unique identifier for the appointment.
+  string appointment_id = 1;
+
+  // The license number associated with the appointment.
+  string license_number = 2;
+
+  // Type of appointment (e.g., up-front, registry).
+  AppointmentType appointment_type = 3;
+
+  // Eligibility status of the appointment (e.g., eligible, ineligible).
+  EligibilityStatus eligibility_status = 4;
+
+  // Processing status of the appointment (e.g., in progress, appointed).
+  ProcessingStatus processing_status = 5;
+
+  // If ineligible or rejected, reasons will be listed here.
+  repeated string not_eligible_reasons = 6;
+
+  // Optional comments or notes related to the appointment.
+  string comments = 7;
+
+  // Total appointment fee in cents.
+  int64 appointment_fee_in_cents = 8;
+
+  // Total termination fee in cents, if terminated or eligible for termination.
+  int64 termination_fee_in_cents = 9;
+
+  // Timestamp when the appointment was created.
+  google.protobuf.Timestamp created_at = 10;
+
+  // Timestamp of the last update to the appointment.
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// Eligibility status of the appointment.
+enum EligibilityStatus {
+  ELIGIBILITY_STATUS_UNSPECIFIED = 0;
+  ELIGIBILITY_STATUS_ELIGIBLE = 1;
+  ELIGIBILITY_STATUS_INELIGIBLE = 2;
+}
+
+// Processing status of the appointment.
+enum ProcessingStatus {
+  PROCESSING_STATUS_UNSPECIFIED = 0;
+  PROCESSING_STATUS_IN_PROGRESS = 1;
+  PROCESSING_STATUS_APPOINTED = 2;
+  PROCESSING_STATUS_TERMINATED = 3;
+  PROCESSING_STATUS_REJECTED = 4;
+  PROCESSING_STATUS_MISSING_LICENSE = 5;
+}
+
+// Type of appointment.
+enum AppointmentType {
+  APPOINTMENT_TYPE_UNSPECIFIED = 0;
+  APPOINTMENT_TYPE_REGISTRY = 1;
+  APPOINTMENT_TYPE_UP_FRONT = 2;
+  APPOINTMENT_TYPE_JUST_IN_TIME = 3;
+}
