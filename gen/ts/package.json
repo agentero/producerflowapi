@@ -1,17 +1,15 @@
 {
   "name": "@agentero/producerflowapi",
+  "author": "Agentero",
   "version": "0.0.0",
   "description": "Generated TypeScript types for ProducerFlow API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "**/*.ts",
-    "**/*.d.ts",
-    "**/*.js",
-    "README.md"
+    "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp README.md dist/",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -22,9 +20,9 @@
     "@types/node": "^22.15.29"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/agentero/producerflowapi.git",
