@@ -96,7 +96,7 @@ This document outlines our deprecation policy for the producer flow API service.
 
 Deprecated endpoints and fields will include appropriate headers:
 
-```
+```http
 X-API-Deprecated: true
 X-API-Deprecation-Date: YYYY-MM-DD
 X-API-Removal-Date: YYYY-MM-DD
