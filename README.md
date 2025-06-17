@@ -4,69 +4,164 @@
 [![Go Build Test](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml)
 [![TypeScript Build Test](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml)
 [![Proto Validation](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml)
+[![SOC 2 Compliant](https://img.shields.io/badge/SOC%202-Compliant-green.svg)](https://www.producerflow.com/)
 
-> **⚠️ Under Construction**  
-> This project is currently under active development. APIs and features may change without notice until the first stable release.
+> **For Producerflow clients seeking seamless API integration with their services**
 
-A comprehensive producer flow API service providing both gRPC and REST endpoints for managing producer workflows and data flows. Built with modern protocol buffer definitions and generating client libraries for multiple languages.
+Trusted by insurance companies of all sizes to manage onboarding, licensing, appointments, and ensure compliance—all in one platform. This comprehensive API service provides gRPC and Connect endpoints for managing producer workflows and data flows, built with modern protocol buffer definitions and generating client libraries for multiple languages.
 
-## Features
+> **⚠️ Notice**  
+> Issues and pull requests are disabled for this repository. For support and questions, please contact our team directly.
 
-- **Dual API Support**: Both gRPC and REST endpoints for maximum flexibility
-- **Type-Safe Clients**: Generated Go and TypeScript client libraries
-- **Protocol Buffers**: Strongly-typed message definitions
-- **CI/CD Ready**: Automated build and deployment workflows
-- **Multi-Language Support**: Code generation for Go and TypeScript
+## Table of Contents
 
-## Project Structure
+- [Producerflow API](#producerflow-api)
+  - [Table of Contents](#table-of-contents)
+  - [Quickstart](#quickstart)
+    - [API Token Generation](#api-token-generation)
+  - [Installation \& Usage](#installation--usage)
+    - [Using Protocol Buffer Files](#using-protocol-buffer-files)
+    - [Using Pre-Generated Clients](#using-pre-generated-clients)
+      - [Go Client](#go-client)
+      - [TypeScript Client](#typescript-client)
+  - [Client Libraries](#client-libraries)
+    - [Generated Client Directories](#generated-client-directories)
+    - [Supported Languages](#supported-languages)
+    - [Navigation Guide](#navigation-guide)
+  - [Build/Generation Instructions](#buildgeneration-instructions)
+    - [Generating Official Clients](#generating-official-clients)
+    - [Prerequisites](#prerequisites)
+    - [Custom Generation for Other Languages](#custom-generation-for-other-languages)
+  - [Glossary](#glossary)
+  - [Security](#security)
+  - [Deprecation Policy](#deprecation-policy)
+  - [Contact/Support](#contactsupport)
+  - [License](#license)
+  - [Versioning](#versioning)
 
+## Quickstart
+
+### API Token Generation
+
+To get started with the Producerflow API, you'll need to generate an API token:
+
+1. Log into your Producerflow dashboard
+2. Navigate to API Settings in your account preferences
+3. Generate a new API token with appropriate permissions
+4. Securely store your token for use in API requests
+
+For detailed API documentation and examples, visit our [comprehensive API documentation](docs/).
+
+## Installation & Usage
+
+### Using Protocol Buffer Files
+
+The raw `.proto` files are located in the `producerflow/` directory and can be used to generate clients for any language supported by Protocol Buffers.
+
+```bash
+# Install buf and necessary plugins for your target language
+# Then generate clients using the proto files
+buf generate
 ```
-producerflowapi/
-├── producerflow/       # Protocol buffer definitions
-├── gen/                # Generated code
-│   ├── go/            # Generated Go code
-│   └── typescript/    # Generated TypeScript code
-├── docs/              # Documentation
-├── .github/           # GitHub workflows and templates
-│   └── workflows/     # CI/CD workflows
+
+### Using Pre-Generated Clients
+
+#### Go Client
+```bash
+go get github.com/agentero/producerflowapi/gen/go
 ```
 
-## Documentation
+#### TypeScript Client
+```bash
+npm install @agentero/producerflowapi
+```
 
-- **[Changelog](CHANGELOG.md)** - Release history and version changes
-- **[Security Policy](SECURITY.md)** - Security reporting and vulnerability disclosure
-- **[Deprecation Policy](DEPRECATION.md)** - API deprecation guidelines and timelines
+For detailed installation and usage instructions, see the respective client library documentation.
 
-## Getting Started
+## Client Libraries
 
-This project is currently under development. More detailed setup and usage instructions will be provided as the project matures.
+### Generated Client Directories
+
+- **[Go Client Library](/gen/go/)** - Complete Go implementation with gRPC and Connect support
+- **[TypeScript Client Library](/gen/ts/)** - Full TypeScript/JavaScript client with type definitions
+
+### Supported Languages
+
+The monorepo currently provides official support for:
+
+- **Go** (1.21+)
+- **TypeScript/JavaScript** (Node.js 18+)
+
+For other languages, use the Protocol Buffer definitions in `producerflow/` with the official Protocol Buffer compiler and language-specific plugins. Refer to the [Buf documentation](https://buf.build/docs) for comprehensive language support.
+
+### Navigation Guide
+
+- **API Definitions**: Start with `producerflow/producer/v1/producer.proto`
+- **Go Integration**: Use code in `gen/go/` directory
+- **TypeScript Integration**: Use code in `gen/ts/` directory
+- **Documentation**: Reference `docs/` for detailed API guides
+
+## Build/Generation Instructions
+
+### Generating Official Clients
+
+To regenerate the Go and TypeScript clients within the monorepo:
+
+```bash
+# From the repository root
+buf generate
+```
+
+This command will:
+
+1. Validate all Protocol Buffer definitions
+2. Generate Go client code in `gen/go/`
+3. Generate TypeScript client code in `gen/ts/`
 
 ### Prerequisites
 
-- Protocol Buffer compiler (protoc)
-- Go 1.21+ (for Go client generation)
-- Node.js 18+ (for TypeScript client generation)
+- [Buf CLI](https://buf.build/docs/installation) installed
+- Go 1.21+ (for Go generation)
+- Node.js 18+ (for TypeScript generation)
 
-### Development
+### Custom Generation for Other Languages
 
-Development setup and contribution guidelines will be documented as the project evolves.
+For languages not officially supported by this monorepo, refer to the [Buf documentation](https://buf.build/docs) for comprehensive code generation guides and plugin configurations.
 
-## API Specification
+## Glossary
 
-The API is defined using Protocol Buffers and follows industry-standard practices for both gRPC and REST interfaces. Detailed API documentation will be available upon the first stable release.
+*This section will be populated with domain-specific terms and definitions.*
 
-## Versioning
-
-This project follows [Semantic Versioning](https://semver.org/). See the [changelog](CHANGELOG.md) for release history.
+<!-- TODO: Add domain terms and definitions -->
 
 ## Security
 
-For security concerns and vulnerability reporting, please see our [Security Policy](SECURITY.md).
+For security concerns, vulnerability reporting, and our comprehensive security policies, please see our [Security Policy](SECURITY.md).
+
+For immediate security issues, contact: [support@agentero.com](mailto:support@agentero.com)
+
+## Deprecation Policy
+
+This API follows a structured deprecation approach to ensure backward compatibility and smooth transitions. For detailed information about our deprecation timelines, migration guides, and policy, see [DEPRECATION.md](DEPRECATION.md).
+
+## Contact/Support
+
+For technical support, integration assistance, or general inquiries:
+
+**Email**: [support@agentero.com](mailto:support@agentero.com)
+
+**Documentation**: Visit our [comprehensive documentation](docs/) for detailed guides and examples.
+
+---
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/). See the [CHANGELOG.md](CHANGELOG.md) for release history and detailed version information.
+
 ---
 
-*For questions, issues, or contributions, please use the GitHub issue tracker or contact the development team.*
+*© 2025 Producerflow. All rights reserved.*
