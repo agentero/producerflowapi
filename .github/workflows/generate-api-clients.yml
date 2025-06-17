@@ -42,12 +42,32 @@ jobs:
         run: buf --version
       - name: Run buf generate
         run: buf generate
+      - name: Close existing PRs and delete branches
+        run: |
+          # Find and close existing PRs with the regenerate-api-clients pattern
+          existing_prs=$(gh pr list --state open --head "dev/producerflowapi/regenerate-api-clients-*" --json number,headRefName --jq '.[].number' || echo "")
+          
+          if [ ! -z "$existing_prs" ]; then
+            echo "Found existing PRs to close: $existing_prs"
+            for pr_number in $existing_prs; do
+              echo "Closing PR #$pr_number"
+              gh pr close $pr_number --comment "Closing this PR as a new API client regeneration is being created."
+              
+              # Get the branch name for this PR
+              branch_name=$(gh pr view $pr_number --json headRefName --jq '.headRefName')
+              echo "Deleting branch: $branch_name"
+              git push origin --delete $branch_name || echo "Branch $branch_name may not exist or already deleted"
+            done
+          else
+            echo "No existing PRs found to close"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.PRODUCERFLOWAPI_PAT }}
           commit-message: "chore(producerflowapi): regenerate client libraries"
-          title: "chore: Regenerate Producerflow API client libraries"
+          title: "chore(producerflowapi): regenerate client libraries"
           body: |
             This PR contains automatically generated changes to the Producerflow API client libraries.
             
@@ -61,5 +81,4 @@ jobs:
             Please review the generated code to ensure all changes are as expected.
           branch: "dev/producerflowapi/regenerate-api-clients-${{ github.run_number }}"
           delete-branch: true
-          assignees: engineers
-          team-reviewers: engineers
+
