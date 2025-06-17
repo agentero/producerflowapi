@@ -1,7 +1,7 @@
 name: "Generate Producerflow API client libraries"
 on:
   push:
-    branches: [main]
+    branches-ignore: [main]
     paths: [buf.yaml, buf.gen.yaml, producerflow/**]
   workflow_dispatch:
 concurrency:
@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: true
 permissions:
   contents: write
+  pull-requests: write
 
 env:
   NODE_VERSION: 22
@@ -26,6 +27,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.0'
+          cache: true
+      - name: Download Go dependencies
+        run: go mod download
       - name: 'Install @bufbuild/protoc-gen-es'
         run: npm i -g @bufbuild/protoc-gen-es
       - name: 'Install @connectrpc/protoc-gen-connect-es'
@@ -34,14 +42,24 @@ jobs:
         run: buf --version
       - name: Run buf generate
         run: buf generate
-      - name: Commit changes
-        run: |
-          git pull origin ${{ github.head_ref }}
-          git status
-          git config --global user.name github-actions
-          git config --global user.email "github-actions@github.com"
-          git add .
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "chore(producerflowapi): regenerate client libraries"
-            git push origin ${{ github.head_ref }}
-          fi
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PRODUCERFLOWAPI_PAT }}
+          commit-message: "chore(producerflowapi): regenerate client libraries"
+          title: "chore: Regenerate Producerflow API client libraries"
+          body: |
+            This PR contains automatically generated changes to the Producerflow API client libraries.
+            
+            Generated from the latest protocol buffer definitions in the `producerflow/` directory.
+            
+            ## Changes
+            - Updated Go client libraries
+            - Updated TypeScript client libraries
+            
+            ## Review
+            Please review the generated code to ensure all changes are as expected.
+          branch: "dev/producerflowapi/regenerate-api-clients-${{ github.run_number }}"
+          delete-branch: true
+          assignees: engineers
+          team-reviewers: engineers
