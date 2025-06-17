@@ -1,8 +1,8 @@
-# Webhooks
+# Webhook
 
 ## Table of Contents
 
-- [Webhooks](#webhooks)
+- [Webhook](#webhook)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. System Overview](#2-system-overview)
