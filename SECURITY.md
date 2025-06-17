@@ -96,5 +96,3 @@ For general questions about this security policy:
 ---
 
 *This security policy is subject to change. Please check back regularly for updates.*
-
-*Last updated: [Current Date]* 
