@@ -44,25 +44,44 @@ jobs:
         run: buf generate
       - name: Close existing PRs and delete branches
         run: |
-          # Find and close existing PRs with the regenerate-api-clients pattern
-          existing_prs=$(gh pr list --state open --head "dev/producerflowapi/regenerate-api-clients-*" --json number,headRefName --jq '.[].number' || echo "")
+          echo "Searching for existing PRs with pattern: dev/producerflowapi/regenerate-api-clients-*"
           
-          if [ ! -z "$existing_prs" ]; then
+          # List all open PRs to debug
+          echo "All open PRs:"
+          gh pr list --state open --json number,title,headRefName || echo "Failed to list PRs"
+          
+          # Find existing PRs with our specific pattern
+          echo "Searching for PRs with regenerate-api-clients pattern..."
+          existing_prs=$(gh pr list --state open --json number,headRefName | jq -r '.[] | select(.headRefName | startswith("dev/producerflowapi/regenerate-api-clients-")) | .number' 2>/dev/null || echo "")
+          
+          echo "Found PR numbers: '$existing_prs'"
+          
+          if [ ! -z "$existing_prs" ] && [ "$existing_prs" != "" ]; then
             echo "Found existing PRs to close: $existing_prs"
-            for pr_number in $existing_prs; do
-              echo "Closing PR #$pr_number"
-              gh pr close $pr_number --comment "Closing this PR as a new API client regeneration is being created."
-              
-              # Get the branch name for this PR
-              branch_name=$(gh pr view $pr_number --json headRefName --jq '.headRefName')
-              echo "Deleting branch: $branch_name"
-              git push origin --delete $branch_name || echo "Branch $branch_name may not exist or already deleted"
+            echo "$existing_prs" | while read -r pr_number; do
+              if [ ! -z "$pr_number" ]; then
+                echo "Processing PR #$pr_number"
+                
+                # Get the branch name first
+                branch_name=$(gh pr view $pr_number --json headRefName --jq -r '.headRefName' 2>/dev/null || echo "")
+                echo "Branch name: $branch_name"
+                
+                # Close the PR
+                echo "Closing PR #$pr_number"
+                gh pr close $pr_number --comment "Closing this PR as a new API client regeneration is being created." || echo "Failed to close PR #$pr_number"
+                
+                # Delete the branch if we got the name
+                if [ ! -z "$branch_name" ] && [ "$branch_name" != "null" ]; then
+                  echo "Deleting branch: $branch_name"
+                  git push origin --delete "$branch_name" 2>/dev/null || echo "Branch $branch_name may not exist or already deleted"
+                fi
+              fi
             done
           else
             echo "No existing PRs found to close"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
