@@ -75,7 +75,7 @@ When a change occurs in a producer, an agency or a contact, we will send a reque
 All messages will include the following common fields giving information about the change:
     - **id**: this is a unique identifier of the event
     - **change_type**: it is the type of change done to the thing. One of “Created", "Updated", "Deleted", “Resync”
-    - **origin**: what part of Producerflow did the change. One of "API", "Portal", "NIPR". 
+    - **origin**: what part of Producerflow did the change. One of "API", "Portal", "NIPR".
     - **timestamp**: when the change happened in Producerflow.
 
 Besides the common fields, and depending on the type of entity that has changed, we will send specific fields describing the entity itself based on the schemas found on the Appendix A of this document.
@@ -94,12 +94,12 @@ Besides the common fields, and depending on the type of entity that has changed,
     - NIPR: Changes originating from NIPR and received by ProducerFlow.
 - **Partial Payloads for Updates**:
   - To limit the size of the payload, producer and agency events will only contain the information from the section that has undergone the change:
-    - An agency has the following sections: 
+    - An agency has the following sections:
       - agency_data:  general agency attributes collected in the Portal
       - agency_bank_account: bank account information of the agency
       - agency_eo: details about the agency E&O provided during the onboarding
       - agency_ivans_account: IVANS account of the agency
-      - agency_address: address of the agency collected in the Portal 
+      - agency_address: address of the agency collected in the Portal
       - agency_nipr_data: agency attributes collected from NIPR
       - agency_nipr_appointments: agency appointments in NIPR
       - agency_nipr_licenses: agency licenses in NIPR
