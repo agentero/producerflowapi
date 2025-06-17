@@ -22,7 +22,7 @@ A comprehensive producer flow API service providing both gRPC and REST endpoints
 
 ```
 producerflowapi/
-├── proto/              # Protocol buffer definitions
+├── producerflow/       # Protocol buffer definitions
 ├── gen/                # Generated code
 │   ├── go/            # Generated Go code
 │   └── typescript/    # Generated TypeScript code
