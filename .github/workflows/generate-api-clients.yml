@@ -1,0 +1,47 @@
+name: "Generate Producerflow API client libraries"
+on:
+  push:
+    branches: [main]
+    paths: [buf.yaml, buf.gen.yaml, producerflow/**]
+  workflow_dispatch:
+concurrency:
+  group: buf-generate
+  cancel-in-progress: true
+permissions:
+  contents: write
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  buf-generate:
+    name: "Generate Producerflow API client libraries"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup buf
+        uses: bufbuild/buf-setup-action@v1
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: 'Install @bufbuild/protoc-gen-es'
+        run: npm i -g @bufbuild/protoc-gen-es
+      - name: 'Install @connectrpc/protoc-gen-connect-es'
+        run: npm i -g @connectrpc/protoc-gen-connect-es
+      - name: Check buf version
+        run: buf --version
+      - name: Run buf generate
+        run: buf generate
+      - name: Commit changes
+        run: |
+          git pull origin ${{ github.head_ref }}
+          git status
+          git config --global user.name github-actions
+          git config --global user.email "github-actions@github.com"
+          git add .
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore(producerflowapi): regenerate client libraries"
+            git push origin ${{ github.head_ref }}
+          fi
