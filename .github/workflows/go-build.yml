@@ -6,7 +6,6 @@ on:
     paths:
       - 'gen/go/**'
   pull_request:
-    branches: [ main ]
     paths:
       - 'gen/go/**'
   workflow_dispatch:
