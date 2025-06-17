@@ -48,7 +48,7 @@ We follow a coordinated disclosure policy:
 
 This security policy applies to:
 
-- **Core API Services**: All gRPC and REST endpoints
+- **Core API Services**: All gRPC endpoints
 - **Protocol Buffers**: Message definitions and serialization
 - **Generated Code**: Go and TypeScript client libraries
 - **Infrastructure**: Deployment configurations and CI/CD pipelines

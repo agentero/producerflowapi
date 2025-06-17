@@ -16,7 +16,6 @@ This document outlines our deprecation policy for the producer flow API service.
 ### API Components Subject to Deprecation
 
 - **gRPC Service Methods**: Individual RPC methods
-- **REST Endpoints**: HTTP endpoints and their parameters
 - **Protocol Buffer Fields**: Message fields and nested structures
 - **Request/Response Parameters**: Query parameters, headers, and body fields
 - **Generated Client Methods**: Methods in Go and TypeScript client libraries
