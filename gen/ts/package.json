@@ -1,6 +1,6 @@
 {
-  "name": "@producerflow/producerflowapi",
-  "version": "1.0.0",
+  "name": "@agentero/producerflowapi",
+  "version": "0.0.0",
   "description": "Generated TypeScript types for ProducerFlow API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

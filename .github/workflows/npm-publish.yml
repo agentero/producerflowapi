@@ -1,0 +1,80 @@
+name: Publish to NPM
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (leave empty to use package.json version)'
+        required: false
+        type: string
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # For npm provenance
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.npm
+          gen/ts/node_modules
+        key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('gen/ts/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ env.NODE_VERSION }}-
+
+    - name: Install dependencies
+      run: |
+        cd gen/ts
+        npm ci
+
+    - name: Set version from input
+      if: github.event.inputs.version != ''
+      run: |
+        cd gen/ts
+        npm version ${{ github.event.inputs.version }} --no-git-tag-version
+
+    - name: Build package
+      run: |
+        cd gen/ts
+        npm run build
+
+    - name: Run type check
+      run: |
+        cd gen/ts
+        npm run typecheck
+
+    - name: Publish to NPM
+      run: |
+        cd gen/ts
+        npm publish --provenance --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Get package version
+      id: package-version
+      run: |
+        cd gen/ts
+        echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+    - name: Create success comment
+      run: |
+        echo "✅ Successfully published @agentero/producerflowapi@${{ steps.package-version.outputs.version }} to NPM"
+        echo "📦 Package URL: https://www.npmjs.com/package/@agentero/producerflowapi" 
