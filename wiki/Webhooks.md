@@ -1,8 +1,8 @@
-# Webhook
+# Webhooks
 
 ## Table of Contents
 
-- [Webhook](#webhook)
+- [Webhooks](#webhooks)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. System Overview](#2-system-overview)
@@ -72,9 +72,10 @@ To configure the webhook:
 
 When a change occurs in a producer, an agency or a contact, we will send a request with a JSON in the request body with the new information of the dimension that has changed.
 
-All messages will include the following common fields giving information about the change:
-    - **id**: this is a unique identifier of the event
-    - **change_type**: it is the type of change done to the thing. One of “Created", "Updated", "Deleted", “Resync”
+All messages will include the following common fields giving information about the change
+
+    - **id**: this is a unique identifier of the event.
+    - **change_type**: it is the type of change done to the thing. One of “Created", "Updated", "Deleted", “Resync”.
     - **origin**: what part of Producerflow did the change. One of "API", "Portal", "NIPR".
     - **timestamp**: when the change happened in Producerflow.
 
