@@ -10,6 +10,9 @@ on:
       - 'gen/ts/**'
   workflow_dispatch:
 
+env:
+  NODE_VERSION: 22
+
 jobs:
   ts-build:
     runs-on: ubuntu-latest
@@ -21,14 +24,23 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: ${{ env.NODE_VERSION }}
 
+    - uses: actions/cache@v4
+      with:
+        path: |
+          ~/.npm
+          gen/ts/node_modules
+        key: ${{ runner.os }}-node-${{ env.NODE_VERSION }}-${{ hashFiles('gen/ts/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ env.NODE_VERSION }}-
     - name: Check TypeScript compilation
       run: |
         if [ -d "gen/ts" ] && [ "$(find gen/ts -name "*.ts" | wc -l)" -gt 0 ]; then
           echo "Setting up TypeScript compilation test..."
           cd gen/ts
           echo "Type-checking TypeScript files..."
+          npm install
           npm run typecheck
           echo "✅ TypeScript type-checks successfully"
         else
