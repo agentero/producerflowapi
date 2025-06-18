@@ -351,8 +351,6 @@ function verifySignature(payload: Buffer, receivedSignature: string, secret: str
 
 ```
 
-
-
 ## 11. Frequently Asked Questions
 
 - **Q1**: What happens if my Webhook is down during an event?
