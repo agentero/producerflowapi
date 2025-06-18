@@ -136,4 +136,3 @@ The `/gen` directory contains generated code from Protocol Buffer definitions:
 
 - **Go** - Generated Go code for gRPC services
 - **TypeScript** - Generated TypeScript/JavaScript code
-
