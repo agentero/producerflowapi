@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AppointmentService_RequestAppointment_FullMethodName          = "/producerflow.appointment.v1.AppointmentService/RequestAppointment"
-	AppointmentService_GetAppointment_FullMethodName              = "/producerflow.appointment.v1.AppointmentService/GetAppointment"
-	AppointmentService_ListAppointments_FullMethodName            = "/producerflow.appointment.v1.AppointmentService/ListAppointments"
-	AppointmentService_TerminateAppointment_FullMethodName        = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
-	AppointmentService_CheckAppointmentEligibility_FullMethodName = "/producerflow.appointment.v1.AppointmentService/CheckAppointmentEligibility"
-	AppointmentService_GetAppointmentFees_FullMethodName          = "/producerflow.appointment.v1.AppointmentService/GetAppointmentFees"
-	AppointmentService_GetTerminationFees_FullMethodName          = "/producerflow.appointment.v1.AppointmentService/GetTerminationFees"
+	AppointmentService_RequestAppointment_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/RequestAppointment"
+	AppointmentService_GetAppointment_FullMethodName       = "/producerflow.appointment.v1.AppointmentService/GetAppointment"
+	AppointmentService_ListAppointments_FullMethodName     = "/producerflow.appointment.v1.AppointmentService/ListAppointments"
+	AppointmentService_TerminateAppointment_FullMethodName = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
+	AppointmentService_ListEligibleLicenses_FullMethodName = "/producerflow.appointment.v1.AppointmentService/ListEligibleLicenses"
+	AppointmentService_GetAppointmentFees_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/GetAppointmentFees"
+	AppointmentService_GetTerminationFees_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/GetTerminationFees"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -46,8 +46,10 @@ const (
 //
 // Any call to this service must be authenticated using an API key in the request headers.
 type AppointmentServiceClient interface {
-	// Requests a new appointment for the specified license number.
-	// The caller must verify that the license and the producer are eligible for appointment.
+	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
+	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
+	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+	//
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(ctx context.Context, in *RequestAppointmentRequest, opts ...grpc.CallOption) (*RequestAppointmentResponse, error)
@@ -57,9 +59,8 @@ type AppointmentServiceClient interface {
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(ctx context.Context, in *TerminateAppointmentRequest, opts ...grpc.CallOption) (*TerminateAppointmentResponse, error)
-	// Checks whether a license is eligible for appointment.
-	// If not eligible, a list of reasons is provided.
-	CheckAppointmentEligibility(ctx context.Context, in *CheckAppointmentEligibilityRequest, opts ...grpc.CallOption) (*CheckAppointmentEligibilityResponse, error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error)
 	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(ctx context.Context, in *GetAppointmentFeesRequest, opts ...grpc.CallOption) (*GetAppointmentFeesResponse, error)
@@ -116,10 +117,10 @@ func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *appointmentServiceClient) CheckAppointmentEligibility(ctx context.Context, in *CheckAppointmentEligibilityRequest, opts ...grpc.CallOption) (*CheckAppointmentEligibilityResponse, error) {
+func (c *appointmentServiceClient) ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckAppointmentEligibilityResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_CheckAppointmentEligibility_FullMethodName, in, out, cOpts...)
+	out := new(ListEligibleLicensesResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_ListEligibleLicenses_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -164,8 +165,10 @@ func (c *appointmentServiceClient) GetTerminationFees(ctx context.Context, in *G
 //
 // Any call to this service must be authenticated using an API key in the request headers.
 type AppointmentServiceServer interface {
-	// Requests a new appointment for the specified license number.
-	// The caller must verify that the license and the producer are eligible for appointment.
+	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
+	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
+	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+	//
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(context.Context, *RequestAppointmentRequest) (*RequestAppointmentResponse, error)
@@ -175,9 +178,8 @@ type AppointmentServiceServer interface {
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error)
-	// Checks whether a license is eligible for appointment.
-	// If not eligible, a list of reasons is provided.
-	CheckAppointmentEligibility(context.Context, *CheckAppointmentEligibilityRequest) (*CheckAppointmentEligibilityResponse, error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error)
 	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error)
@@ -206,8 +208,8 @@ func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *
 func (UnimplementedAppointmentServiceServer) TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TerminateAppointment not implemented")
 }
-func (UnimplementedAppointmentServiceServer) CheckAppointmentEligibility(context.Context, *CheckAppointmentEligibilityRequest) (*CheckAppointmentEligibilityResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckAppointmentEligibility not implemented")
+func (UnimplementedAppointmentServiceServer) ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEligibleLicenses not implemented")
 }
 func (UnimplementedAppointmentServiceServer) GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppointmentFees not implemented")
@@ -308,20 +310,20 @@ func _AppointmentService_TerminateAppointment_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppointmentService_CheckAppointmentEligibility_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckAppointmentEligibilityRequest)
+func _AppointmentService_ListEligibleLicenses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEligibleLicensesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppointmentServiceServer).CheckAppointmentEligibility(ctx, in)
+		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppointmentService_CheckAppointmentEligibility_FullMethodName,
+		FullMethod: AppointmentService_ListEligibleLicenses_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).CheckAppointmentEligibility(ctx, req.(*CheckAppointmentEligibilityRequest))
+		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, req.(*ListEligibleLicensesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -386,8 +388,8 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppointmentService_TerminateAppointment_Handler,
 		},
 		{
-			MethodName: "CheckAppointmentEligibility",
-			Handler:    _AppointmentService_CheckAppointmentEligibility_Handler,
+			MethodName: "ListEligibleLicenses",
+			Handler:    _AppointmentService_ListEligibleLicenses_Handler,
 		},
 		{
 			MethodName: "GetAppointmentFees",

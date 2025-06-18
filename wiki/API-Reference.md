@@ -5,16 +5,17 @@
 
 - [producerflow/appointment/v1/appointment.proto](#producerflow_appointment_v1_appointment-proto)
     - [Appointment](#producerflow-appointment-v1-Appointment)
-    - [CheckAppointmentEligibilityRequest](#producerflow-appointment-v1-CheckAppointmentEligibilityRequest)
-    - [CheckAppointmentEligibilityResponse](#producerflow-appointment-v1-CheckAppointmentEligibilityResponse)
     - [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest)
     - [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse)
     - [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest)
     - [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse)
     - [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest)
     - [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse)
+    - [License](#producerflow-appointment-v1-License)
     - [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest)
     - [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse)
+    - [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest)
+    - [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse)
     - [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest)
     - [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse)
     - [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest)
@@ -137,7 +138,7 @@ Represents an appointment for a license.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | appointment_id | [string](#string) |  | Unique identifier for the appointment. |
-| license_number | [string](#string) |  | The license number associated with the appointment. |
+| license | [License](#producerflow-appointment-v1-License) |  | The license number of the license being appointed. |
 | appointment_type | [AppointmentType](#producerflow-appointment-v1-AppointmentType) |  | Type of appointment (e.g., up-front, registry). |
 | eligibility_status | [EligibilityStatus](#producerflow-appointment-v1-EligibilityStatus) |  | Eligibility status of the appointment (e.g., eligible, ineligible). |
 | processing_status | [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus) |  | Processing status of the appointment (e.g., in progress, appointed). |
@@ -147,36 +148,6 @@ Represents an appointment for a license.
 | termination_fee_in_cents | [int64](#int64) |  | Total termination fee in cents, if terminated or eligible for termination. |
 | created_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Timestamp when the appointment was created. |
 | updated_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Timestamp of the last update to the appointment. |
-
-
-
-
-
-
-<a name="producerflow-appointment-v1-CheckAppointmentEligibilityRequest"></a>
-
-### CheckAppointmentEligibilityRequest
-Request to check appointment eligibility for a license.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| license_number | [string](#string) |  | Required. License number to check. |
-
-
-
-
-
-
-<a name="producerflow-appointment-v1-CheckAppointmentEligibilityResponse"></a>
-
-### CheckAppointmentEligibilityResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| not_eligible_reasons | [string](#string) | repeated | If not eligible, reasons will be returned. |
 
 
 
@@ -273,6 +244,26 @@ Request to get termination fees.
 
 
 
+<a name="producerflow-appointment-v1-License"></a>
+
+### License
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| license_id | [string](#string) |  | The ID of the license. |
+| license_number | [string](#string) |  | The license number. |
+| producer_id | [string](#string) |  |  |
+| agency_id | [string](#string) |  |  |
+| state | [string](#string) |  | The two-letter state code of the license. |
+| license_class | [string](#string) |  | The license class. |
+
+
+
+
+
+
 <a name="producerflow-appointment-v1-ListAppointmentsRequest"></a>
 
 ### ListAppointmentsRequest
@@ -306,6 +297,37 @@ Request to list appointments, optionally filtered by processing status.
 
 
 
+<a name="producerflow-appointment-v1-ListEligibleLicensesRequest"></a>
+
+### ListEligibleLicensesRequest
+Request to retrieve a list of licenses that are eligible to be appointed.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| producer_id | [string](#string) |  |  |
+| agency_id | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="producerflow-appointment-v1-ListEligibleLicensesResponse"></a>
+
+### ListEligibleLicensesResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| licenses | [License](#producerflow-appointment-v1-License) | repeated | List of licenses that are eligible to be appointed. |
+
+
+
+
+
+
 <a name="producerflow-appointment-v1-RequestAppointmentRequest"></a>
 
 ### RequestAppointmentRequest
@@ -314,7 +336,7 @@ Request to create a new appointment.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| license_number | [string](#string) |  | Required. License number to appoint. |
+| license_id | [string](#string) |  | Required. The ID of the license to appoint. |
 
 
 
@@ -437,11 +459,13 @@ Any call to this service must be authenticated using an API key in the request h
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| RequestAppointment | [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest) | [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse) | Requests a new appointment for the specified license number. The caller must verify that the license and the producer are eligible for appointment. If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status. If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons. |
+| RequestAppointment | [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest) | [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse) | Requests a new appointment for a license that is eligible to be appointed. The simpler way to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+
+If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status. If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons. |
 | GetAppointment | [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest) | [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse) | Retrieves the details of an appointment by its ID. |
 | ListAppointments | [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest) | [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse) | Lists appointments for the tenant, optionally filtered by processing status. |
 | TerminateAppointment | [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest) | [TerminateAppointmentResponse](#producerflow-appointment-v1-TerminateAppointmentResponse) | Terminates an existing appointment by ID, providing a reason. |
-| CheckAppointmentEligibility | [CheckAppointmentEligibilityRequest](#producerflow-appointment-v1-CheckAppointmentEligibilityRequest) | [CheckAppointmentEligibilityResponse](#producerflow-appointment-v1-CheckAppointmentEligibilityResponse) | Checks whether a license is eligible for appointment. If not eligible, a list of reasons is provided. |
+| ListEligibleLicenses | [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest) | [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse) | Returns a list of licenses that are eligible to be appointed. |
 | GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 | GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 

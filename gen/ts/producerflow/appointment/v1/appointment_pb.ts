@@ -13,7 +13,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file producerflow/appointment/v1/appointment.proto.
  */
 export const file_producerflow_appointment_v1_appointment: GenFile = /*@__PURE__*/
-  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSI8ChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0Eh8KDmxpY2Vuc2VfbnVtYmVyGAEgASgJQge6SARyAhABIpwBChpSZXF1ZXN0QXBwb2ludG1lbnRSZXNwb25zZRIWCg5hcHBvaW50bWVudF9pZBgBIAEoCRJIChFwcm9jZXNzaW5nX3N0YXR1cxgCIAEoDjItLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5Qcm9jZXNzaW5nU3RhdHVzEhwKFG5vdF9lbGlnaWJsZV9yZWFzb25zGAMgAygJIjgKFUdldEFwcG9pbnRtZW50UmVxdWVzdBIfCg5hcHBvaW50bWVudF9pZBgBIAEoCUIHukgEcgIQASJXChZHZXRBcHBvaW50bWVudFJlc3BvbnNlEj0KC2FwcG9pbnRtZW50GAEgASgLMigucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkFwcG9pbnRtZW50IpUBChdMaXN0QXBwb2ludG1lbnRzUmVxdWVzdBJIChFwcm9jZXNzaW5nX3N0YXR1cxgBIAMoDjItLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5Qcm9jZXNzaW5nU3RhdHVzEhwKCXBhZ2Vfc2l6ZRgCIAEoBUIJukgGGgQYZCgBEhIKCnBhZ2VfdG9rZW4YAyABKAkicwoYTGlzdEFwcG9pbnRtZW50c1Jlc3BvbnNlEj4KDGFwcG9pbnRtZW50cxgBIAMoCzIoLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudBIXCg9uZXh0X3BhZ2VfdG9rZW4YAiABKAkiVwobVGVybWluYXRlQXBwb2ludG1lbnRSZXF1ZXN0Eh8KDmFwcG9pbnRtZW50X2lkGAEgASgJQge6SARyAhABEhcKBnJlYXNvbhgCIAEoCUIHukgEcgIQASIvChxUZXJtaW5hdGVBcHBvaW50bWVudFJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgiRQoiQ2hlY2tBcHBvaW50bWVudEVsaWdpYmlsaXR5UmVxdWVzdBIfCg5saWNlbnNlX251bWJlchgBIAEoCUIHukgEcgIQASJDCiNDaGVja0FwcG9pbnRtZW50RWxpZ2liaWxpdHlSZXNwb25zZRIcChRub3RfZWxpZ2libGVfcmVhc29ucxgBIAMoCSI8ChlHZXRBcHBvaW50bWVudEZlZXNSZXF1ZXN0Eh8KDmxpY2Vuc2VfbnVtYmVyGAEgASgJQge6SARyAhABIjIKGkdldEFwcG9pbnRtZW50RmVlc1Jlc3BvbnNlEhQKDGZlZV9pbl9jZW50cxgBIAEoAyI8ChlHZXRUZXJtaW5hdGlvbkZlZXNSZXF1ZXN0Eh8KDmFwcG9pbnRtZW50X2lkGAEgASgJQge6SARyAhABIjIKGkdldFRlcm1pbmF0aW9uRmVlc1Jlc3BvbnNlEhQKDGZlZV9pbl9jZW50cxgBIAEoAyLvAwoLQXBwb2ludG1lbnQSFgoOYXBwb2ludG1lbnRfaWQYASABKAkSFgoObGljZW5zZV9udW1iZXIYAiABKAkSRgoQYXBwb2ludG1lbnRfdHlwZRgDIAEoDjIsLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudFR5cGUSSgoSZWxpZ2liaWxpdHlfc3RhdHVzGAQgASgOMi4ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkVsaWdpYmlsaXR5U3RhdHVzEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAUgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYBiADKAkSEAoIY29tbWVudHMYByABKAkSIAoYYXBwb2ludG1lbnRfZmVlX2luX2NlbnRzGAggASgDEiAKGHRlcm1pbmF0aW9uX2ZlZV9pbl9jZW50cxgJIAEoAxIuCgpjcmVhdGVkX2F0GAogASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCp7ChFFbGlnaWJpbGl0eVN0YXR1cxIiCh5FTElHSUJJTElUWV9TVEFUVVNfVU5TUEVDSUZJRUQQABIfChtFTElHSUJJTElUWV9TVEFUVVNfRUxJR0lCTEUQARIhCh1FTElHSUJJTElUWV9TVEFUVVNfSU5FTElHSUJMRRACKuIBChBQcm9jZXNzaW5nU3RhdHVzEiEKHVBST0NFU1NJTkdfU1RBVFVTX1VOU1BFQ0lGSUVEEAASIQodUFJPQ0VTU0lOR19TVEFUVVNfSU5fUFJPR1JFU1MQARIfChtQUk9DRVNTSU5HX1NUQVRVU19BUFBPSU5URUQQAhIgChxQUk9DRVNTSU5HX1NUQVRVU19URVJNSU5BVEVEEAMSHgoaUFJPQ0VTU0lOR19TVEFUVVNfUkVKRUNURUQQBBIlCiFQUk9DRVNTSU5HX1NUQVRVU19NSVNTSU5HX0xJQ0VOU0UQBSqUAQoPQXBwb2ludG1lbnRUeXBlEiAKHEFQUE9JTlRNRU5UX1RZUEVfVU5TUEVDSUZJRUQQABIdChlBUFBPSU5UTUVOVF9UWVBFX1JFR0lTVFJZEAESHQoZQVBQT0lOVE1FTlRfVFlQRV9VUF9GUk9OVBACEiEKHUFQUE9JTlRNRU5UX1RZUEVfSlVTVF9JTl9USU1FEAMy2QcKEkFwcG9pbnRtZW50U2VydmljZRKFAQoSUmVxdWVzdEFwcG9pbnRtZW50EjYucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlJlcXVlc3RBcHBvaW50bWVudFJlcXVlc3QaNy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUmVxdWVzdEFwcG9pbnRtZW50UmVzcG9uc2USeQoOR2V0QXBwb2ludG1lbnQSMi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRSZXF1ZXN0GjMucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50UmVzcG9uc2USfwoQTGlzdEFwcG9pbnRtZW50cxI0LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0QXBwb2ludG1lbnRzUmVxdWVzdBo1LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0QXBwb2ludG1lbnRzUmVzcG9uc2USiwEKFFRlcm1pbmF0ZUFwcG9pbnRtZW50EjgucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlRlcm1pbmF0ZUFwcG9pbnRtZW50UmVxdWVzdBo5LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGVBcHBvaW50bWVudFJlc3BvbnNlEqABChtDaGVja0FwcG9pbnRtZW50RWxpZ2liaWxpdHkSPy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQ2hlY2tBcHBvaW50bWVudEVsaWdpYmlsaXR5UmVxdWVzdBpALnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5DaGVja0FwcG9pbnRtZW50RWxpZ2liaWxpdHlSZXNwb25zZRKFAQoSR2V0QXBwb2ludG1lbnRGZWVzEjYucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50RmVlc1JlcXVlc3QaNy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRGZWVzUmVzcG9uc2UShQEKEkdldFRlcm1pbmF0aW9uRmVlcxI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRUZXJtaW5hdGlvbkZlZXNSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldFRlcm1pbmF0aW9uRmVlc1Jlc3BvbnNlQpcCCh9jb20ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxQhBBcHBvaW50bWVudFByb3RvUAFaVGdpdGh1Yi5jb20vYWdlbnRlcm8vcHJvZHVjZXJmbG93YXBpL2dlbi9nby9wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjE7YXBwb2ludG1lbnR2MaICA1BBWKoCG1Byb2R1Y2VyZmxvdy5BcHBvaW50bWVudC5WMcoCG1Byb2R1Y2VyZmxvd1xBcHBvaW50bWVudFxWMeICJ1Byb2R1Y2VyZmxvd1xBcHBvaW50bWVudFxWMVxHUEJNZXRhZGF0YeoCHVByb2R1Y2VyZmxvdzo6QXBwb2ludG1lbnQ6OlYxYgZwcm90bzM", [file_buf_validate_validate, file_google_protobuf_timestamp]);
+  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSI4ChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAEinAEKGlJlcXVlc3RBcHBvaW50bWVudFJlc3BvbnNlEhYKDmFwcG9pbnRtZW50X2lkGAEgASgJEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAIgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYAyADKAkiOAoVR2V0QXBwb2ludG1lbnRSZXF1ZXN0Eh8KDmFwcG9pbnRtZW50X2lkGAEgASgJQge6SARyAhABIlcKFkdldEFwcG9pbnRtZW50UmVzcG9uc2USPQoLYXBwb2ludG1lbnQYASABKAsyKC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnQilQEKF0xpc3RBcHBvaW50bWVudHNSZXF1ZXN0EkgKEXByb2Nlc3Npbmdfc3RhdHVzGAEgAygOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoJcGFnZV9zaXplGAIgASgFQgm6SAYaBBhkKAESEgoKcGFnZV90b2tlbhgDIAEoCSJzChhMaXN0QXBwb2ludG1lbnRzUmVzcG9uc2USPgoMYXBwb2ludG1lbnRzGAEgAygLMigucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkFwcG9pbnRtZW50EhcKD25leHRfcGFnZV90b2tlbhgCIAEoCSJXChtUZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAESFwoGcmVhc29uGAIgASgJQge6SARyAhABIi8KHFRlcm1pbmF0ZUFwcG9pbnRtZW50UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCCJxChtMaXN0RWxpZ2libGVMaWNlbnNlc1JlcXVlc3QSHwoLcHJvZHVjZXJfaWQYASABKAlCCLpIBXIDsAEBSAASHQoJYWdlbmN5X2lkGAIgASgJQgi6SAVyA7ABAUgAQhIKCWFwcGxpY2FudBIFukgCCAEiVgocTGlzdEVsaWdpYmxlTGljZW5zZXNSZXNwb25zZRI2CghsaWNlbnNlcxgBIAMoCzIkLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaWNlbnNlIjwKGUdldEFwcG9pbnRtZW50RmVlc1JlcXVlc3QSHwoObGljZW5zZV9udW1iZXIYASABKAlCB7pIBHICEAEiMgoaR2V0QXBwb2ludG1lbnRGZWVzUmVzcG9uc2USFAoMZmVlX2luX2NlbnRzGAEgASgDIjwKGUdldFRlcm1pbmF0aW9uRmVlc1JlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAEiMgoaR2V0VGVybWluYXRpb25GZWVzUmVzcG9uc2USFAoMZmVlX2luX2NlbnRzGAEgASgDIo4ECgtBcHBvaW50bWVudBIWCg5hcHBvaW50bWVudF9pZBgBIAEoCRI1CgdsaWNlbnNlGAIgASgLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2USRgoQYXBwb2ludG1lbnRfdHlwZRgEIAEoDjIsLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudFR5cGUSSgoSZWxpZ2liaWxpdHlfc3RhdHVzGAUgASgOMi4ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkVsaWdpYmlsaXR5U3RhdHVzEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAYgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYByADKAkSEAoIY29tbWVudHMYCCABKAkSIAoYYXBwb2ludG1lbnRfZmVlX2luX2NlbnRzGAkgASgDEiAKGHRlcm1pbmF0aW9uX2ZlZV9pbl9jZW50cxgKIAEoAxIuCgpjcmVhdGVkX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAwgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKsAQoHTGljZW5zZRISCgpsaWNlbnNlX2lkGAEgASgJEhYKDmxpY2Vuc2VfbnVtYmVyGAIgASgJEh8KC3Byb2R1Y2VyX2lkGAMgASgJQgi6SAVyA7ABAUgAEh0KCWFnZW5jeV9pZBgEIAEoCUIIukgFcgOwAQFIABINCgVzdGF0ZRgFIAEoCRIVCg1saWNlbnNlX2NsYXNzGAYgASgJQg8KDWxpY2Vuc2Vfb3duZXIqewoRRWxpZ2liaWxpdHlTdGF0dXMSIgoeRUxJR0lCSUxJVFlfU1RBVFVTX1VOU1BFQ0lGSUVEEAASHwobRUxJR0lCSUxJVFlfU1RBVFVTX0VMSUdJQkxFEAESIQodRUxJR0lCSUxJVFlfU1RBVFVTX0lORUxJR0lCTEUQAiriAQoQUHJvY2Vzc2luZ1N0YXR1cxIhCh1QUk9DRVNTSU5HX1NUQVRVU19VTlNQRUNJRklFRBAAEiEKHVBST0NFU1NJTkdfU1RBVFVTX0lOX1BST0dSRVNTEAESHwobUFJPQ0VTU0lOR19TVEFUVVNfQVBQT0lOVEVEEAISIAocUFJPQ0VTU0lOR19TVEFUVVNfVEVSTUlOQVRFRBADEh4KGlBST0NFU1NJTkdfU1RBVFVTX1JFSkVDVEVEEAQSJQohUFJPQ0VTU0lOR19TVEFUVVNfTUlTU0lOR19MSUNFTlNFEAUqlAEKD0FwcG9pbnRtZW50VHlwZRIgChxBUFBPSU5UTUVOVF9UWVBFX1VOU1BFQ0lGSUVEEAASHQoZQVBQT0lOVE1FTlRfVFlQRV9SRUdJU1RSWRABEh0KGUFQUE9JTlRNRU5UX1RZUEVfVVBfRlJPTlQQAhIhCh1BUFBPSU5UTUVOVF9UWVBFX0pVU1RfSU5fVElNRRADMsQHChJBcHBvaW50bWVudFNlcnZpY2UShQEKElJlcXVlc3RBcHBvaW50bWVudBI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5SZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlJlcXVlc3RBcHBvaW50bWVudFJlc3BvbnNlEnkKDkdldEFwcG9pbnRtZW50EjIucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50UmVxdWVzdBozLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudFJlc3BvbnNlEn8KEExpc3RBcHBvaW50bWVudHMSNC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QaNS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1Jlc3BvbnNlEosBChRUZXJtaW5hdGVBcHBvaW50bWVudBI4LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QaOS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZRKLAQoUTGlzdEVsaWdpYmxlTGljZW5zZXMSOC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEVsaWdpYmxlTGljZW5zZXNSZXF1ZXN0GjkucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RFbGlnaWJsZUxpY2Vuc2VzUmVzcG9uc2UShQEKEkdldEFwcG9pbnRtZW50RmVlcxI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudEZlZXNSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50RmVlc1Jlc3BvbnNlEoUBChJHZXRUZXJtaW5hdGlvbkZlZXMSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0VGVybWluYXRpb25GZWVzUmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRUZXJtaW5hdGlvbkZlZXNSZXNwb25zZUKXAgofY29tLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MUIQQXBwb2ludG1lbnRQcm90b1ABWlRnaXRodWIuY29tL2FnZW50ZXJvL3Byb2R1Y2VyZmxvd2FwaS9nZW4vZ28vcHJvZHVjZXJmbG93L2FwcG9pbnRtZW50L3YxO2FwcG9pbnRtZW50djGiAgNQQViqAhtQcm9kdWNlcmZsb3cuQXBwb2ludG1lbnQuVjHKAhtQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjHiAidQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjFcR1BCTWV0YWRhdGHqAh1Qcm9kdWNlcmZsb3c6OkFwcG9pbnRtZW50OjpWMWIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp]);
 
 /**
  * Request to create a new appointment.
@@ -22,11 +22,11 @@ export const file_producerflow_appointment_v1_appointment: GenFile = /*@__PURE__
  */
 export type RequestAppointmentRequest = Message<"producerflow.appointment.v1.RequestAppointmentRequest"> & {
   /**
-   * Required. License number to appoint.
+   * Required. The ID of the license to appoint.
    *
-   * @generated from field: string license_number = 1;
+   * @generated from field: string license_id = 1;
    */
-  licenseNumber: string;
+  licenseId: string;
 };
 
 /**
@@ -218,43 +218,55 @@ export const TerminateAppointmentResponseSchema: GenMessage<TerminateAppointment
   messageDesc(file_producerflow_appointment_v1_appointment, 7);
 
 /**
- * Request to check appointment eligibility for a license.
+ * Request to retrieve a list of licenses that are eligible to be appointed.
  *
- * @generated from message producerflow.appointment.v1.CheckAppointmentEligibilityRequest
+ * @generated from message producerflow.appointment.v1.ListEligibleLicensesRequest
  */
-export type CheckAppointmentEligibilityRequest = Message<"producerflow.appointment.v1.CheckAppointmentEligibilityRequest"> & {
+export type ListEligibleLicensesRequest = Message<"producerflow.appointment.v1.ListEligibleLicensesRequest"> & {
   /**
-   * Required. License number to check.
+   * The applicant is the producer or agency with licenses eligible to be appointed.
    *
-   * @generated from field: string license_number = 1;
+   * @generated from oneof producerflow.appointment.v1.ListEligibleLicensesRequest.applicant
    */
-  licenseNumber: string;
+  applicant: {
+    /**
+     * @generated from field: string producer_id = 1;
+     */
+    value: string;
+    case: "producerId";
+  } | {
+    /**
+     * @generated from field: string agency_id = 2;
+     */
+    value: string;
+    case: "agencyId";
+  } | { case: undefined; value?: undefined };
 };
 
 /**
- * Describes the message producerflow.appointment.v1.CheckAppointmentEligibilityRequest.
- * Use `create(CheckAppointmentEligibilityRequestSchema)` to create a new message.
+ * Describes the message producerflow.appointment.v1.ListEligibleLicensesRequest.
+ * Use `create(ListEligibleLicensesRequestSchema)` to create a new message.
  */
-export const CheckAppointmentEligibilityRequestSchema: GenMessage<CheckAppointmentEligibilityRequest> = /*@__PURE__*/
+export const ListEligibleLicensesRequestSchema: GenMessage<ListEligibleLicensesRequest> = /*@__PURE__*/
   messageDesc(file_producerflow_appointment_v1_appointment, 8);
 
 /**
- * @generated from message producerflow.appointment.v1.CheckAppointmentEligibilityResponse
+ * @generated from message producerflow.appointment.v1.ListEligibleLicensesResponse
  */
-export type CheckAppointmentEligibilityResponse = Message<"producerflow.appointment.v1.CheckAppointmentEligibilityResponse"> & {
+export type ListEligibleLicensesResponse = Message<"producerflow.appointment.v1.ListEligibleLicensesResponse"> & {
   /**
-   * If not eligible, reasons will be returned.
+   * List of licenses that are eligible to be appointed.
    *
-   * @generated from field: repeated string not_eligible_reasons = 1;
+   * @generated from field: repeated producerflow.appointment.v1.License licenses = 1;
    */
-  notEligibleReasons: string[];
+  licenses: License[];
 };
 
 /**
- * Describes the message producerflow.appointment.v1.CheckAppointmentEligibilityResponse.
- * Use `create(CheckAppointmentEligibilityResponseSchema)` to create a new message.
+ * Describes the message producerflow.appointment.v1.ListEligibleLicensesResponse.
+ * Use `create(ListEligibleLicensesResponseSchema)` to create a new message.
  */
-export const CheckAppointmentEligibilityResponseSchema: GenMessage<CheckAppointmentEligibilityResponse> = /*@__PURE__*/
+export const ListEligibleLicensesResponseSchema: GenMessage<ListEligibleLicensesResponse> = /*@__PURE__*/
   messageDesc(file_producerflow_appointment_v1_appointment, 9);
 
 /**
@@ -351,72 +363,72 @@ export type Appointment = Message<"producerflow.appointment.v1.Appointment"> & {
   appointmentId: string;
 
   /**
-   * The license number associated with the appointment.
+   * The license number of the license being appointed.
    *
-   * @generated from field: string license_number = 2;
+   * @generated from field: producerflow.appointment.v1.License license = 2;
    */
-  licenseNumber: string;
+  license?: License;
 
   /**
    * Type of appointment (e.g., up-front, registry).
    *
-   * @generated from field: producerflow.appointment.v1.AppointmentType appointment_type = 3;
+   * @generated from field: producerflow.appointment.v1.AppointmentType appointment_type = 4;
    */
   appointmentType: AppointmentType;
 
   /**
    * Eligibility status of the appointment (e.g., eligible, ineligible).
    *
-   * @generated from field: producerflow.appointment.v1.EligibilityStatus eligibility_status = 4;
+   * @generated from field: producerflow.appointment.v1.EligibilityStatus eligibility_status = 5;
    */
   eligibilityStatus: EligibilityStatus;
 
   /**
    * Processing status of the appointment (e.g., in progress, appointed).
    *
-   * @generated from field: producerflow.appointment.v1.ProcessingStatus processing_status = 5;
+   * @generated from field: producerflow.appointment.v1.ProcessingStatus processing_status = 6;
    */
   processingStatus: ProcessingStatus;
 
   /**
    * If ineligible or rejected, reasons will be listed here.
    *
-   * @generated from field: repeated string not_eligible_reasons = 6;
+   * @generated from field: repeated string not_eligible_reasons = 7;
    */
   notEligibleReasons: string[];
 
   /**
    * Optional comments or notes related to the appointment.
    *
-   * @generated from field: string comments = 7;
+   * @generated from field: string comments = 8;
    */
   comments: string;
 
   /**
    * Total appointment fee in cents.
    *
-   * @generated from field: int64 appointment_fee_in_cents = 8;
+   * @generated from field: int64 appointment_fee_in_cents = 9;
    */
   appointmentFeeInCents: bigint;
 
   /**
    * Total termination fee in cents, if terminated or eligible for termination.
    *
-   * @generated from field: int64 termination_fee_in_cents = 9;
+   * @generated from field: int64 termination_fee_in_cents = 10;
    */
   terminationFeeInCents: bigint;
 
   /**
    * Timestamp when the appointment was created.
    *
-   * @generated from field: google.protobuf.Timestamp created_at = 10;
+   * @generated from field: google.protobuf.Timestamp created_at = 11;
    */
   createdAt?: Timestamp;
 
   /**
    * Timestamp of the last update to the appointment.
    *
-   * @generated from field: google.protobuf.Timestamp updated_at = 11;
+   * @generated from field: google.protobuf.Timestamp updated_at = 12;
    */
   updatedAt?: Timestamp;
 };
@@ -427,6 +439,65 @@ export type Appointment = Message<"producerflow.appointment.v1.Appointment"> & {
  */
 export const AppointmentSchema: GenMessage<Appointment> = /*@__PURE__*/
   messageDesc(file_producerflow_appointment_v1_appointment, 14);
+
+/**
+ * @generated from message producerflow.appointment.v1.License
+ */
+export type License = Message<"producerflow.appointment.v1.License"> & {
+  /**
+   * The ID of the license.
+   *
+   * @generated from field: string license_id = 1;
+   */
+  licenseId: string;
+
+  /**
+   * The license number.
+   *
+   * @generated from field: string license_number = 2;
+   */
+  licenseNumber: string;
+
+  /**
+   * The owner of the license, it can be an agency or a producer.
+   *
+   * @generated from oneof producerflow.appointment.v1.License.license_owner
+   */
+  licenseOwner: {
+    /**
+     * @generated from field: string producer_id = 3;
+     */
+    value: string;
+    case: "producerId";
+  } | {
+    /**
+     * @generated from field: string agency_id = 4;
+     */
+    value: string;
+    case: "agencyId";
+  } | { case: undefined; value?: undefined };
+
+  /**
+   * The two-letter state code of the license.
+   *
+   * @generated from field: string state = 5;
+   */
+  state: string;
+
+  /**
+   * The license class.
+   *
+   * @generated from field: string license_class = 6;
+   */
+  licenseClass: string;
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.License.
+ * Use `create(LicenseSchema)` to create a new message.
+ */
+export const LicenseSchema: GenMessage<License> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 15);
 
 /**
  * Eligibility status of the appointment.
@@ -551,8 +622,10 @@ export const AppointmentTypeSchema: GenEnum<AppointmentType> = /*@__PURE__*/
  */
 export const AppointmentService: GenService<{
   /**
-   * Requests a new appointment for the specified license number.
-   * The caller must verify that the license and the producer are eligible for appointment.
+   * Requests a new appointment for a license that is eligible to be appointed. The simpler way
+   * to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
+   * appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+   *
    * If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
    * If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
    *
@@ -594,15 +667,14 @@ export const AppointmentService: GenService<{
     output: typeof TerminateAppointmentResponseSchema;
   },
   /**
-   * Checks whether a license is eligible for appointment.
-   * If not eligible, a list of reasons is provided.
+   * Returns a list of licenses that are eligible to be appointed.
    *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.CheckAppointmentEligibility
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListEligibleLicenses
    */
-  checkAppointmentEligibility: {
+  listEligibleLicenses: {
     methodKind: "unary";
-    input: typeof CheckAppointmentEligibilityRequestSchema;
-    output: typeof CheckAppointmentEligibilityResponseSchema;
+    input: typeof ListEligibleLicensesRequestSchema;
+    output: typeof ListEligibleLicensesResponseSchema;
   },
   /**
    * Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
