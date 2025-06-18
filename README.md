@@ -159,7 +159,7 @@ For technical support, integration assistance, or general inquiries:
 
 **Email**: [support@producerflow.com](mailto:support@producerflow.com)
 
-**Documentation**: Visit our [comprehensive documentation](docs/) for detailed guides and examples.
+**Documentation**: Visit our [comprehensive documentation](https://github.com/agentero/producerflowapi/wiki) for detailed guides and examples.
 
 ---
 
