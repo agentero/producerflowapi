@@ -33,6 +33,8 @@
   - [8. Error Handling and Troubleshooting](#8-error-handling-and-troubleshooting)
   - [9. Security Considerations](#9-security-considerations)
   - [10. Signature Verification](#10-signature-verification)
+    - [Go example](#go-example)
+    - [TypeScript example](#typescript-example)
   - [11. Frequently Asked Questions](#11-frequently-asked-questions)
 
 ## 1. Introduction
@@ -272,7 +274,83 @@ How It Works:
     - Step 3: Compare the generated hash with the value in the Producerflow-Signature header.
     - Step 4: If the hashes match, the request is verified. If they do not match, reject the request as it may have been tampered with.
 
-Appendix B contains some examples of how to verify request signature.
+### Go example
+
+```go
+package main
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/base64"
+)
+
+// Sign generates a HMAC SHA256 hash using the provided payload and secret.
+func Sign(payload []byte, secret string) string {
+    if secret == "" {
+        return ""
+    }
+    if len(payload) == 0 {
+        return ""
+    }
+
+    s, _ := base64.StdEncoding.DecodeString(secret)
+    sign := hmac.New(sha256.New, s)
+    sign.Write(payload)
+    return base64.StdEncoding.EncodeToString(sign.Sum(nil))
+}
+
+// VerifySignature compares the generated signature with the received signature.
+func VerifySignature(payload []byte, receivedSignature, secret string) bool {
+    computedSignature := Sign(payload, secret)
+    return hmac.Equal([]byte(computedSignature), []byte(receivedSignature))
+}
+```
+
+### TypeScript example
+
+```typescript
+import * as crypto from 'crypto';
+
+/**
+ * Generates an HMAC SHA256 signature using the payload and shared secret.
+ * @param payload - The raw body of the request (as a Buffer).
+ * @param secret - The shared secret from Producerflow portal.
+ * @returns The generated signature as a base64 string.
+ */
+function signPayload(payload: Buffer, secret: string): string {
+  if (!secret || !payload.length) {
+    return '';
+  }
+
+  // Decode the secret from Base64
+  const key = Buffer.from(secret, 'base64');
+  
+  // Create the HMAC-SHA256 hash
+  const hmac = crypto.createHmac('sha256', key);
+  hmac.update(payload);
+  
+  // Return the generated signature in base64 encoding
+  return hmac.digest('base64');
+}
+
+/**
+ * Verifies the incoming request's signature.
+ * @param payload - The raw body of the request (as a Buffer).
+ * @param receivedSignature - The signature received from the request's `X-Signature` header.
+ * @param secret - The shared secret used to verify the signature.
+ * @returns Boolean indicating if the signatures match.
+ */
+function verifySignature(payload: Buffer, receivedSignature: string, secret: string): boolean {
+  const computedSignature = signPayload(payload, secret);
+
+  // Use time-safe comparison to avoid timing attacks
+  return crypto.timingSafeEqual(Buffer.from(computedSignature), Buffer.from(receivedSignature));
+}
+
+```
+
+
 
 ## 11. Frequently Asked Questions
 
