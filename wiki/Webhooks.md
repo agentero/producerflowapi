@@ -14,7 +14,21 @@
     - [Update Events](#update-events)
     - [Resync Events](#resync-events)
   - [6. Webhook Payload](#6-webhook-payload)
+    - [Common Payload Structure](#common-payload-structure)
+    - [Webhook Types and Event Types](#webhook-types-and-event-types)
+      - [Agency Webhooks](#agency-webhooks)
+      - [Producer Webhooks](#producer-webhooks)
+      - [Contact Webhooks](#contact-webhooks)
     - [Key Elements](#key-elements)
+      - [Required Fields](#required-fields)
+      - [Identifier Fields](#identifier-fields)
+      - [Origin Field Values](#origin-field-values)
+    - [Data Sections](#data-sections)
+      - [Agency Data Sections](#agency-data-sections)
+      - [Producer Data Sections](#producer-data-sections)
+      - [Contact Data](#contact-data)
+    - [Schema Validation](#schema-validation)
+    - [Integration Best Practices](#integration-best-practices)
   - [7. Response and Retries](#7-response-and-retries)
   - [8. Error Handling and Troubleshooting](#8-error-handling-and-troubleshooting)
   - [9. Security Considerations](#9-security-considerations)
@@ -70,48 +84,126 @@ To configure the webhook:
 
 ## 6. Webhook Payload
 
-When a change occurs in a producer, an agency or a contact, we will send a request with a JSON in the request body with the new information of the dimension that has changed.
+ProducerFlow delivers real-time notifications for changes to agencies, producers, and contacts through structured webhook payloads. Each webhook contains JSON data that follows our published schemas for validation and documentation purposes.
 
-All messages will include the following common fields giving information about the change
+### Common Payload Structure
 
-    - **id**: this is a unique identifier of the event.
-    - **change_type**: it is the type of change done to the thing. One of “Created", "Updated", "Deleted", “Resync”.
-    - **origin**: what part of Producerflow did the change. One of "API", "Portal", "NIPR".
-    - **timestamp**: when the change happened in Producerflow.
+All webhook payloads share a common base structure with the following fields:
 
-Besides the common fields, and depending on the type of entity that has changed, we will send specific fields describing the entity itself based on the schemas found on the Appendix A of this document.
+```json
+{
+  "id": "chg_123456789",                    // Unique identifier for this change event
+  "event_type": "agency.updated",           // Specific event type (e.g., "agency.updated", "producer.created")
+  "change_type": "Updated",                 // Legacy field: "Created", "Updated", "Deleted", "Resync"
+  "origin": "ProducerFlowAPI",              // Source: "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
+  "timestamp": "2024-03-20T15:30:45Z",      // ISO 8601 datetime when change occurred
+  // ... entity-specific data follows
+}
+```
+
+### Webhook Types and Event Types
+
+#### Agency Webhooks
+
+**Event Types:**
+
+- `agency.created` - New agency record created
+- `agency.updated` - Existing agency record modified  
+- `agency.synced` - Agency data synchronized from NIPR (equivalent to "Resync")
+
+**Schema Reference**: [`webhooks/schema/agency_schema.json`](../webhooks/schema/agency_schema.json)  
+**Example Payload**: [`webhooks/examples/agency_example.json`](../webhooks/examples/agency_example.json)
+
+#### Producer Webhooks
+
+**Event Types:**
+
+- `producer.created` - New producer record created
+- `producer.updated` - Existing producer record modified
+- `producer.synced` - Producer data synchronized from NIPR (equivalent to "Resync")
+
+**Schema Reference**: [`webhooks/schema/producer_schema.json`](../webhooks/schema/producer_schema.json)  
+**Example Payload**: [`webhooks/examples/producer_example.json`](../webhooks/examples/producer_example.json)
+
+#### Contact Webhooks
+
+**Event Types:**
+
+- `contact.created` - New contact record created
+- `contact.updated` - Existing contact record modified
+- `contact.deleted` - Contact record removed
+
+**Schema Reference**: [`webhooks/schema/contact_schema.json`](../webhooks/schema/contact_schema.json)  
+**Example Payload**: [`webhooks/examples/contact_example.json`](../webhooks/examples/contact_example.json)
 
 ### Key Elements
 
-- **Agency Identifier Fields**:
-  - All three types of messages will include an agency_id field. For agency messages, this field identifies the agency itself. For producer and contact messages, it identifies the agency they are associated with.
-  - If available, all three types of messages will include an agency_external_id field. This field represents the agency’s identifier in the tenant system, provided the tenant has supplied it to ProducerFlow.
-- **Producer Identifier Field**:
-  - For producer messages, we will include a producer_external_id field, which represents the producer’s identifier in the tenant system, provided the tenant has supplied it to ProducerFlow.
-- **Origin Field**:
-  - The origin field will indicate the source of the change and will take one of the following values:
-    - ProducerFlowAPI: Changes made using the public API of ProducerFlow, typically by tenant systems or scripts.
-    - ProducerFlowPortal: Changes made in the ProducerFlow Portal, either by a tenant administrator or by an agency user with access to their data in ProducerFlow.
-    - NIPR: Changes originating from NIPR and received by ProducerFlow.
-- **Partial Payloads for Updates**:
-  - To limit the size of the payload, producer and agency events will only contain the information from the section that has undergone the change:
-    - An agency has the following sections:
-      - agency_data:  general agency attributes collected in the Portal
-      - agency_bank_account: bank account information of the agency
-      - agency_eo: details about the agency E&O provided during the onboarding
-      - agency_ivans_account: IVANS account of the agency
-      - agency_address: address of the agency collected in the Portal
-      - agency_nipr_data: agency attributes collected from NIPR
-      - agency_nipr_appointments: agency appointments in NIPR
-      - agency_nipr_licenses: agency licenses in NIPR
-      - agency_nipr_addresses: agency addresses in NIPR
-    - A producer has the following sections:  
-      - producer_data: producer attributes collected in the Portal
-      - accurate_background_check: information provided by Accurate about the background check on the producer, if any
-      - producer_nipr_data: producer attributes collected from NIPR
-      - producer_nipr_appointments: producer appointments in NIPR
-      - producer_nipr_licenses: producer licenses in NIPR
-      - producer_nipr_addresses: producer addresses in NIPR
+#### Required Fields
+
+Each webhook type has specific required fields:
+
+- **Agency**: `id`, `timestamp`, `agency_id`
+- **Producer**: `id`, `timestamp`, `producer_id`  
+- **Contact**: `id`, `timestamp`, `contact_id`
+
+#### Identifier Fields
+
+- **Agency Identifier**: All webhook types include `agency_id`. For agency webhooks, this identifies the agency itself. For producer and contact webhooks, this identifies the associated agency.
+- **External Identifiers**: When available, webhooks include `external_id` fields representing identifiers from your system that you've provided to ProducerFlow.
+- **National Producer Numbers (NPN)**: Included when available for agencies and producers.
+
+#### Origin Field Values
+
+- **ProducerFlowAPI**: Changes made using the public API, typically by your systems or scripts
+- **ProducerFlowPortal**: Changes made through the ProducerFlow web portal by administrators or agency users  
+- **NIPR**: Changes originating from the National Insurance Producer Registry
+
+### Data Sections
+
+#### Agency Data Sections
+
+For update events, only the changed section(s) will be included:
+
+- **`agency_data`**: General agency attributes (name, contact info, website, status)
+- **`agency_address`**: Physical addresses collected in the Portal
+- **`agency_bank_account`**: Bank account information for the agency
+- **`agency_eo`**: Errors & Omissions insurance details
+- **`agency_ivans_account`**: IVANS account configuration (AMS software, version, etc.)
+- **`agency_nipr_data`**: Agency attributes from NIPR
+- **`agency_nipr_appointments`**: Carrier appointments from NIPR
+- **`agency_nipr_licenses`**: License information from NIPR
+- **`agency_nipr_addresses`**: Address information from NIPR
+
+#### Producer Data Sections  
+
+For update events, only the changed section(s) will be included:
+
+- **`producer_data`**: Personal information and contact details
+- **`accurate_background_check`**: Background check results from Accurate Background (when available)
+- **`producer_nipr_data`**: Producer attributes from NIPR
+- **`producer_nipr_appointments`**: Carrier appointments from NIPR
+- **`producer_nipr_licenses`**: License information and Lines of Authority from NIPR
+- **`producer_nipr_addresses`**: Address information from NIPR
+
+#### Contact Data
+
+Contact webhooks contain flattened data including personal information, role, and address details.
+
+### Schema Validation
+
+All webhook payloads conform to JSON Schema Draft 2020-12 specifications. Use the provided schema files in the `webhooks/schema/` directory to:
+
+- Validate incoming webhook payloads
+- Generate types/models for your programming language
+- Understand complete data structures and field requirements
+- Implement proper data validation in your webhook handlers
+
+### Integration Best Practices
+
+1. **Idempotency**: Use the `id` field to handle duplicate webhook deliveries gracefully
+2. **Event Filtering**: Check the `event_type` field to process only relevant events for your use case
+3. **Schema Validation**: Validate all incoming payloads against the provided JSON schemas
+4. **Partial Updates**: For update events, only process the data sections that are present in the payload
 
 ## 7. Response and Retries
 
@@ -152,7 +244,7 @@ To ensure smooth operation:
 
 - Log all incoming Webhook requests and responses.
 - Handle errors gracefully in your system by using appropriate status codes.
-- Check your server’s capacity to process the payload within the given 10-second window.
+- Check your server's capacity to process the payload within the given 10-second window.
 
 Common issues include:
 
@@ -184,7 +276,7 @@ Appendix B contains some examples of how to verify request signature.
 
 ## 11. Frequently Asked Questions
 
-**Q1**: What happens if my Webhook is down during an event?
-**A1**: We will attempt to retry the Webhook call up to 3 times before marking it as undelivered.
-**Q2**: Can I send a delayed response?
-**A2**: Responses must be returned within 10 seconds; otherwise, the request will be considered failed.
+- **Q1**: What happens if my Webhook is down during an event?
+  - **A1**: We will attempt to retry the Webhook call up to 3 times before marking it as undelivered.
+- **Q2**: Can I send a delayed response?
+  - **A2**: Responses must be returned within 10 seconds; otherwise, the request will be considered failed.

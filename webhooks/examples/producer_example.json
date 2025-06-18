@@ -1,0 +1,94 @@
+{
+  "id": "chg_123456789",
+  "event_type": "producer.updated",
+  "change_type": "Updated",
+  "origin": "ProducerFlowAPI",
+  "timestamp": "2024-03-20T15:30:00Z",
+  "producer_id": "prod_987654321",
+  "external_id": "ext_123",
+  "agency_id": "agcy_456789",
+  "external_agency_id": "ext_agcy_789",
+  "npn": "12345678",
+  "accurate_background_check": {
+    "accurate_order_id": "order_abc123",
+    "background_check_passed": true,
+    "background_check_timestamp": "2024-03-19T10:00:00Z"
+  },
+  "producer_data": {
+    "city": "San Francisco",
+    "email": "john.doe@example.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "middle_name": "Robert",
+    "phone": "415-555-0123",
+    "state": "CA",
+    "street": "123 Market Street",
+    "zip": "94105"
+  },
+  "producer_nipr_data": {
+    "birth_date": "1980-01-15",
+    "business_email": "john.doe@business.com",
+    "business_phone": "415-555-0124",
+    "first_name": "John",
+    "last_name": "Doe",
+    "middle_name": "Robert"
+  },
+  "producer_nipr_appointments": [
+    {
+      "carrier_code": "CAR123",
+      "carrier_fein": "12-3456789",
+      "company_name": "Insurance Company ABC",
+      "loa": "Life Insurance",
+      "loa_code": "LI",
+      "state": "CA",
+      "status": "Active",
+      "termination_reason": "",
+      "status_reason_date": "2023-01-01",
+      "renewal_date": "2025-01-01"
+    }
+  ],
+  "producer_nipr_licenses": [
+    {
+      "expiration_date": "2025-12-31",
+      "is_active": true,
+      "issue_date": "2020-01-01",
+      "license_class": "Producer",
+      "license_class_code": "PR",
+      "npn": "12345678",
+      "license_number": "LIC987654",
+      "residency_status": "Resident",
+      "license_state": "CA",
+      "loas": [
+        {
+          "loa": "Life Insurance",
+          "loa_code": "LI",
+          "is_active": true,
+          "status_reason": "Active",
+          "issue_date": "2020-01-01",
+          "status_reason_date": "2020-01-01",
+          "ce_compliance": "Compliant",
+          "ce_renewal_date": "2025-01-01",
+          "ce_credits_needed": "0"
+        }
+      ]
+    }
+  ],
+  "producer_nipr_addresses": [
+    {
+      "address_type": "Business",
+      "city": "San Francisco",
+      "country": "USA",
+      "state": "CA",
+      "street": "123 Market Street",
+      "zip_code": "94105"
+    },
+    {
+      "address_type": "Mailing",
+      "city": "San Francisco",
+      "country": "USA",
+      "state": "CA",
+      "street": "456 Mission Street",
+      "zip_code": "94105"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agency Schema",
+  "description": "Schema for agency changes in Producerflow",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the change"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of event that occurred (e.g., 'agency.updated', 'agency.synced')"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["Created", "Updated", "Deleted"],
+      "description": "Type of change that occurred (deprecated, use event_type instead)"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["ProducerFlowAPI", "ProducerFlowPortal", "NIPR"],
+      "description": "Source of the change"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when the change occurred"
+    },
+    "agency_id": {
+      "type": "string",
+      "description": "Unique identifier for the agency"
+    },
+    "external_id": {
+      "type": "string",
+      "description": "External identifier for the agency"
+    },
+    "fein": {
+      "type": "string",
+      "description": "Federal Employer Identification Number"
+    },
+    "npn": {
+      "type": "string",
+      "description": "National Producer Number"
+    },
+    "agency_data": {
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "fax": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "website": { "type": "string", "format": "uri" }
+      }
+    },
+    "agency_address": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "address_type": { "type": "string" },
+          "street": { "type": "string" },
+          "city": { "type": "string" },
+          "state": { "type": "string" },
+          "zip": { "type": "string" }
+        }
+      }
+    },
+    "agency_bank_account": {
+      "type": "object",
+      "properties": {
+        "bank_account_id": { "type": "string" },
+        "account_number": { "type": "string" },
+        "routing_number": { "type": "string" },
+        "account_type": { "type": "string" },
+        "account_holder_name": { "type": "string" }
+      }
+    },
+    "agency_eo": {
+      "type": "object",
+      "properties": {
+        "carrier": { "type": "string" },
+        "expiration_date": { "type": "string", "format": "date" },
+        "effective_date": { "type": "string", "format": "date" },
+        "coverage_amount": { "type": "string" }
+      }
+    },
+    "agency_ivans_account": {
+      "type": "object",
+      "properties": {
+        "account_number": { "type": "string" },
+        "ams_software": { "type": "string" },
+        "ams_version": { "type": "string" },
+        "mailbox_number": { "type": "string" }
+      }
+    },
+    "agency_nipr_data": {
+      "type": "object",
+      "properties": {
+        "business_email": { "type": "string", "format": "email" },
+        "business_phone": { "type": "string" },
+        "company_name": { "type": "string" },
+        "fein": { "type": "string" },
+        "npn": { "type": "string" }
+      }
+    },
+    "agency_nipr_appointments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "carrier_code": { "type": "string" },
+          "carrier_fein": { "type": "string" },
+          "company_name": { "type": "string" },
+          "loa": { "type": "string" },
+          "loa_code": { "type": "string" },
+          "state": { "type": "string" },
+          "status": { "type": "string" },
+          "termination_reason": { "type": "string" },
+          "status_reason_date": { "type": "string", "format": "date" },
+          "renewal_date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "agency_nipr_licenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expiration_date": { "type": "string", "format": "date" },
+          "is_active": { "type": "boolean" },
+          "issue_date": { "type": "string", "format": "date" },
+          "license_class": { "type": "string" },
+          "license_class_code": { "type": "string" },
+          "npn": { "type": "string" },
+          "license_number": { "type": "string" },
+          "residency_status": { "type": "string" },
+          "license_state": { "type": "string" },
+          "loas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "loa": { "type": "string" },
+                "loa_code": { "type": "string" },
+                "is_active": { "type": "boolean" },
+                "status_reason": { "type": "string" },
+                "issue_date": { "type": "string", "format": "date" },
+                "status_reason_date": { "type": "string", "format": "date" },
+                "ce_compliance": { "type": "string" },
+                "ce_renewal_date": { "type": "string", "format": "date" },
+                "ce_credits_needed": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "agency_nipr_addresses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "address_type": { "type": "string" },
+          "city": { "type": "string" },
+          "country": { "type": "string" },
+          "state": { "type": "string" },
+          "street": { "type": "string" },
+          "zip_code": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["id", "timestamp", "agency_id"],
+  "additionalProperties": false
+}

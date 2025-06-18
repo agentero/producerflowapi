@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProducerChange Schema",
+  "description": "Schema for producer changes in Producerflow",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the change"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of event that occurred (e.g., 'producer.updated', 'producer.synced')"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["Created", "Updated", "Deleted"],
+      "description": "Type of change that occurred (deprecated, use event_type instead)"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["ProducerFlowAPI", "ProducerFlowPortal", "NIPR"],
+      "description": "Source of the change"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the change occurred"
+    },
+    "producer_id": {
+      "type": "string"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "agency_id": {
+      "type": "string",
+      "description": "ID of the agency that the producer belongs to"
+    },
+    "external_agency_id": {
+      "type": "string",
+      "description": "External ID of the agency that the producer belongs to"
+    },
+    "npn": {
+      "type": "string"
+    },
+    "accurate_background_check": {
+      "type": "object",
+      "properties": {
+        "accurate_order_id": {
+          "type": "string"
+        },
+        "background_check_passed": {
+          "type": "boolean"
+        },
+        "background_check_timestamp": {
+          "type": "string"
+        }
+      }
+    },
+    "producer_data": {
+      "type": "object",
+      "properties": {
+        "city": { "type": "string" },
+        "email": { "type": "string" },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "middle_name": { "type": "string" },
+        "phone": { "type": "string" },
+        "state": { "type": "string" },
+        "street": { "type": "string" },
+        "zip": { "type": "string" }
+      }
+    },
+    "producer_nipr_data": {
+      "type": "object",
+      "properties": {
+        "birth_date": { "type": "string", "format": "date" },
+        "business_email": { "type": "string" },
+        "business_phone": { "type": "string" },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "middle_name": { "type": "string" }
+      }
+    },
+    "producer_nipr_appointments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "carrier_code": { "type": "string" },
+          "carrier_fein": { "type": "string" },
+          "company_name": { "type": "string" },
+          "loa": { "type": "string" },
+          "loa_code": { "type": "string" },
+          "state": { "type": "string" },
+          "status": { "type": "string" },
+          "termination_reason": { "type": "string" },
+          "status_reason_date": { "type": "string", "format": "date" },
+          "renewal_date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "producer_nipr_licenses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expiration_date": { "type": "string", "format": "date" },
+          "is_active": { "type": "boolean" },
+          "issue_date": { "type": "string", "format": "date" },
+          "license_class": { "type": "string" },
+          "license_class_code": { "type": "string" },
+          "npn": { "type": "string" },
+          "license_number": { "type": "string" },
+          "residency_status": { "type": "string" },
+          "license_state": { "type": "string" },
+          "loas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "loa": { "type": "string" },
+                "loa_code": { "type": "string" },
+                "is_active": { "type": "boolean" },
+                "status_reason": { "type": "string" },
+                "issue_date": { "type": "string", "format": "date" },
+                "status_reason_date": { "type": "string", "format": "date" },
+                "ce_compliance": { "type": "string" },
+                "ce_renewal_date": { "type": "string", "format": "date" },
+                "ce_credits_needed": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "producer_nipr_addresses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "address_type": { "type": "string" },
+          "city": { "type": "string" },
+          "country": { "type": "string" },
+          "state": { "type": "string" },
+          "street": { "type": "string" },
+          "zip_code": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["id", "timestamp", "producer_id"],
+  "additionalProperties": false
+}

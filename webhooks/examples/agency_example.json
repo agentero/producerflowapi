@@ -1,0 +1,112 @@
+{
+  "id": "chg_123456789",
+  "event_type": "agency.updated",
+  "change_type": "Updated",
+  "origin": "ProducerFlowAPI",
+  "timestamp": "2024-03-20T15:30:45Z",
+  "agency_id": "agc_987654321",
+  "external_id": "ext_123",
+  "fein": "12-3456789",
+  "npn": "1234567",
+
+  "agency_data": {
+    "email": "contact@insuranceagency.com",
+    "fax": "555-123-4567",
+    "name": "Premier Insurance Agency LLC",
+    "phone": "555-987-6543",
+    "status": "Active",
+    "website": "www.premierinsurance.com"
+  },
+
+  "agency_address": [
+    {
+      "address_type": "Business",
+      "street": "123 Insurance Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    }
+  ],
+
+  "agency_bank_account": {
+    "bank_account_id": "ba_123456",
+    "account_number": "****4321",
+    "routing_number": "071000013",
+    "account_type": "Checking",
+    "account_holder_name": "Premier Insurance Agency LLC"
+  },
+
+  "agency_eo": {
+    "carrier": "Professional Coverage Corp",
+    "expiration_date": "2025-12-31",
+    "effective_date": "2024-01-01",
+    "coverage_amount": "1000000"
+  },
+
+  "agency_ivans_account": {
+    "account_number": "IV123456",
+    "ams_software": "Applied Epic",
+    "ams_version": "2024.1",
+    "mailbox_number": "MB789"
+  },
+
+  "agency_nipr_data": {
+    "business_email": "licensing@insuranceagency.com",
+    "business_phone": "555-999-8888",
+    "company_name": "Premier Insurance Agency LLC",
+    "fein": "12-3456789",
+    "npn": "1234567"
+  },
+
+  "agency_nipr_appointments": [
+    {
+      "carrier_code": "12345",
+      "carrier_fein": "98-7654321",
+      "company_name": "Big Insurance Co",
+      "loa": "Property and Casualty",
+      "loa_code": "PC",
+      "state": "IL",
+      "status": "Active",
+      "status_reason_date": "2024-01-01",
+      "renewal_date": "2025-01-01"
+    }
+  ],
+
+  "agency_nipr_licenses": [
+    {
+      "expiration_date": "2025-12-31",
+      "is_active": true,
+      "issue_date": "2024-01-01",
+      "license_class": "Producer",
+      "license_class_code": "PR",
+      "npn": "1234567",
+      "license_number": "987654",
+      "residency_status": "Resident",
+      "license_state": "IL",
+      "loas": [
+        {
+          "loa": "Life Insurance",
+          "loa_code": "LI",
+          "is_active": true,
+          "status_reason": "Active",
+          "issue_date": "2020-01-01",
+          "status_reason_date": "2020-01-01",
+          "ce_compliance": "Compliant",
+          "ce_renewal_date": "2025-01-01",
+          "ce_credits_needed": "0"
+        }
+      ]
+    }
+  ],
+
+  "agency_nipr_addresses": [
+    {
+      "address_type": "Business",
+      "city": "Chicago",
+      "country": "USA",
+      "state": "IL",
+      "street": "123 Insurance Ave",
+      "zip_code": "60601"
+    }
+  ]
+}
