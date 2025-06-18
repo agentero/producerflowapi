@@ -5,9 +5,14 @@ on:
     branches: [ main ]
     paths:
       - 'gen/ts/**'
+      - 'package-lock.json'
+      - 'package.json'
   pull_request:
+    branches: [main]
     paths:
       - 'gen/ts/**'
+      - 'package-lock.json'
+      - 'package.json'
   workflow_dispatch:
 
 env:
