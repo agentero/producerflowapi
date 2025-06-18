@@ -186,7 +186,7 @@ In cases of security vulnerabilities or critical issues:
 
 For questions about deprecations:
 
-- **Email**: `support@agentero.com`
+- **Email**: `support@producerflow.com`
 
 ---
 

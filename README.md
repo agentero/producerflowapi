@@ -57,7 +57,7 @@ To get started with the Producerflow API, you'll need to generate an API token:
 3. Generate a new API key with appropriate expiration date.
 4. Securely store your API key for use in API requests.
 
-For detailed API documentation and examples, visit our [comprehensive API documentation](docs/).
+For detailed API documentation and examples, visit our [comprehensive API documentation](https://github.com/agentero/producerflowapi/wiki).
 
 ## Installation & Usage
 
@@ -147,7 +147,7 @@ For languages not officially supported by this monorepo, refer to the [Buf docum
 
 For security concerns, vulnerability reporting, and our comprehensive security policies, please see our [Security Policy](SECURITY.md).
 
-For immediate security issues, contact: [support@agentero.com](mailto:support@agentero.com)
+For immediate security issues, contact: [support@producerflow.com](mailto:support@producerflow.com)
 
 ## Deprecation Policy
 
@@ -157,7 +157,7 @@ This API follows a structured deprecation approach to ensure backward compatibil
 
 For technical support, integration assistance, or general inquiries:
 
-**Email**: [support@agentero.com](mailto:support@agentero.com)
+**Email**: [support@producerflow.com](mailto:support@producerflow.com)
 
 **Documentation**: Visit our [comprehensive documentation](docs/) for detailed guides and examples.
 
