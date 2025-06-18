@@ -256,9 +256,10 @@ Common issues include:
 ## 9. Security Considerations
 
 To ensure secure communication and data protection, we expect the following measures:
-    - **HTTPS Only**: Use SSL/TLS-encrypted endpoints to secure data transmission and prevent eavesdropping.
-    - **Signature Verification**: Implement HMAC-based signature verification using the shared secret that you can find in the Producerflow portal to authenticate the integrity of incoming requests.
-    - **IP Whitelisting** (optional): Restrict incoming requests to trusted IP addresses from our infrastructure to further enhance security.
+
+1. **HTTPS Only**: Use SSL/TLS-encrypted endpoints to secure data transmission and prevent eavesdropping.
+2. **Signature Verification**: Implement HMAC-based signature verification using the shared secret that you can find in the Producerflow portal to authenticate the integrity of incoming requests.
+3. **IP Whitelisting** (optional): Restrict incoming requests to trusted IP addresses from our infrastructure to further enhance security.
 
 ## 10. Signature Verification
 

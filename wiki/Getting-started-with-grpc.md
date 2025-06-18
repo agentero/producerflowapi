@@ -39,13 +39,9 @@ Using these SDKs provides several benefits:
 
 For Go developers, we provide a generated SDK that makes it easy to integrate with our services.
 
-To get started with the Go SDK, follow our [detailed guide](./getting-started-go-sdk.md).
-
 ## TypeScript SDK
 
 For TypeScript and JavaScript developers, we offer a generated SDK for both browser and Node.js environments.
-
-To get started with the TypeScript SDK, follow our [detailed guide](./getting-started-typescript-sdk.md).
 
 ## Additional Language Support
 
