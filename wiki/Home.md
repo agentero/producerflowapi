@@ -14,16 +14,16 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
 
 ### Quick Start
 
-- [🚀 Getting Started with gRPC](Getting-started-with-grpc.md) - Complete guide to using our gRPC API
-- [🔐 Authentication](Authentication.md) - How to obtain and use API keys
+- [🚀 Getting Started with gRPC](https://github.com/agentero/producerflowapi/wiki/Getting-started-with-grpc) - Complete guide to using our gRPC API
+- [🔐 Authentication](https://github.com/agentero/producerflowapi/wiki/Authentication) - How to obtain and use API keys
 
 ### Core Documentation
 
 #### API Reference
 
-- [📖 API Reference](API-Reference.md) - Complete protocol documentation
-  - [Appointment Service](API-Reference.md#producerflow-appointment-v1-appointment-proto)
-  - [Producer Service](API-Reference.md#producerflow-producer-v1-producer-proto)
+- [📖 API Reference](https://github.com/agentero/producerflowapi/wiki/API-Reference) - Complete protocol documentation
+  - [Appointment Service](https://github.com/agentero/producerflowapi/wiki/API-Reference#producerflow-appointment-v1-appointment-proto)
+  - [Producer Service](https://github.com/agentero/producerflowapi/wiki/API-Reference#producerflow-producer-v1-producer-proto)
 
 #### Schema & Data Models
 
@@ -31,17 +31,17 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
 
 #### Webhooks & Real-time Updates
 
-- [🔔 Webhooks](Webhooks.md) - Real-time notifications and event handling
-  - [Webhook Integration Overview](Webhooks.md#3-webhook-integration-overview)
-  - [Event Types & Mechanics](Webhooks.md#5-event-mechanics-and-types)
-  - [Payload Structure](Webhooks.md#6-webhook-payload)
+- [🔔 Webhooks](https://github.com/agentero/producerflowapi/wiki/Webhooks) - Real-time notifications and event handling
+  - [Webhook Integration Overview](https://github.com/agentero/producerflowapi/wiki/Webhooks#3-webhook-integration-overview)
+  - [Event Types & Mechanics](https://github.com/agentero/producerflowapi/wiki/Webhooks#5-event-mechanics-and-types)
+  - [Payload Structure](https://github.com/agentero/producerflowapi/wiki/Webhooks#6-webhook-payload)
   - [Security & Signature Verification](Webhooks.md#10-signature-verification)
 
 ---
 
 ## Detailed Documentation
 
-### [🚀 Getting Started with gRPC](Getting-started-with-grpc.md)
+### [🚀 Getting Started with gRPC](https://github.com/agentero/producerflowapi/wiki/Getting-started-with-grpc)
 
 - **Overview** - gRPC API introduction
 - **Connect** - Multi-protocol support
@@ -52,7 +52,7 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
 - **TypeScript SDK** - Getting started with TypeScript/JavaScript
 - **Additional Language Support** - Other language options
 
-### [🔐 Authentication](Authentication.md)
+### [🔐 Authentication](https://github.com/agentero/producerflowapi/wiki/Authentication)
 
 - **Obtaining an API Key** - Step-by-step guide
 - **Using API Keys in Go** - Go implementation examples
@@ -62,13 +62,13 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
   - For Browser Environments
 - **Security Best Practices** - API key security guidelines
 
-### [📋 gRPC Schema](Schema.md)
+### [📋 gRPC Schema](https://github.com/agentero/producerflowapi/wiki/Schema)
 
 - Protocol Buffer schema definitions
 - Buf Studio access for interactive exploration
 - Message and service documentation
 
-### [🔔 Webhooks](Webhooks.md)
+### [🔔 Webhooks](https://github.com/agentero/producerflowapi/wiki/Webhooks)
 
 - **Introduction** - Webhook overview
 - **System Overview** - How webhooks work
@@ -101,7 +101,7 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
 - **Signature Verification** - Verifying webhook authenticity
 - **Frequently Asked Questions** - Common questions and answers
 
-### [📖 API Reference](API-Reference.md)
+### [📖 API Reference](https://github.com/agentero/producerflowapi/wiki/API-Reference)
 
 Complete protocol documentation with detailed message definitions:
 
