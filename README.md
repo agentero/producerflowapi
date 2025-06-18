@@ -108,7 +108,7 @@ For other languages, use the Protocol Buffer definitions in `producerflow/` with
 - **API Definitions**: Start with `producerflow/producer/v1/producer.proto`
 - **Go Integration**: Use code in `gen/go/` directory
 - **TypeScript Integration**: Use code in `gen/ts/` directory
-- **Documentation**: Reference `docs/` for detailed API guides
+- **Documentation**: Reference [comprehensive documentation](https://github.com/agentero/producerflowapi/wiki) for detailed API guides
 
 ## Build/Generation Instructions
 
