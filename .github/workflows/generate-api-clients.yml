@@ -1,7 +1,7 @@
 name: "Generate Producerflow API client libraries"
 on:
   push:
-    branches-ignore: [main]
+    branches: [main]
     paths: [buf.yaml, buf.gen.yaml, producerflow/**]
   workflow_dispatch:
 concurrency:
