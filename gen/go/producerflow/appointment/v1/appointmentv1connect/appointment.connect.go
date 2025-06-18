@@ -45,9 +45,9 @@ const (
 	// AppointmentServiceTerminateAppointmentProcedure is the fully-qualified name of the
 	// AppointmentService's TerminateAppointment RPC.
 	AppointmentServiceTerminateAppointmentProcedure = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
-	// AppointmentServiceCheckAppointmentEligibilityProcedure is the fully-qualified name of the
-	// AppointmentService's CheckAppointmentEligibility RPC.
-	AppointmentServiceCheckAppointmentEligibilityProcedure = "/producerflow.appointment.v1.AppointmentService/CheckAppointmentEligibility"
+	// AppointmentServiceListEligibleLicensesProcedure is the fully-qualified name of the
+	// AppointmentService's ListEligibleLicenses RPC.
+	AppointmentServiceListEligibleLicensesProcedure = "/producerflow.appointment.v1.AppointmentService/ListEligibleLicenses"
 	// AppointmentServiceGetAppointmentFeesProcedure is the fully-qualified name of the
 	// AppointmentService's GetAppointmentFees RPC.
 	AppointmentServiceGetAppointmentFeesProcedure = "/producerflow.appointment.v1.AppointmentService/GetAppointmentFees"
@@ -59,8 +59,10 @@ const (
 // AppointmentServiceClient is a client for the producerflow.appointment.v1.AppointmentService
 // service.
 type AppointmentServiceClient interface {
-	// Requests a new appointment for the specified license number.
-	// The caller must verify that the license and the producer are eligible for appointment.
+	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
+	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
+	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+	//
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(context.Context, *connect.Request[v1.RequestAppointmentRequest]) (*connect.Response[v1.RequestAppointmentResponse], error)
@@ -70,9 +72,8 @@ type AppointmentServiceClient interface {
 	ListAppointments(context.Context, *connect.Request[v1.ListAppointmentsRequest]) (*connect.Response[v1.ListAppointmentsResponse], error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(context.Context, *connect.Request[v1.TerminateAppointmentRequest]) (*connect.Response[v1.TerminateAppointmentResponse], error)
-	// Checks whether a license is eligible for appointment.
-	// If not eligible, a list of reasons is provided.
-	CheckAppointmentEligibility(context.Context, *connect.Request[v1.CheckAppointmentEligibilityRequest]) (*connect.Response[v1.CheckAppointmentEligibilityResponse], error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(context.Context, *connect.Request[v1.ListEligibleLicensesRequest]) (*connect.Response[v1.ListEligibleLicensesResponse], error)
 	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
@@ -117,10 +118,10 @@ func NewAppointmentServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			connect.WithSchema(appointmentServiceMethods.ByName("TerminateAppointment")),
 			connect.WithClientOptions(opts...),
 		),
-		checkAppointmentEligibility: connect.NewClient[v1.CheckAppointmentEligibilityRequest, v1.CheckAppointmentEligibilityResponse](
+		listEligibleLicenses: connect.NewClient[v1.ListEligibleLicensesRequest, v1.ListEligibleLicensesResponse](
 			httpClient,
-			baseURL+AppointmentServiceCheckAppointmentEligibilityProcedure,
-			connect.WithSchema(appointmentServiceMethods.ByName("CheckAppointmentEligibility")),
+			baseURL+AppointmentServiceListEligibleLicensesProcedure,
+			connect.WithSchema(appointmentServiceMethods.ByName("ListEligibleLicenses")),
 			connect.WithClientOptions(opts...),
 		),
 		getAppointmentFees: connect.NewClient[v1.GetAppointmentFeesRequest, v1.GetAppointmentFeesResponse](
@@ -140,13 +141,13 @@ func NewAppointmentServiceClient(httpClient connect.HTTPClient, baseURL string, 
 
 // appointmentServiceClient implements AppointmentServiceClient.
 type appointmentServiceClient struct {
-	requestAppointment          *connect.Client[v1.RequestAppointmentRequest, v1.RequestAppointmentResponse]
-	getAppointment              *connect.Client[v1.GetAppointmentRequest, v1.GetAppointmentResponse]
-	listAppointments            *connect.Client[v1.ListAppointmentsRequest, v1.ListAppointmentsResponse]
-	terminateAppointment        *connect.Client[v1.TerminateAppointmentRequest, v1.TerminateAppointmentResponse]
-	checkAppointmentEligibility *connect.Client[v1.CheckAppointmentEligibilityRequest, v1.CheckAppointmentEligibilityResponse]
-	getAppointmentFees          *connect.Client[v1.GetAppointmentFeesRequest, v1.GetAppointmentFeesResponse]
-	getTerminationFees          *connect.Client[v1.GetTerminationFeesRequest, v1.GetTerminationFeesResponse]
+	requestAppointment   *connect.Client[v1.RequestAppointmentRequest, v1.RequestAppointmentResponse]
+	getAppointment       *connect.Client[v1.GetAppointmentRequest, v1.GetAppointmentResponse]
+	listAppointments     *connect.Client[v1.ListAppointmentsRequest, v1.ListAppointmentsResponse]
+	terminateAppointment *connect.Client[v1.TerminateAppointmentRequest, v1.TerminateAppointmentResponse]
+	listEligibleLicenses *connect.Client[v1.ListEligibleLicensesRequest, v1.ListEligibleLicensesResponse]
+	getAppointmentFees   *connect.Client[v1.GetAppointmentFeesRequest, v1.GetAppointmentFeesResponse]
+	getTerminationFees   *connect.Client[v1.GetTerminationFeesRequest, v1.GetTerminationFeesResponse]
 }
 
 // RequestAppointment calls producerflow.appointment.v1.AppointmentService.RequestAppointment.
@@ -169,10 +170,9 @@ func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, req
 	return c.terminateAppointment.CallUnary(ctx, req)
 }
 
-// CheckAppointmentEligibility calls
-// producerflow.appointment.v1.AppointmentService.CheckAppointmentEligibility.
-func (c *appointmentServiceClient) CheckAppointmentEligibility(ctx context.Context, req *connect.Request[v1.CheckAppointmentEligibilityRequest]) (*connect.Response[v1.CheckAppointmentEligibilityResponse], error) {
-	return c.checkAppointmentEligibility.CallUnary(ctx, req)
+// ListEligibleLicenses calls producerflow.appointment.v1.AppointmentService.ListEligibleLicenses.
+func (c *appointmentServiceClient) ListEligibleLicenses(ctx context.Context, req *connect.Request[v1.ListEligibleLicensesRequest]) (*connect.Response[v1.ListEligibleLicensesResponse], error) {
+	return c.listEligibleLicenses.CallUnary(ctx, req)
 }
 
 // GetAppointmentFees calls producerflow.appointment.v1.AppointmentService.GetAppointmentFees.
@@ -188,8 +188,10 @@ func (c *appointmentServiceClient) GetTerminationFees(ctx context.Context, req *
 // AppointmentServiceHandler is an implementation of the
 // producerflow.appointment.v1.AppointmentService service.
 type AppointmentServiceHandler interface {
-	// Requests a new appointment for the specified license number.
-	// The caller must verify that the license and the producer are eligible for appointment.
+	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
+	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
+	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
+	//
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(context.Context, *connect.Request[v1.RequestAppointmentRequest]) (*connect.Response[v1.RequestAppointmentResponse], error)
@@ -199,9 +201,8 @@ type AppointmentServiceHandler interface {
 	ListAppointments(context.Context, *connect.Request[v1.ListAppointmentsRequest]) (*connect.Response[v1.ListAppointmentsResponse], error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(context.Context, *connect.Request[v1.TerminateAppointmentRequest]) (*connect.Response[v1.TerminateAppointmentResponse], error)
-	// Checks whether a license is eligible for appointment.
-	// If not eligible, a list of reasons is provided.
-	CheckAppointmentEligibility(context.Context, *connect.Request[v1.CheckAppointmentEligibilityRequest]) (*connect.Response[v1.CheckAppointmentEligibilityResponse], error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(context.Context, *connect.Request[v1.ListEligibleLicensesRequest]) (*connect.Response[v1.ListEligibleLicensesResponse], error)
 	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
@@ -241,10 +242,10 @@ func NewAppointmentServiceHandler(svc AppointmentServiceHandler, opts ...connect
 		connect.WithSchema(appointmentServiceMethods.ByName("TerminateAppointment")),
 		connect.WithHandlerOptions(opts...),
 	)
-	appointmentServiceCheckAppointmentEligibilityHandler := connect.NewUnaryHandler(
-		AppointmentServiceCheckAppointmentEligibilityProcedure,
-		svc.CheckAppointmentEligibility,
-		connect.WithSchema(appointmentServiceMethods.ByName("CheckAppointmentEligibility")),
+	appointmentServiceListEligibleLicensesHandler := connect.NewUnaryHandler(
+		AppointmentServiceListEligibleLicensesProcedure,
+		svc.ListEligibleLicenses,
+		connect.WithSchema(appointmentServiceMethods.ByName("ListEligibleLicenses")),
 		connect.WithHandlerOptions(opts...),
 	)
 	appointmentServiceGetAppointmentFeesHandler := connect.NewUnaryHandler(
@@ -269,8 +270,8 @@ func NewAppointmentServiceHandler(svc AppointmentServiceHandler, opts ...connect
 			appointmentServiceListAppointmentsHandler.ServeHTTP(w, r)
 		case AppointmentServiceTerminateAppointmentProcedure:
 			appointmentServiceTerminateAppointmentHandler.ServeHTTP(w, r)
-		case AppointmentServiceCheckAppointmentEligibilityProcedure:
-			appointmentServiceCheckAppointmentEligibilityHandler.ServeHTTP(w, r)
+		case AppointmentServiceListEligibleLicensesProcedure:
+			appointmentServiceListEligibleLicensesHandler.ServeHTTP(w, r)
 		case AppointmentServiceGetAppointmentFeesProcedure:
 			appointmentServiceGetAppointmentFeesHandler.ServeHTTP(w, r)
 		case AppointmentServiceGetTerminationFeesProcedure:
@@ -300,8 +301,8 @@ func (UnimplementedAppointmentServiceHandler) TerminateAppointment(context.Conte
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.TerminateAppointment is not implemented"))
 }
 
-func (UnimplementedAppointmentServiceHandler) CheckAppointmentEligibility(context.Context, *connect.Request[v1.CheckAppointmentEligibilityRequest]) (*connect.Response[v1.CheckAppointmentEligibilityResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.CheckAppointmentEligibility is not implemented"))
+func (UnimplementedAppointmentServiceHandler) ListEligibleLicenses(context.Context, *connect.Request[v1.ListEligibleLicensesRequest]) (*connect.Response[v1.ListEligibleLicensesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.ListEligibleLicenses is not implemented"))
 }
 
 func (UnimplementedAppointmentServiceHandler) GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error) {
