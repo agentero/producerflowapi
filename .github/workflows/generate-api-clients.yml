@@ -37,6 +37,8 @@ jobs:
           cache: true
       - name: Download Go dependencies
         run: go mod download
+      - name: 'Install protoc-gen-doc'
+        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
       - name: 'Install @bufbuild/protoc-gen-es'
         run: npm i -g @bufbuild/protoc-gen-es@${{ env.PROTO_GEN_ES_VERSION }}
       - name: 'Install @connectrpc/protoc-gen-connect-es'
