@@ -5,10 +5,13 @@
 
 - [producerflow/appointment/v1/appointment.proto](#producerflow_appointment_v1_appointment-proto)
     - [Appointment](#producerflow-appointment-v1-Appointment)
+    - [Carrier](#producerflow-appointment-v1-Carrier)
     - [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest)
     - [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse)
     - [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest)
     - [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse)
+    - [GetCarriersRequest](#producerflow-appointment-v1-GetCarriersRequest)
+    - [GetCarriersResponse](#producerflow-appointment-v1-GetCarriersResponse)
     - [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest)
     - [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse)
     - [License](#producerflow-appointment-v1-License)
@@ -154,6 +157,24 @@ Represents an appointment for a license.
 
 
 
+<a name="producerflow-appointment-v1-Carrier"></a>
+
+### Carrier
+Represents a carrier that is available to be appointed.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| carrier_id | [string](#string) |  | The ID of the carrier. |
+| name | [string](#string) |  | The name of the carrier. |
+| npn | [string](#string) |  | The NPN of the carrier. |
+| fein | [string](#string) |  | The state of the carrier. |
+
+
+
+
+
+
 <a name="producerflow-appointment-v1-GetAppointmentFeesRequest"></a>
 
 ### GetAppointmentFeesRequest
@@ -208,6 +229,31 @@ Request to retrieve an appointment by ID.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | appointment | [Appointment](#producerflow-appointment-v1-Appointment) |  | The appointment details. |
+
+
+
+
+
+
+<a name="producerflow-appointment-v1-GetCarriersRequest"></a>
+
+### GetCarriersRequest
+
+
+
+
+
+
+
+<a name="producerflow-appointment-v1-GetCarriersResponse"></a>
+
+### GetCarriersResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| carriers | [Carrier](#producerflow-appointment-v1-Carrier) | repeated | The list of carriers that are available to be appointed. |
 
 
 
@@ -337,6 +383,7 @@ Request to create a new appointment.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | license_id | [string](#string) |  | Required. The ID of the license to appoint. |
+| carrier_id | [string](#string) |  | Required. The ID of the carrier to appoint the license with. |
 
 
 
@@ -455,19 +502,22 @@ When the appointment is finally processed by NIPR, ProducerFlow will notify via 
 the final result. Also, any call from this point on to ListAppointments or GetAppointment will
 also return the final result.
 
-Any call to this service must be authenticated using an API key in the request headers.
+Any call to this service must be authenticated using an API key in the request headers. The API key
+can be found in the ProducerFlow API key section of the ProducerFlow UI and it identifies the tenant
+that is making the request.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
+| GetAppointment | [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest) | [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse) | Retrieves the details of an appointment by its ID. |
+| GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
+| GetCarriers | [GetCarriersRequest](#producerflow-appointment-v1-GetCarriersRequest) | [GetCarriersResponse](#producerflow-appointment-v1-GetCarriersResponse) | Retrieves the carriers that are available to appoint licenses for the tenant. |
+| GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
+| ListAppointments | [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest) | [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse) | Lists appointments for the tenant, optionally filtered by processing status. |
+| ListEligibleLicenses | [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest) | [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse) | Returns a list of licenses that are eligible to be appointed. |
 | RequestAppointment | [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest) | [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse) | Requests a new appointment for a license that is eligible to be appointed. The simpler way to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
 
 If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status. If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons. |
-| GetAppointment | [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest) | [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse) | Retrieves the details of an appointment by its ID. |
-| ListAppointments | [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest) | [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse) | Lists appointments for the tenant, optionally filtered by processing status. |
 | TerminateAppointment | [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest) | [TerminateAppointmentResponse](#producerflow-appointment-v1-TerminateAppointmentResponse) | Terminates an existing appointment by ID, providing a reason. |
-| ListEligibleLicenses | [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest) | [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse) | Returns a list of licenses that are eligible to be appointed. |
-| GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
-| GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 
  
 

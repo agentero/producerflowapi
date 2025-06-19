@@ -19,13 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AppointmentService_RequestAppointment_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/RequestAppointment"
 	AppointmentService_GetAppointment_FullMethodName       = "/producerflow.appointment.v1.AppointmentService/GetAppointment"
-	AppointmentService_ListAppointments_FullMethodName     = "/producerflow.appointment.v1.AppointmentService/ListAppointments"
-	AppointmentService_TerminateAppointment_FullMethodName = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
-	AppointmentService_ListEligibleLicenses_FullMethodName = "/producerflow.appointment.v1.AppointmentService/ListEligibleLicenses"
 	AppointmentService_GetAppointmentFees_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/GetAppointmentFees"
+	AppointmentService_GetCarriers_FullMethodName          = "/producerflow.appointment.v1.AppointmentService/GetCarriers"
 	AppointmentService_GetTerminationFees_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/GetTerminationFees"
+	AppointmentService_ListAppointments_FullMethodName     = "/producerflow.appointment.v1.AppointmentService/ListAppointments"
+	AppointmentService_ListEligibleLicenses_FullMethodName = "/producerflow.appointment.v1.AppointmentService/ListEligibleLicenses"
+	AppointmentService_RequestAppointment_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/RequestAppointment"
+	AppointmentService_TerminateAppointment_FullMethodName = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -44,8 +45,24 @@ const (
 // the final result. Also, any call from this point on to ListAppointments or GetAppointment will
 // also return the final result.
 //
-// Any call to this service must be authenticated using an API key in the request headers.
+// Any call to this service must be authenticated using an API key in the request headers. The API key
+// can be found in the ProducerFlow API key section of the ProducerFlow UI and it identifies the tenant
+// that is making the request.
 type AppointmentServiceClient interface {
+	// Retrieves the details of an appointment by its ID.
+	GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*GetAppointmentResponse, error)
+	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
+	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	GetAppointmentFees(ctx context.Context, in *GetAppointmentFeesRequest, opts ...grpc.CallOption) (*GetAppointmentFeesResponse, error)
+	// Retrieves the carriers that are available to appoint licenses for the tenant.
+	GetCarriers(ctx context.Context, in *GetCarriersRequest, opts ...grpc.CallOption) (*GetCarriersResponse, error)
+	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
+	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	GetTerminationFees(ctx context.Context, in *GetTerminationFeesRequest, opts ...grpc.CallOption) (*GetTerminationFeesResponse, error)
+	// Lists appointments for the tenant, optionally filtered by processing status.
+	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error)
 	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
 	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
 	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
@@ -53,20 +70,8 @@ type AppointmentServiceClient interface {
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(ctx context.Context, in *RequestAppointmentRequest, opts ...grpc.CallOption) (*RequestAppointmentResponse, error)
-	// Retrieves the details of an appointment by its ID.
-	GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*GetAppointmentResponse, error)
-	// Lists appointments for the tenant, optionally filtered by processing status.
-	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(ctx context.Context, in *TerminateAppointmentRequest, opts ...grpc.CallOption) (*TerminateAppointmentResponse, error)
-	// Returns a list of licenses that are eligible to be appointed.
-	ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
-	GetAppointmentFees(ctx context.Context, in *GetAppointmentFeesRequest, opts ...grpc.CallOption) (*GetAppointmentFeesResponse, error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
-	GetTerminationFees(ctx context.Context, in *GetTerminationFeesRequest, opts ...grpc.CallOption) (*GetTerminationFeesResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -77,50 +82,10 @@ func NewAppointmentServiceClient(cc grpc.ClientConnInterface) AppointmentService
 	return &appointmentServiceClient{cc}
 }
 
-func (c *appointmentServiceClient) RequestAppointment(ctx context.Context, in *RequestAppointmentRequest, opts ...grpc.CallOption) (*RequestAppointmentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RequestAppointmentResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_RequestAppointment_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *appointmentServiceClient) GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*GetAppointmentResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetAppointmentResponse)
 	err := c.cc.Invoke(ctx, AppointmentService_GetAppointment_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *appointmentServiceClient) ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAppointmentsResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_ListAppointments_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, in *TerminateAppointmentRequest, opts ...grpc.CallOption) (*TerminateAppointmentResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(TerminateAppointmentResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_TerminateAppointment_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *appointmentServiceClient) ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListEligibleLicensesResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_ListEligibleLicenses_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,10 +102,60 @@ func (c *appointmentServiceClient) GetAppointmentFees(ctx context.Context, in *G
 	return out, nil
 }
 
+func (c *appointmentServiceClient) GetCarriers(ctx context.Context, in *GetCarriersRequest, opts ...grpc.CallOption) (*GetCarriersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCarriersResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_GetCarriers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *appointmentServiceClient) GetTerminationFees(ctx context.Context, in *GetTerminationFeesRequest, opts ...grpc.CallOption) (*GetTerminationFeesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetTerminationFeesResponse)
 	err := c.cc.Invoke(ctx, AppointmentService_GetTerminationFees_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAppointmentsResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_ListAppointments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) ListEligibleLicenses(ctx context.Context, in *ListEligibleLicensesRequest, opts ...grpc.CallOption) (*ListEligibleLicensesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListEligibleLicensesResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_ListEligibleLicenses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) RequestAppointment(ctx context.Context, in *RequestAppointmentRequest, opts ...grpc.CallOption) (*RequestAppointmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RequestAppointmentResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_RequestAppointment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, in *TerminateAppointmentRequest, opts ...grpc.CallOption) (*TerminateAppointmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TerminateAppointmentResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_TerminateAppointment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,8 +178,24 @@ func (c *appointmentServiceClient) GetTerminationFees(ctx context.Context, in *G
 // the final result. Also, any call from this point on to ListAppointments or GetAppointment will
 // also return the final result.
 //
-// Any call to this service must be authenticated using an API key in the request headers.
+// Any call to this service must be authenticated using an API key in the request headers. The API key
+// can be found in the ProducerFlow API key section of the ProducerFlow UI and it identifies the tenant
+// that is making the request.
 type AppointmentServiceServer interface {
+	// Retrieves the details of an appointment by its ID.
+	GetAppointment(context.Context, *GetAppointmentRequest) (*GetAppointmentResponse, error)
+	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
+	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error)
+	// Retrieves the carriers that are available to appoint licenses for the tenant.
+	GetCarriers(context.Context, *GetCarriersRequest) (*GetCarriersResponse, error)
+	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
+	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	GetTerminationFees(context.Context, *GetTerminationFeesRequest) (*GetTerminationFeesResponse, error)
+	// Lists appointments for the tenant, optionally filtered by processing status.
+	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
+	// Returns a list of licenses that are eligible to be appointed.
+	ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error)
 	// Requests a new appointment for a license that is eligible to be appointed. The simpler way
 	// to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
 	// appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
@@ -172,20 +203,8 @@ type AppointmentServiceServer interface {
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(context.Context, *RequestAppointmentRequest) (*RequestAppointmentResponse, error)
-	// Retrieves the details of an appointment by its ID.
-	GetAppointment(context.Context, *GetAppointmentRequest) (*GetAppointmentResponse, error)
-	// Lists appointments for the tenant, optionally filtered by processing status.
-	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// Terminates an existing appointment by ID, providing a reason.
 	TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error)
-	// Returns a list of licenses that are eligible to be appointed.
-	ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
-	GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
-	GetTerminationFees(context.Context, *GetTerminationFeesRequest) (*GetTerminationFeesResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -196,26 +215,29 @@ type AppointmentServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAppointmentServiceServer struct{}
 
-func (UnimplementedAppointmentServiceServer) RequestAppointment(context.Context, *RequestAppointmentRequest) (*RequestAppointmentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RequestAppointment not implemented")
-}
 func (UnimplementedAppointmentServiceServer) GetAppointment(context.Context, *GetAppointmentRequest) (*GetAppointmentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppointment not implemented")
-}
-func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAppointments not implemented")
-}
-func (UnimplementedAppointmentServiceServer) TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TerminateAppointment not implemented")
-}
-func (UnimplementedAppointmentServiceServer) ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListEligibleLicenses not implemented")
 }
 func (UnimplementedAppointmentServiceServer) GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppointmentFees not implemented")
 }
+func (UnimplementedAppointmentServiceServer) GetCarriers(context.Context, *GetCarriersRequest) (*GetCarriersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCarriers not implemented")
+}
 func (UnimplementedAppointmentServiceServer) GetTerminationFees(context.Context, *GetTerminationFeesRequest) (*GetTerminationFeesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTerminationFees not implemented")
+}
+func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAppointments not implemented")
+}
+func (UnimplementedAppointmentServiceServer) ListEligibleLicenses(context.Context, *ListEligibleLicensesRequest) (*ListEligibleLicensesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEligibleLicenses not implemented")
+}
+func (UnimplementedAppointmentServiceServer) RequestAppointment(context.Context, *RequestAppointmentRequest) (*RequestAppointmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestAppointment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TerminateAppointment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 func (UnimplementedAppointmentServiceServer) testEmbeddedByValue()                            {}
@@ -238,24 +260,6 @@ func RegisterAppointmentServiceServer(s grpc.ServiceRegistrar, srv AppointmentSe
 	s.RegisterService(&AppointmentService_ServiceDesc, srv)
 }
 
-func _AppointmentService_RequestAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestAppointmentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppointmentServiceServer).RequestAppointment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppointmentService_RequestAppointment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).RequestAppointment(ctx, req.(*RequestAppointmentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AppointmentService_GetAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAppointmentRequest)
 	if err := dec(in); err != nil {
@@ -270,60 +274,6 @@ func _AppointmentService_GetAppointment_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AppointmentServiceServer).GetAppointment(ctx, req.(*GetAppointmentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AppointmentService_ListAppointments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAppointmentsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppointmentServiceServer).ListAppointments(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppointmentService_ListAppointments_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).ListAppointments(ctx, req.(*ListAppointmentsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AppointmentService_TerminateAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TerminateAppointmentRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppointmentServiceServer).TerminateAppointment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppointmentService_TerminateAppointment_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).TerminateAppointment(ctx, req.(*TerminateAppointmentRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AppointmentService_ListEligibleLicenses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListEligibleLicensesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppointmentService_ListEligibleLicenses_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, req.(*ListEligibleLicensesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -346,6 +296,24 @@ func _AppointmentService_GetAppointmentFees_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_GetCarriers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCarriersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetCarriers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_GetCarriers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetCarriers(ctx, req.(*GetCarriersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AppointmentService_GetTerminationFees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTerminationFeesRequest)
 	if err := dec(in); err != nil {
@@ -364,6 +332,78 @@ func _AppointmentService_GetTerminationFees_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_ListAppointments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAppointmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).ListAppointments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_ListAppointments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).ListAppointments(ctx, req.(*ListAppointmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppointmentService_ListEligibleLicenses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEligibleLicensesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_ListEligibleLicenses_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).ListEligibleLicenses(ctx, req.(*ListEligibleLicensesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppointmentService_RequestAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).RequestAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_RequestAppointment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).RequestAppointment(ctx, req.(*RequestAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppointmentService_TerminateAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TerminateAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).TerminateAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_TerminateAppointment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).TerminateAppointment(ctx, req.(*TerminateAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppointmentService_ServiceDesc is the grpc.ServiceDesc for AppointmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -372,32 +412,36 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AppointmentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RequestAppointment",
-			Handler:    _AppointmentService_RequestAppointment_Handler,
-		},
-		{
 			MethodName: "GetAppointment",
 			Handler:    _AppointmentService_GetAppointment_Handler,
-		},
-		{
-			MethodName: "ListAppointments",
-			Handler:    _AppointmentService_ListAppointments_Handler,
-		},
-		{
-			MethodName: "TerminateAppointment",
-			Handler:    _AppointmentService_TerminateAppointment_Handler,
-		},
-		{
-			MethodName: "ListEligibleLicenses",
-			Handler:    _AppointmentService_ListEligibleLicenses_Handler,
 		},
 		{
 			MethodName: "GetAppointmentFees",
 			Handler:    _AppointmentService_GetAppointmentFees_Handler,
 		},
 		{
+			MethodName: "GetCarriers",
+			Handler:    _AppointmentService_GetCarriers_Handler,
+		},
+		{
 			MethodName: "GetTerminationFees",
 			Handler:    _AppointmentService_GetTerminationFees_Handler,
+		},
+		{
+			MethodName: "ListAppointments",
+			Handler:    _AppointmentService_ListAppointments_Handler,
+		},
+		{
+			MethodName: "ListEligibleLicenses",
+			Handler:    _AppointmentService_ListEligibleLicenses_Handler,
+		},
+		{
+			MethodName: "RequestAppointment",
+			Handler:    _AppointmentService_RequestAppointment_Handler,
+		},
+		{
+			MethodName: "TerminateAppointment",
+			Handler:    _AppointmentService_TerminateAppointment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

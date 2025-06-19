@@ -13,7 +13,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file producerflow/appointment/v1/appointment.proto.
  */
 export const file_producerflow_appointment_v1_appointment: GenFile = /*@__PURE__*/
-  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSI4ChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAEinAEKGlJlcXVlc3RBcHBvaW50bWVudFJlc3BvbnNlEhYKDmFwcG9pbnRtZW50X2lkGAEgASgJEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAIgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYAyADKAkiOAoVR2V0QXBwb2ludG1lbnRSZXF1ZXN0Eh8KDmFwcG9pbnRtZW50X2lkGAEgASgJQge6SARyAhABIlcKFkdldEFwcG9pbnRtZW50UmVzcG9uc2USPQoLYXBwb2ludG1lbnQYASABKAsyKC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnQilQEKF0xpc3RBcHBvaW50bWVudHNSZXF1ZXN0EkgKEXByb2Nlc3Npbmdfc3RhdHVzGAEgAygOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoJcGFnZV9zaXplGAIgASgFQgm6SAYaBBhkKAESEgoKcGFnZV90b2tlbhgDIAEoCSJzChhMaXN0QXBwb2ludG1lbnRzUmVzcG9uc2USPgoMYXBwb2ludG1lbnRzGAEgAygLMigucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkFwcG9pbnRtZW50EhcKD25leHRfcGFnZV90b2tlbhgCIAEoCSJXChtUZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAESFwoGcmVhc29uGAIgASgJQge6SARyAhABIi8KHFRlcm1pbmF0ZUFwcG9pbnRtZW50UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCCJxChtMaXN0RWxpZ2libGVMaWNlbnNlc1JlcXVlc3QSHwoLcHJvZHVjZXJfaWQYASABKAlCCLpIBXIDsAEBSAASHQoJYWdlbmN5X2lkGAIgASgJQgi6SAVyA7ABAUgAQhIKCWFwcGxpY2FudBIFukgCCAEiVgocTGlzdEVsaWdpYmxlTGljZW5zZXNSZXNwb25zZRI2CghsaWNlbnNlcxgBIAMoCzIkLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaWNlbnNlIjwKGUdldEFwcG9pbnRtZW50RmVlc1JlcXVlc3QSHwoObGljZW5zZV9udW1iZXIYASABKAlCB7pIBHICEAEiMgoaR2V0QXBwb2ludG1lbnRGZWVzUmVzcG9uc2USFAoMZmVlX2luX2NlbnRzGAEgASgDIjwKGUdldFRlcm1pbmF0aW9uRmVlc1JlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAEiMgoaR2V0VGVybWluYXRpb25GZWVzUmVzcG9uc2USFAoMZmVlX2luX2NlbnRzGAEgASgDIo4ECgtBcHBvaW50bWVudBIWCg5hcHBvaW50bWVudF9pZBgBIAEoCRI1CgdsaWNlbnNlGAIgASgLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2USRgoQYXBwb2ludG1lbnRfdHlwZRgEIAEoDjIsLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudFR5cGUSSgoSZWxpZ2liaWxpdHlfc3RhdHVzGAUgASgOMi4ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkVsaWdpYmlsaXR5U3RhdHVzEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAYgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYByADKAkSEAoIY29tbWVudHMYCCABKAkSIAoYYXBwb2ludG1lbnRfZmVlX2luX2NlbnRzGAkgASgDEiAKGHRlcm1pbmF0aW9uX2ZlZV9pbl9jZW50cxgKIAEoAxIuCgpjcmVhdGVkX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAwgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKsAQoHTGljZW5zZRISCgpsaWNlbnNlX2lkGAEgASgJEhYKDmxpY2Vuc2VfbnVtYmVyGAIgASgJEh8KC3Byb2R1Y2VyX2lkGAMgASgJQgi6SAVyA7ABAUgAEh0KCWFnZW5jeV9pZBgEIAEoCUIIukgFcgOwAQFIABINCgVzdGF0ZRgFIAEoCRIVCg1saWNlbnNlX2NsYXNzGAYgASgJQg8KDWxpY2Vuc2Vfb3duZXIqewoRRWxpZ2liaWxpdHlTdGF0dXMSIgoeRUxJR0lCSUxJVFlfU1RBVFVTX1VOU1BFQ0lGSUVEEAASHwobRUxJR0lCSUxJVFlfU1RBVFVTX0VMSUdJQkxFEAESIQodRUxJR0lCSUxJVFlfU1RBVFVTX0lORUxJR0lCTEUQAiriAQoQUHJvY2Vzc2luZ1N0YXR1cxIhCh1QUk9DRVNTSU5HX1NUQVRVU19VTlNQRUNJRklFRBAAEiEKHVBST0NFU1NJTkdfU1RBVFVTX0lOX1BST0dSRVNTEAESHwobUFJPQ0VTU0lOR19TVEFUVVNfQVBQT0lOVEVEEAISIAocUFJPQ0VTU0lOR19TVEFUVVNfVEVSTUlOQVRFRBADEh4KGlBST0NFU1NJTkdfU1RBVFVTX1JFSkVDVEVEEAQSJQohUFJPQ0VTU0lOR19TVEFUVVNfTUlTU0lOR19MSUNFTlNFEAUqlAEKD0FwcG9pbnRtZW50VHlwZRIgChxBUFBPSU5UTUVOVF9UWVBFX1VOU1BFQ0lGSUVEEAASHQoZQVBQT0lOVE1FTlRfVFlQRV9SRUdJU1RSWRABEh0KGUFQUE9JTlRNRU5UX1RZUEVfVVBfRlJPTlQQAhIhCh1BUFBPSU5UTUVOVF9UWVBFX0pVU1RfSU5fVElNRRADMsQHChJBcHBvaW50bWVudFNlcnZpY2UShQEKElJlcXVlc3RBcHBvaW50bWVudBI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5SZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlJlcXVlc3RBcHBvaW50bWVudFJlc3BvbnNlEnkKDkdldEFwcG9pbnRtZW50EjIucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50UmVxdWVzdBozLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudFJlc3BvbnNlEn8KEExpc3RBcHBvaW50bWVudHMSNC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QaNS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1Jlc3BvbnNlEosBChRUZXJtaW5hdGVBcHBvaW50bWVudBI4LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QaOS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZRKLAQoUTGlzdEVsaWdpYmxlTGljZW5zZXMSOC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEVsaWdpYmxlTGljZW5zZXNSZXF1ZXN0GjkucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RFbGlnaWJsZUxpY2Vuc2VzUmVzcG9uc2UShQEKEkdldEFwcG9pbnRtZW50RmVlcxI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudEZlZXNSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50RmVlc1Jlc3BvbnNlEoUBChJHZXRUZXJtaW5hdGlvbkZlZXMSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0VGVybWluYXRpb25GZWVzUmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRUZXJtaW5hdGlvbkZlZXNSZXNwb25zZUKXAgofY29tLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MUIQQXBwb2ludG1lbnRQcm90b1ABWlRnaXRodWIuY29tL2FnZW50ZXJvL3Byb2R1Y2VyZmxvd2FwaS9nZW4vZ28vcHJvZHVjZXJmbG93L2FwcG9pbnRtZW50L3YxO2FwcG9pbnRtZW50djGiAgNQQViqAhtQcm9kdWNlcmZsb3cuQXBwb2ludG1lbnQuVjHKAhtQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjHiAidQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjFcR1BCTWV0YWRhdGHqAh1Qcm9kdWNlcmZsb3c6OkFwcG9pbnRtZW50OjpWMWIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp]);
+  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSJVChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAESGwoKY2Fycmllcl9pZBgCIAEoCUIHukgEcgIQASKcAQoaUmVxdWVzdEFwcG9pbnRtZW50UmVzcG9uc2USFgoOYXBwb2ludG1lbnRfaWQYASABKAkSSAoRcHJvY2Vzc2luZ19zdGF0dXMYAiABKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcChRub3RfZWxpZ2libGVfcmVhc29ucxgDIAMoCSI4ChVHZXRBcHBvaW50bWVudFJlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAEiVwoWR2V0QXBwb2ludG1lbnRSZXNwb25zZRI9CgthcHBvaW50bWVudBgBIAEoCzIoLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudCKVAQoXTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QSSAoRcHJvY2Vzc2luZ19zdGF0dXMYASADKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcCglwYWdlX3NpemUYAiABKAVCCbpIBhoEGGQoARISCgpwYWdlX3Rva2VuGAMgASgJInMKGExpc3RBcHBvaW50bWVudHNSZXNwb25zZRI+CgxhcHBvaW50bWVudHMYASADKAsyKC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnQSFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIlcKG1Rlcm1pbmF0ZUFwcG9pbnRtZW50UmVxdWVzdBIfCg5hcHBvaW50bWVudF9pZBgBIAEoCUIHukgEcgIQARIXCgZyZWFzb24YAiABKAlCB7pIBHICEAEiLwocVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIInEKG0xpc3RFbGlnaWJsZUxpY2Vuc2VzUmVxdWVzdBIfCgtwcm9kdWNlcl9pZBgBIAEoCUIIukgFcgOwAQFIABIdCglhZ2VuY3lfaWQYAiABKAlCCLpIBXIDsAEBSABCEgoJYXBwbGljYW50EgW6SAIIASJWChxMaXN0RWxpZ2libGVMaWNlbnNlc1Jlc3BvbnNlEjYKCGxpY2Vuc2VzGAEgAygLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2UiPAoZR2V0QXBwb2ludG1lbnRGZWVzUmVxdWVzdBIfCg5saWNlbnNlX251bWJlchgBIAEoCUIHukgEcgIQASIyChpHZXRBcHBvaW50bWVudEZlZXNSZXNwb25zZRIUCgxmZWVfaW5fY2VudHMYASABKAMiPAoZR2V0VGVybWluYXRpb25GZWVzUmVxdWVzdBIfCg5hcHBvaW50bWVudF9pZBgBIAEoCUIHukgEcgIQASIyChpHZXRUZXJtaW5hdGlvbkZlZXNSZXNwb25zZRIUCgxmZWVfaW5fY2VudHMYASABKAMiFAoSR2V0Q2FycmllcnNSZXF1ZXN0Ik0KE0dldENhcnJpZXJzUmVzcG9uc2USNgoIY2FycmllcnMYASADKAsyJC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQ2FycmllciJGCgdDYXJyaWVyEhIKCmNhcnJpZXJfaWQYASABKAkSDAoEbmFtZRgCIAEoCRILCgNucG4YAyABKAkSDAoEZmVpbhgEIAEoCSKOBAoLQXBwb2ludG1lbnQSFgoOYXBwb2ludG1lbnRfaWQYASABKAkSNQoHbGljZW5zZRgCIAEoCzIkLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaWNlbnNlEkYKEGFwcG9pbnRtZW50X3R5cGUYBCABKA4yLC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnRUeXBlEkoKEmVsaWdpYmlsaXR5X3N0YXR1cxgFIAEoDjIuLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5FbGlnaWJpbGl0eVN0YXR1cxJIChFwcm9jZXNzaW5nX3N0YXR1cxgGIAEoDjItLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5Qcm9jZXNzaW5nU3RhdHVzEhwKFG5vdF9lbGlnaWJsZV9yZWFzb25zGAcgAygJEhAKCGNvbW1lbnRzGAggASgJEiAKGGFwcG9pbnRtZW50X2ZlZV9pbl9jZW50cxgJIAEoAxIgChh0ZXJtaW5hdGlvbl9mZWVfaW5fY2VudHMYCiABKAMSLgoKY3JlYXRlZF9hdBgLIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKdXBkYXRlZF9hdBgMIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAirAEKB0xpY2Vuc2USEgoKbGljZW5zZV9pZBgBIAEoCRIWCg5saWNlbnNlX251bWJlchgCIAEoCRIfCgtwcm9kdWNlcl9pZBgDIAEoCUIIukgFcgOwAQFIABIdCglhZ2VuY3lfaWQYBCABKAlCCLpIBXIDsAEBSAASDQoFc3RhdGUYBSABKAkSFQoNbGljZW5zZV9jbGFzcxgGIAEoCUIPCg1saWNlbnNlX293bmVyKnsKEUVsaWdpYmlsaXR5U3RhdHVzEiIKHkVMSUdJQklMSVRZX1NUQVRVU19VTlNQRUNJRklFRBAAEh8KG0VMSUdJQklMSVRZX1NUQVRVU19FTElHSUJMRRABEiEKHUVMSUdJQklMSVRZX1NUQVRVU19JTkVMSUdJQkxFEAIq4gEKEFByb2Nlc3NpbmdTdGF0dXMSIQodUFJPQ0VTU0lOR19TVEFUVVNfVU5TUEVDSUZJRUQQABIhCh1QUk9DRVNTSU5HX1NUQVRVU19JTl9QUk9HUkVTUxABEh8KG1BST0NFU1NJTkdfU1RBVFVTX0FQUE9JTlRFRBACEiAKHFBST0NFU1NJTkdfU1RBVFVTX1RFUk1JTkFURUQQAxIeChpQUk9DRVNTSU5HX1NUQVRVU19SRUpFQ1RFRBAEEiUKIVBST0NFU1NJTkdfU1RBVFVTX01JU1NJTkdfTElDRU5TRRAFKpQBCg9BcHBvaW50bWVudFR5cGUSIAocQVBQT0lOVE1FTlRfVFlQRV9VTlNQRUNJRklFRBAAEh0KGUFQUE9JTlRNRU5UX1RZUEVfUkVHSVNUUlkQARIdChlBUFBPSU5UTUVOVF9UWVBFX1VQX0ZST05UEAISIQodQVBQT0lOVE1FTlRfVFlQRV9KVVNUX0lOX1RJTUUQAzK2CAoSQXBwb2ludG1lbnRTZXJ2aWNlEnkKDkdldEFwcG9pbnRtZW50EjIucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50UmVxdWVzdBozLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudFJlc3BvbnNlEoUBChJHZXRBcHBvaW50bWVudEZlZXMSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRGZWVzUmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudEZlZXNSZXNwb25zZRJwCgtHZXRDYXJyaWVycxIvLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRDYXJyaWVyc1JlcXVlc3QaMC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0Q2FycmllcnNSZXNwb25zZRKFAQoSR2V0VGVybWluYXRpb25GZWVzEjYucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldFRlcm1pbmF0aW9uRmVlc1JlcXVlc3QaNy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0VGVybWluYXRpb25GZWVzUmVzcG9uc2USfwoQTGlzdEFwcG9pbnRtZW50cxI0LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0QXBwb2ludG1lbnRzUmVxdWVzdBo1LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0QXBwb2ludG1lbnRzUmVzcG9uc2USiwEKFExpc3RFbGlnaWJsZUxpY2Vuc2VzEjgucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RFbGlnaWJsZUxpY2Vuc2VzUmVxdWVzdBo5LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0RWxpZ2libGVMaWNlbnNlc1Jlc3BvbnNlEoUBChJSZXF1ZXN0QXBwb2ludG1lbnQSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUmVxdWVzdEFwcG9pbnRtZW50UmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5SZXF1ZXN0QXBwb2ludG1lbnRSZXNwb25zZRKLAQoUVGVybWluYXRlQXBwb2ludG1lbnQSOC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuVGVybWluYXRlQXBwb2ludG1lbnRSZXF1ZXN0GjkucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlRlcm1pbmF0ZUFwcG9pbnRtZW50UmVzcG9uc2VClwIKH2NvbS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjFCEEFwcG9pbnRtZW50UHJvdG9QAVpUZ2l0aHViLmNvbS9hZ2VudGVyby9wcm9kdWNlcmZsb3dhcGkvZ2VuL2dvL3Byb2R1Y2VyZmxvdy9hcHBvaW50bWVudC92MTthcHBvaW50bWVudHYxogIDUEFYqgIbUHJvZHVjZXJmbG93LkFwcG9pbnRtZW50LlYxygIbUHJvZHVjZXJmbG93XEFwcG9pbnRtZW50XFYx4gInUHJvZHVjZXJmbG93XEFwcG9pbnRtZW50XFYxXEdQQk1ldGFkYXRh6gIdUHJvZHVjZXJmbG93OjpBcHBvaW50bWVudDo6VjFiBnByb3RvMw", [file_buf_validate_validate, file_google_protobuf_timestamp]);
 
 /**
  * Request to create a new appointment.
@@ -27,6 +27,13 @@ export type RequestAppointmentRequest = Message<"producerflow.appointment.v1.Req
    * @generated from field: string license_id = 1;
    */
   licenseId: string;
+
+  /**
+   * Required. The ID of the carrier to appoint the license with.
+   *
+   * @generated from field: string carrier_id = 2;
+   */
+  carrierId: string;
 };
 
 /**
@@ -350,6 +357,80 @@ export const GetTerminationFeesResponseSchema: GenMessage<GetTerminationFeesResp
   messageDesc(file_producerflow_appointment_v1_appointment, 13);
 
 /**
+ * @generated from message producerflow.appointment.v1.GetCarriersRequest
+ */
+export type GetCarriersRequest = Message<"producerflow.appointment.v1.GetCarriersRequest"> & {
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.GetCarriersRequest.
+ * Use `create(GetCarriersRequestSchema)` to create a new message.
+ */
+export const GetCarriersRequestSchema: GenMessage<GetCarriersRequest> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 14);
+
+/**
+ * @generated from message producerflow.appointment.v1.GetCarriersResponse
+ */
+export type GetCarriersResponse = Message<"producerflow.appointment.v1.GetCarriersResponse"> & {
+  /**
+   * The list of carriers that are available to be appointed.
+   *
+   * @generated from field: repeated producerflow.appointment.v1.Carrier carriers = 1;
+   */
+  carriers: Carrier[];
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.GetCarriersResponse.
+ * Use `create(GetCarriersResponseSchema)` to create a new message.
+ */
+export const GetCarriersResponseSchema: GenMessage<GetCarriersResponse> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 15);
+
+/**
+ * Represents a carrier that is available to be appointed.
+ *
+ * @generated from message producerflow.appointment.v1.Carrier
+ */
+export type Carrier = Message<"producerflow.appointment.v1.Carrier"> & {
+  /**
+   * The ID of the carrier.
+   *
+   * @generated from field: string carrier_id = 1;
+   */
+  carrierId: string;
+
+  /**
+   * The name of the carrier.
+   *
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * The NPN of the carrier.
+   *
+   * @generated from field: string npn = 3;
+   */
+  npn: string;
+
+  /**
+   * The state of the carrier.
+   *
+   * @generated from field: string fein = 4;
+   */
+  fein: string;
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.Carrier.
+ * Use `create(CarrierSchema)` to create a new message.
+ */
+export const CarrierSchema: GenMessage<Carrier> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 16);
+
+/**
  * Represents an appointment for a license.
  *
  * @generated from message producerflow.appointment.v1.Appointment
@@ -438,7 +519,7 @@ export type Appointment = Message<"producerflow.appointment.v1.Appointment"> & {
  * Use `create(AppointmentSchema)` to create a new message.
  */
 export const AppointmentSchema: GenMessage<Appointment> = /*@__PURE__*/
-  messageDesc(file_producerflow_appointment_v1_appointment, 14);
+  messageDesc(file_producerflow_appointment_v1_appointment, 17);
 
 /**
  * @generated from message producerflow.appointment.v1.License
@@ -497,7 +578,7 @@ export type License = Message<"producerflow.appointment.v1.License"> & {
  * Use `create(LicenseSchema)` to create a new message.
  */
 export const LicenseSchema: GenMessage<License> = /*@__PURE__*/
-  messageDesc(file_producerflow_appointment_v1_appointment, 15);
+  messageDesc(file_producerflow_appointment_v1_appointment, 18);
 
 /**
  * Eligibility status of the appointment.
@@ -616,11 +697,75 @@ export const AppointmentTypeSchema: GenEnum<AppointmentType> = /*@__PURE__*/
  * the final result. Also, any call from this point on to ListAppointments or GetAppointment will
  * also return the final result.
  *
- * Any call to this service must be authenticated using an API key in the request headers.
+ * Any call to this service must be authenticated using an API key in the request headers. The API key
+ * can be found in the ProducerFlow API key section of the ProducerFlow UI and it identifies the tenant
+ * that is making the request.
  *
  * @generated from service producerflow.appointment.v1.AppointmentService
  */
 export const AppointmentService: GenService<{
+  /**
+   * Retrieves the details of an appointment by its ID.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetAppointment
+   */
+  getAppointment: {
+    methodKind: "unary";
+    input: typeof GetAppointmentRequestSchema;
+    output: typeof GetAppointmentResponseSchema;
+  },
+  /**
+   * Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
+   * as integer values in cents. E.g. $10.34 is sent as 1034.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetAppointmentFees
+   */
+  getAppointmentFees: {
+    methodKind: "unary";
+    input: typeof GetAppointmentFeesRequestSchema;
+    output: typeof GetAppointmentFeesResponseSchema;
+  },
+  /**
+   * Retrieves the carriers that are available to appoint licenses for the tenant.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetCarriers
+   */
+  getCarriers: {
+    methodKind: "unary";
+    input: typeof GetCarriersRequestSchema;
+    output: typeof GetCarriersResponseSchema;
+  },
+  /**
+   * Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
+   * as integer values in cents. E.g. $10.34 is sent as 1034.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetTerminationFees
+   */
+  getTerminationFees: {
+    methodKind: "unary";
+    input: typeof GetTerminationFeesRequestSchema;
+    output: typeof GetTerminationFeesResponseSchema;
+  },
+  /**
+   * Lists appointments for the tenant, optionally filtered by processing status.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListAppointments
+   */
+  listAppointments: {
+    methodKind: "unary";
+    input: typeof ListAppointmentsRequestSchema;
+    output: typeof ListAppointmentsResponseSchema;
+  },
+  /**
+   * Returns a list of licenses that are eligible to be appointed.
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListEligibleLicenses
+   */
+  listEligibleLicenses: {
+    methodKind: "unary";
+    input: typeof ListEligibleLicensesRequestSchema;
+    output: typeof ListEligibleLicensesResponseSchema;
+  },
   /**
    * Requests a new appointment for a license that is eligible to be appointed. The simpler way
    * to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be
@@ -637,26 +782,6 @@ export const AppointmentService: GenService<{
     output: typeof RequestAppointmentResponseSchema;
   },
   /**
-   * Retrieves the details of an appointment by its ID.
-   *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetAppointment
-   */
-  getAppointment: {
-    methodKind: "unary";
-    input: typeof GetAppointmentRequestSchema;
-    output: typeof GetAppointmentResponseSchema;
-  },
-  /**
-   * Lists appointments for the tenant, optionally filtered by processing status.
-   *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListAppointments
-   */
-  listAppointments: {
-    methodKind: "unary";
-    input: typeof ListAppointmentsRequestSchema;
-    output: typeof ListAppointmentsResponseSchema;
-  },
-  /**
    * Terminates an existing appointment by ID, providing a reason.
    *
    * @generated from rpc producerflow.appointment.v1.AppointmentService.TerminateAppointment
@@ -665,38 +790,6 @@ export const AppointmentService: GenService<{
     methodKind: "unary";
     input: typeof TerminateAppointmentRequestSchema;
     output: typeof TerminateAppointmentResponseSchema;
-  },
-  /**
-   * Returns a list of licenses that are eligible to be appointed.
-   *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListEligibleLicenses
-   */
-  listEligibleLicenses: {
-    methodKind: "unary";
-    input: typeof ListEligibleLicensesRequestSchema;
-    output: typeof ListEligibleLicensesResponseSchema;
-  },
-  /**
-   * Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-   * as integer values in cents. E.g. $10.34 is sent as 1034.
-   *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetAppointmentFees
-   */
-  getAppointmentFees: {
-    methodKind: "unary";
-    input: typeof GetAppointmentFeesRequestSchema;
-    output: typeof GetAppointmentFeesResponseSchema;
-  },
-  /**
-   * Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-   * as integer values in cents. E.g. $10.34 is sent as 1034.
-   *
-   * @generated from rpc producerflow.appointment.v1.AppointmentService.GetTerminationFees
-   */
-  getTerminationFees: {
-    methodKind: "unary";
-    input: typeof GetTerminationFeesRequestSchema;
-    output: typeof GetTerminationFeesResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_producerflow_appointment_v1_appointment, 0);
