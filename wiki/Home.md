@@ -26,10 +26,6 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
   - [Appointment Service](https://github.com/agentero/producerflowapi/wiki/API-Reference#producerflow-appointment-v1-appointment-proto)
   - [Producer Service](https://github.com/agentero/producerflowapi/wiki/API-Reference#producerflow-producer-v1-producer-proto)
 
-#### Schema & Data Models
-
-- [📋 gRPC Schema](Schema.md) - Protocol Buffer schema definitions and Buf Studio access
-
 #### Webhooks & Real-time Updates
 
 - [🔔 Webhooks](https://github.com/agentero/producerflowapi/wiki/Webhooks) - Real-time notifications and event handling
@@ -62,12 +58,6 @@ Welcome to [Producerflow](https://www.producerflow.com)'s developer docs, where 
   - Using Connect Interceptors
   - For Browser Environments
 - **Security Best Practices** - API key security guidelines
-
-### [📋 gRPC Schema](https://github.com/agentero/producerflowapi/wiki/Schema)
-
-- Protocol Buffer schema definitions
-- Buf Studio access for interactive exploration
-- Message and service documentation
 
 ### [🔔 Webhooks](https://github.com/agentero/producerflowapi/wiki/Webhooks)
 
