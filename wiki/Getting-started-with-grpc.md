@@ -26,22 +26,22 @@ By default, Connect servers support all three protocols. Clients default to usin
 
 ## Generated SDKs
 
-The recommended way to access our API is through generated SDKs. When we push our schemas to the Buf Schema Registry (BSR), it automatically generates SDKs for multiple languages that package up code generated from the Protobuf files.
+The recommended way to access our API is through generated SDKs. We generate SDKs directly in this repository from our Protocol Buffer schemas and publish them to their respective package registries.
 
 Using these SDKs provides several benefits:
 
 - Natively integrate across backend, frontend, and mobile clients
 - Consume SDKs without worrying about Protobuf environment, compiler, or plugins
-- Take advantage of automatic organization-wide SDK caching
-- View API reference documentation directly from the BSR
+- Use versioned, stable releases published to standard package registries
+- Access strongly-typed client interfaces generated from our API definitions
 
 ## Go SDK
 
-For Go developers, we provide a generated SDK that makes it easy to integrate with our services.
+For Go developers, we provide a generated SDK published as a Go module. You can import it directly using standard Go module syntax to integrate with our services.
 
 ## TypeScript SDK
 
-For TypeScript and JavaScript developers, we offer a generated SDK for both browser and Node.js environments.
+For TypeScript and JavaScript developers, we offer a generated SDK published to npm for both browser and Node.js environments.
 
 ## Additional Language Support
 
