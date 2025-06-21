@@ -222,6 +222,8 @@ message CreateAgencyOnboardingURLRequest {
     Address physical_address = 12;
     // Invoicing address of the agency
     Address invoicing_address = 13;
+    // Organization ID of the agency
+    string organization_id = 15;
 
     // Principal is the person responsible for the agency
     message Principal {
