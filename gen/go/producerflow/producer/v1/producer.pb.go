@@ -3343,10 +3343,12 @@ type CreateAgencyOnboardingURLRequest_Agency struct {
 	// Physical address of the agency
 	PhysicalAddress *Address `protobuf:"bytes,12,opt,name=physical_address,json=physicalAddress,proto3" json:"physical_address,omitempty"`
 	// Invoicing address of the agency
-	InvoicingAddress *Address                                           `protobuf:"bytes,13,opt,name=invoicing_address,json=invoicingAddress,proto3" json:"invoicing_address,omitempty"`
-	Principal        *CreateAgencyOnboardingURLRequest_Agency_Principal `protobuf:"bytes,14,opt,name=principal,proto3" json:"principal,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	InvoicingAddress *Address `protobuf:"bytes,13,opt,name=invoicing_address,json=invoicingAddress,proto3" json:"invoicing_address,omitempty"`
+	// Organization ID of the agency
+	OrganizationId string                                             `protobuf:"bytes,15,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	Principal      *CreateAgencyOnboardingURLRequest_Agency_Principal `protobuf:"bytes,14,opt,name=principal,proto3" json:"principal,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreateAgencyOnboardingURLRequest_Agency) Reset() {
@@ -3468,6 +3470,13 @@ func (x *CreateAgencyOnboardingURLRequest_Agency) GetInvoicingAddress() *Address
 		return x.InvoicingAddress
 	}
 	return nil
+}
+
+func (x *CreateAgencyOnboardingURLRequest_Agency) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
 }
 
 func (x *CreateAgencyOnboardingURLRequest_Agency) GetPrincipal() *CreateAgencyOnboardingURLRequest_Agency_Principal {
@@ -5862,9 +5871,9 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\x05state\x18\x03 \x01(\tB\b\xbaH\x05r\x03\x98\x01\x02R\x05state\x12\x1b\n" +
 	"\x03zip\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x01\x18\n" +
 	"R\x03zip\x12\x16\n" +
-	"\x06county\x18\x05 \x01(\tR\x06county\"\xaf\b\n" +
+	"\x06county\x18\x05 \x01(\tR\x06county\"\xd8\b\n" +
 	" CreateAgencyOnboardingURLRequest\x12Y\n" +
-	"\x06agency\x18\x01 \x01(\v2A.producerflow.producer.v1.CreateAgencyOnboardingURLRequest.AgencyR\x06agency\x1a\xaf\a\n" +
+	"\x06agency\x18\x01 \x01(\v2A.producerflow.producer.v1.CreateAgencyOnboardingURLRequest.AgencyR\x06agency\x1a\xd8\a\n" +
 	"\x06Agency\x12\x1e\n" +
 	"\x04name\x18\x01 \x01(\tB\n" +
 	"\xbaH\a\xc8\x01\x01r\x02\x10\x01R\x04name\x12S\n" +
@@ -5881,7 +5890,8 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	" \x01(\tR\x03npn\x12J\n" +
 	"\x0fmailing_address\x18\v \x01(\v2!.producerflow.producer.v1.AddressR\x0emailingAddress\x12L\n" +
 	"\x10physical_address\x18\f \x01(\v2!.producerflow.producer.v1.AddressR\x0fphysicalAddress\x12N\n" +
-	"\x11invoicing_address\x18\r \x01(\v2!.producerflow.producer.v1.AddressR\x10invoicingAddress\x12i\n" +
+	"\x11invoicing_address\x18\r \x01(\v2!.producerflow.producer.v1.AddressR\x10invoicingAddress\x12'\n" +
+	"\x0forganization_id\x18\x0f \x01(\tR\x0eorganizationId\x12i\n" +
 	"\tprincipal\x18\x0e \x01(\v2K.producerflow.producer.v1.CreateAgencyOnboardingURLRequest.Agency.PrincipalR\tprincipal\x1a\x80\x02\n" +
 	"\tPrincipal\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x1d\n" +

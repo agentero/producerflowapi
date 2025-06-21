@@ -755,6 +755,7 @@ Agency contains the information about the agency to be onboarded
 | mailing_address | [Address](#producerflow-producer-v1-Address) |  | Mailing address of the agency |
 | physical_address | [Address](#producerflow-producer-v1-Address) |  | Physical address of the agency |
 | invoicing_address | [Address](#producerflow-producer-v1-Address) |  | Invoicing address of the agency |
+| organization_id | [string](#string) |  | Organization ID of the agency |
 | principal | [CreateAgencyOnboardingURLRequest.Agency.Principal](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency-Principal) |  |  |
 
 
