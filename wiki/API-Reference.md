@@ -56,6 +56,8 @@
     - [GetProducerResponse](#producerflow-producer-v1-GetProducerResponse)
     - [ListNewProducersRequest](#producerflow-producer-v1-ListNewProducersRequest)
     - [ListNewProducersResponse](#producerflow-producer-v1-ListNewProducersResponse)
+    - [ListOrganizationsRequest](#producerflow-producer-v1-ListOrganizationsRequest)
+    - [ListOrganizationsResponse](#producerflow-producer-v1-ListOrganizationsResponse)
     - [LookupNPNByFEINRequest](#producerflow-producer-v1-LookupNPNByFEINRequest)
     - [LookupNPNByFEINResponse](#producerflow-producer-v1-LookupNPNByFEINResponse)
     - [NewAgencyRequest](#producerflow-producer-v1-NewAgencyRequest)
@@ -79,6 +81,7 @@
     - [NewProducerResponse](#producerflow-producer-v1-NewProducerResponse)
     - [NewProducersRequest](#producerflow-producer-v1-NewProducersRequest)
     - [NewProducersResponse](#producerflow-producer-v1-NewProducersResponse)
+    - [Organization](#producerflow-producer-v1-Organization)
     - [Producer](#producerflow-producer-v1-Producer)
     - [Producer.Agency](#producerflow-producer-v1-Producer-Agency)
     - [Producer.NIPR](#producerflow-producer-v1-Producer-NIPR)
@@ -755,7 +758,7 @@ Agency contains the information about the agency to be onboarded
 | mailing_address | [Address](#producerflow-producer-v1-Address) |  | Mailing address of the agency |
 | physical_address | [Address](#producerflow-producer-v1-Address) |  | Physical address of the agency |
 | invoicing_address | [Address](#producerflow-producer-v1-Address) |  | Invoicing address of the agency |
-| organization_id | [string](#string) |  | Organization ID of the agency |
+| organization_id | [string](#string) |  | Organization ID of the agency. To get valid organization IDs, use the ListOrganizations RPC. |
 | principal | [CreateAgencyOnboardingURLRequest.Agency.Principal](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency-Principal) |  |  |
 
 
@@ -973,6 +976,35 @@ ListNewProducersResponse contains a list of new producers that match the filter 
 
 
 
+<a name="producerflow-producer-v1-ListOrganizationsRequest"></a>
+
+### ListOrganizationsRequest
+ListOrganizationsRequest requests a list of all organizations associated with the tenant.
+This request requires no parameters  and will return all organizations that
+the authenticated tenant has access to.
+
+
+
+
+
+
+<a name="producerflow-producer-v1-ListOrganizationsResponse"></a>
+
+### ListOrganizationsResponse
+ListOrganizationsResponse contains the list of organizations associated with the tenant.
+The organizations are returned in no particular order. If the tenant has no organizations,
+the organizations list will be empty.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| organizations | [Organization](#producerflow-producer-v1-Organization) | repeated | List of organizations associated with the tenant. Each organization includes its unique identifier and display name. The list may be empty if no organizations are associated with the tenant. |
+
+
+
+
+
+
 <a name="producerflow-producer-v1-LookupNPNByFEINRequest"></a>
 
 ### LookupNPNByFEINRequest
@@ -1038,7 +1070,7 @@ Agency contains all information about the agency to be created
 | business_hours | [NewAgencyRequest.Agency.BusinessHours](#producerflow-producer-v1-NewAgencyRequest-Agency-BusinessHours) |  |  |
 | producers | [NewProducer](#producerflow-producer-v1-NewProducer) | repeated | List of producers associated with the agency |
 | points_of_contact | [NewAgencyRequest.Agency.PointOfContact](#producerflow-producer-v1-NewAgencyRequest-Agency-PointOfContact) | repeated |  |
-| root_organization_id | [string](#string) | optional | RootOrganizationID represents the ID of the root organization that the agency belongs to. An example of a root organization is an Aggregator (Like AgencyHero) or an Agency Network. We currently don&#39;t support multiple levels of organizations or agencies. Agencies are not always part of an organization, so this field is optional. |
+| root_organization_id | [string](#string) | optional | RootOrganizationID represents the ID of the root organization that the agency belongs to. An example of a root organization is an Aggregator (Like AgencyHero) or an Agency Network. We currently don&#39;t support multiple levels of organizations or agencies. Agencies are not always part of an organization, so this field is optional. To get valid organization IDs, use the ListOrganizations RPC. |
 | entity_type | [EntityType](#producerflow-producer-v1-EntityType) |  | EntityType represents the type of business entity for an agency. |
 | fein | [string](#string) | optional | FEIN represents the Federal Employer Identification Number of the agency. Required for ENTITY_TYPE_AGENCY Not allowed for ENTITY_TYPE_SOLE_PROPRIETOR |
 | mailing_address | [Address](#producerflow-producer-v1-Address) |  | MailingAddress represents the mailing address of the agency. |
@@ -1385,6 +1417,24 @@ NewProducersResponse contains the IDs of all created producers.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | producer_ids | [string](#string) | repeated | List of UUIDs for the newly created producers. The order matches the order of producers in the request. |
+
+
+
+
+
+
+<a name="producerflow-producer-v1-Organization"></a>
+
+### Organization
+Organization represents a logical grouping or hierarchical structure within a tenant.
+Organizations can be used to organize agencies into meaningful groups
+such as agency networks, aggregators, or other business hierarchies.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Unique identifier for the organization. This is a UUID that can be used to reference the organization in other API calls. |
+| name | [string](#string) |  | Display name of the organization. This is the human-readable name that identifies the organization to users. |
 
 
 
@@ -2008,6 +2058,7 @@ RPCs for starting the onboarding agency process.
 Business rules: - Sole proprietors can&#39;t have an agency NPN or additional producers - Regular agencies must provide either an NPN or a FEIN
 
 If validation passes, it creates the agency, principal, and any producers. Returns the IDs of the created agency, principal, and producers. |
+| ListOrganizations | [ListOrganizationsRequest](#producerflow-producer-v1-ListOrganizationsRequest) | [ListOrganizationsResponse](#producerflow-producer-v1-ListOrganizationsResponse) | ListOrganizations returns a list of organizations associated with the tenant. Organizations represent logical groupings or hierarchical structures within a tenant that can be used to organize agencies and producers. |
 | NewProducer | [NewProducerRequest](#producerflow-producer-v1-NewProducerRequest) | [NewProducerResponse](#producerflow-producer-v1-NewProducerResponse) | NewProducer creates a new producer and associates them with an existing agency. It validates the producer&#39;s information and checks that the email is unique. Returns the ID of the created producer. |
 | NewProducers | [NewProducersRequest](#producerflow-producer-v1-NewProducersRequest) | [NewProducersResponse](#producerflow-producer-v1-NewProducersResponse) | NewProducers creates multiple producers and associates them with the specified agency. It performs the same validations as NewProducer for each entry. Returns the IDs of all created producers. |
 | GetAgencyAndProducers | [GetAgencyAndProducersRequest](#producerflow-producer-v1-GetAgencyAndProducersRequest) | [GetAgencyAndProducersResponse](#producerflow-producer-v1-GetAgencyAndProducersResponse) | GetAgencyAndProducers retrieves details for an agency and all associated producers. Returns the agency information and a list of producers. |
