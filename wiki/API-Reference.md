@@ -6,12 +6,12 @@
 - [producerflow/appointment/v1/appointment.proto](#producerflow_appointment_v1_appointment-proto)
     - [Appointment](#producerflow-appointment-v1-Appointment)
     - [Carrier](#producerflow-appointment-v1-Carrier)
+    - [GetAppointableCarriersRequest](#producerflow-appointment-v1-GetAppointableCarriersRequest)
+    - [GetAppointableCarriersResponse](#producerflow-appointment-v1-GetAppointableCarriersResponse)
     - [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest)
     - [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse)
     - [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest)
     - [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse)
-    - [GetCarriersRequest](#producerflow-appointment-v1-GetCarriersRequest)
-    - [GetCarriersResponse](#producerflow-appointment-v1-GetCarriersResponse)
     - [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest)
     - [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse)
     - [License](#producerflow-appointment-v1-License)
@@ -178,6 +178,31 @@ Represents a carrier that is available to be appointed.
 
 
 
+<a name="producerflow-appointment-v1-GetAppointableCarriersRequest"></a>
+
+### GetAppointableCarriersRequest
+
+
+
+
+
+
+
+<a name="producerflow-appointment-v1-GetAppointableCarriersResponse"></a>
+
+### GetAppointableCarriersResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| carriers | [Carrier](#producerflow-appointment-v1-Carrier) | repeated | The list of carriers that are available to be appointed. |
+
+
+
+
+
+
 <a name="producerflow-appointment-v1-GetAppointmentFeesRequest"></a>
 
 ### GetAppointmentFeesRequest
@@ -232,31 +257,6 @@ Request to retrieve an appointment by ID.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | appointment | [Appointment](#producerflow-appointment-v1-Appointment) |  | The appointment details. |
-
-
-
-
-
-
-<a name="producerflow-appointment-v1-GetCarriersRequest"></a>
-
-### GetCarriersRequest
-
-
-
-
-
-
-
-<a name="producerflow-appointment-v1-GetCarriersResponse"></a>
-
-### GetCarriersResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| carriers | [Carrier](#producerflow-appointment-v1-Carrier) | repeated | The list of carriers that are available to be appointed. |
 
 
 
@@ -513,7 +513,7 @@ that is making the request.
 | ----------- | ------------ | ------------- | ------------|
 | GetAppointment | [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest) | [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse) | Retrieves the details of an appointment by its ID. |
 | GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
-| GetCarriers | [GetCarriersRequest](#producerflow-appointment-v1-GetCarriersRequest) | [GetCarriersResponse](#producerflow-appointment-v1-GetCarriersResponse) | Retrieves the carriers that are available to appoint licenses for the tenant. |
+| GetAppointableCarriers | [GetAppointableCarriersRequest](#producerflow-appointment-v1-GetAppointableCarriersRequest) | [GetAppointableCarriersResponse](#producerflow-appointment-v1-GetAppointableCarriersResponse) | Retrieves the carriers that are available to appoint licenses for the tenant. |
 | GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 | ListAppointments | [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest) | [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse) | Lists appointments for the tenant, optionally filtered by processing status. |
 | ListEligibleLicenses | [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest) | [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse) | Returns a list of licenses that are eligible to be appointed. |
@@ -2053,7 +2053,11 @@ RPCs for starting the onboarding agency process.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | CreateAgencyOnboardingURL | [CreateAgencyOnboardingURLRequest](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest) | [CreateAgencyOnboardingURLResponse](#producerflow-producer-v1-CreateAgencyOnboardingURLResponse) | CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency. The URL contains encoded information about the agency defaults and tenant context. Returns a URL string that can be shared with the agency for self-onboarding. |
-| NewAgency | [NewAgencyRequest](#producerflow-producer-v1-NewAgencyRequest) | [NewAgencyResponse](#producerflow-producer-v1-NewAgencyResponse) | NewAgency creates a new agency, optionally with associated producers. It performs the following validation checks: ensures all required fields are present and valid, checks whether the NPN is already registered, and verifies agency and principal information with NIPR. Business rules: sole proprietors can't have an agency NPN or additional producers, regular agencies must provide either an NPN or a FEIN. If validation passes, it creates the agency, principal, and any producers. Returns the IDs of the created agency, principal, and producers. |
+| NewAgency | [NewAgencyRequest](#producerflow-producer-v1-NewAgencyRequest) | [NewAgencyResponse](#producerflow-producer-v1-NewAgencyResponse) | NewAgency creates a new agency, optionally with associated producers. It performs the following validation checks: - Ensures all required fields are present and valid - Checks whether the NPN is already registered - Verifies agency and principal information with NIPR
+
+Business rules: - Sole proprietors can&#39;t have an agency NPN or additional producers - Regular agencies must provide either an NPN or a FEIN
+
+If validation passes, it creates the agency, principal, and any producers. Returns the IDs of the created agency, principal, and producers. |
 | ListOrganizations | [ListOrganizationsRequest](#producerflow-producer-v1-ListOrganizationsRequest) | [ListOrganizationsResponse](#producerflow-producer-v1-ListOrganizationsResponse) | ListOrganizations returns a list of organizations associated with the tenant. Organizations represent logical groupings or hierarchical structures within a tenant that can be used to organize agencies and producers. |
 | NewProducer | [NewProducerRequest](#producerflow-producer-v1-NewProducerRequest) | [NewProducerResponse](#producerflow-producer-v1-NewProducerResponse) | NewProducer creates a new producer and associates them with an existing agency. It validates the producer&#39;s information and checks that the email is unique. Returns the ID of the created producer. |
 | NewProducers | [NewProducersRequest](#producerflow-producer-v1-NewProducersRequest) | [NewProducersResponse](#producerflow-producer-v1-NewProducersResponse) | NewProducers creates multiple producers and associates them with the specified agency. It performs the same validations as NewProducer for each entry. Returns the IDs of all created producers. |
