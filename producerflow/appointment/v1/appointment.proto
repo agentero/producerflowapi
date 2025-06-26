@@ -29,7 +29,7 @@ service AppointmentService {
   rpc GetAppointmentFees(GetAppointmentFeesRequest) returns (GetAppointmentFeesResponse);
 
   // Retrieves the carriers that are available to appoint licenses for the tenant.
-  rpc GetCarriers(GetCarriersRequest) returns (GetCarriersResponse);
+  rpc GetAppointableCarriers(GetAppointableCarriersRequest) returns (GetAppointableCarriersResponse);
 
   // Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
   // as integer values in cents. E.g. $10.34 is sent as 1034.
@@ -152,9 +152,9 @@ message GetTerminationFeesResponse {
   int64 fee_in_cents = 1;
 }
 
-message GetCarriersRequest {}
+message GetAppointableCarriersRequest {}
 
-message GetCarriersResponse {
+message GetAppointableCarriersResponse {
   // The list of carriers that are available to be appointed.
   repeated Carrier carriers = 1;
 }
