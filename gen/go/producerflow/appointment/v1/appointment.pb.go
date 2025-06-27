@@ -924,26 +924,26 @@ func (x *GetTerminationFeesResponse) GetFeeInCents() int64 {
 	return 0
 }
 
-type GetCarriersRequest struct {
+type GetAppointableCarriersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetCarriersRequest) Reset() {
-	*x = GetCarriersRequest{}
+func (x *GetAppointableCarriersRequest) Reset() {
+	*x = GetAppointableCarriersRequest{}
 	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetCarriersRequest) String() string {
+func (x *GetAppointableCarriersRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetCarriersRequest) ProtoMessage() {}
+func (*GetAppointableCarriersRequest) ProtoMessage() {}
 
-func (x *GetCarriersRequest) ProtoReflect() protoreflect.Message {
+func (x *GetAppointableCarriersRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -955,12 +955,12 @@ func (x *GetCarriersRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetCarriersRequest.ProtoReflect.Descriptor instead.
-func (*GetCarriersRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAppointableCarriersRequest.ProtoReflect.Descriptor instead.
+func (*GetAppointableCarriersRequest) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{14}
 }
 
-type GetCarriersResponse struct {
+type GetAppointableCarriersResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The list of carriers that are available to be appointed.
 	Carriers      []*Carrier `protobuf:"bytes,1,rep,name=carriers,proto3" json:"carriers,omitempty"`
@@ -968,20 +968,20 @@ type GetCarriersResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetCarriersResponse) Reset() {
-	*x = GetCarriersResponse{}
+func (x *GetAppointableCarriersResponse) Reset() {
+	*x = GetAppointableCarriersResponse{}
 	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetCarriersResponse) String() string {
+func (x *GetAppointableCarriersResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetCarriersResponse) ProtoMessage() {}
+func (*GetAppointableCarriersResponse) ProtoMessage() {}
 
-func (x *GetCarriersResponse) ProtoReflect() protoreflect.Message {
+func (x *GetAppointableCarriersResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -993,12 +993,12 @@ func (x *GetCarriersResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetCarriersResponse.ProtoReflect.Descriptor instead.
-func (*GetCarriersResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetAppointableCarriersResponse.ProtoReflect.Descriptor instead.
+func (*GetAppointableCarriersResponse) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *GetCarriersResponse) GetCarriers() []*Carrier {
+func (x *GetAppointableCarriersResponse) GetCarriers() []*Carrier {
 	if x != nil {
 		return x.Carriers
 	}
@@ -1381,9 +1381,9 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x0eappointment_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rappointmentId\">\n" +
 	"\x1aGetTerminationFeesResponse\x12 \n" +
 	"\ffee_in_cents\x18\x01 \x01(\x03R\n" +
-	"feeInCents\"\x14\n" +
-	"\x12GetCarriersRequest\"W\n" +
-	"\x13GetCarriersResponse\x12@\n" +
+	"feeInCents\"\x1f\n" +
+	"\x1dGetAppointableCarriersRequest\"b\n" +
+	"\x1eGetAppointableCarriersResponse\x12@\n" +
 	"\bcarriers\x18\x01 \x03(\v2$.producerflow.appointment.v1.CarrierR\bcarriers\"b\n" +
 	"\aCarrier\x12\x1d\n" +
 	"\n" +
@@ -1431,11 +1431,11 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x1cAPPOINTMENT_TYPE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19APPOINTMENT_TYPE_REGISTRY\x10\x01\x12\x1d\n" +
 	"\x19APPOINTMENT_TYPE_UP_FRONT\x10\x02\x12!\n" +
-	"\x1dAPPOINTMENT_TYPE_JUST_IN_TIME\x10\x032\xb6\b\n" +
+	"\x1dAPPOINTMENT_TYPE_JUST_IN_TIME\x10\x032\xd8\b\n" +
 	"\x12AppointmentService\x12y\n" +
 	"\x0eGetAppointment\x122.producerflow.appointment.v1.GetAppointmentRequest\x1a3.producerflow.appointment.v1.GetAppointmentResponse\x12\x85\x01\n" +
-	"\x12GetAppointmentFees\x126.producerflow.appointment.v1.GetAppointmentFeesRequest\x1a7.producerflow.appointment.v1.GetAppointmentFeesResponse\x12p\n" +
-	"\vGetCarriers\x12/.producerflow.appointment.v1.GetCarriersRequest\x1a0.producerflow.appointment.v1.GetCarriersResponse\x12\x85\x01\n" +
+	"\x12GetAppointmentFees\x126.producerflow.appointment.v1.GetAppointmentFeesRequest\x1a7.producerflow.appointment.v1.GetAppointmentFeesResponse\x12\x91\x01\n" +
+	"\x16GetAppointableCarriers\x12:.producerflow.appointment.v1.GetAppointableCarriersRequest\x1a;.producerflow.appointment.v1.GetAppointableCarriersResponse\x12\x85\x01\n" +
 	"\x12GetTerminationFees\x126.producerflow.appointment.v1.GetTerminationFeesRequest\x1a7.producerflow.appointment.v1.GetTerminationFeesResponse\x12\x7f\n" +
 	"\x10ListAppointments\x124.producerflow.appointment.v1.ListAppointmentsRequest\x1a5.producerflow.appointment.v1.ListAppointmentsResponse\x12\x8b\x01\n" +
 	"\x14ListEligibleLicenses\x128.producerflow.appointment.v1.ListEligibleLicensesRequest\x1a9.producerflow.appointment.v1.ListEligibleLicensesResponse\x12\x85\x01\n" +
@@ -1458,29 +1458,29 @@ func file_producerflow_appointment_v1_appointment_proto_rawDescGZIP() []byte {
 var file_producerflow_appointment_v1_appointment_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_producerflow_appointment_v1_appointment_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_producerflow_appointment_v1_appointment_proto_goTypes = []any{
-	(EligibilityStatus)(0),               // 0: producerflow.appointment.v1.EligibilityStatus
-	(ProcessingStatus)(0),                // 1: producerflow.appointment.v1.ProcessingStatus
-	(AppointmentType)(0),                 // 2: producerflow.appointment.v1.AppointmentType
-	(*RequestAppointmentRequest)(nil),    // 3: producerflow.appointment.v1.RequestAppointmentRequest
-	(*RequestAppointmentResponse)(nil),   // 4: producerflow.appointment.v1.RequestAppointmentResponse
-	(*GetAppointmentRequest)(nil),        // 5: producerflow.appointment.v1.GetAppointmentRequest
-	(*GetAppointmentResponse)(nil),       // 6: producerflow.appointment.v1.GetAppointmentResponse
-	(*ListAppointmentsRequest)(nil),      // 7: producerflow.appointment.v1.ListAppointmentsRequest
-	(*ListAppointmentsResponse)(nil),     // 8: producerflow.appointment.v1.ListAppointmentsResponse
-	(*TerminateAppointmentRequest)(nil),  // 9: producerflow.appointment.v1.TerminateAppointmentRequest
-	(*TerminateAppointmentResponse)(nil), // 10: producerflow.appointment.v1.TerminateAppointmentResponse
-	(*ListEligibleLicensesRequest)(nil),  // 11: producerflow.appointment.v1.ListEligibleLicensesRequest
-	(*ListEligibleLicensesResponse)(nil), // 12: producerflow.appointment.v1.ListEligibleLicensesResponse
-	(*GetAppointmentFeesRequest)(nil),    // 13: producerflow.appointment.v1.GetAppointmentFeesRequest
-	(*GetAppointmentFeesResponse)(nil),   // 14: producerflow.appointment.v1.GetAppointmentFeesResponse
-	(*GetTerminationFeesRequest)(nil),    // 15: producerflow.appointment.v1.GetTerminationFeesRequest
-	(*GetTerminationFeesResponse)(nil),   // 16: producerflow.appointment.v1.GetTerminationFeesResponse
-	(*GetCarriersRequest)(nil),           // 17: producerflow.appointment.v1.GetCarriersRequest
-	(*GetCarriersResponse)(nil),          // 18: producerflow.appointment.v1.GetCarriersResponse
-	(*Carrier)(nil),                      // 19: producerflow.appointment.v1.Carrier
-	(*Appointment)(nil),                  // 20: producerflow.appointment.v1.Appointment
-	(*License)(nil),                      // 21: producerflow.appointment.v1.License
-	(*timestamppb.Timestamp)(nil),        // 22: google.protobuf.Timestamp
+	(EligibilityStatus)(0),                 // 0: producerflow.appointment.v1.EligibilityStatus
+	(ProcessingStatus)(0),                  // 1: producerflow.appointment.v1.ProcessingStatus
+	(AppointmentType)(0),                   // 2: producerflow.appointment.v1.AppointmentType
+	(*RequestAppointmentRequest)(nil),      // 3: producerflow.appointment.v1.RequestAppointmentRequest
+	(*RequestAppointmentResponse)(nil),     // 4: producerflow.appointment.v1.RequestAppointmentResponse
+	(*GetAppointmentRequest)(nil),          // 5: producerflow.appointment.v1.GetAppointmentRequest
+	(*GetAppointmentResponse)(nil),         // 6: producerflow.appointment.v1.GetAppointmentResponse
+	(*ListAppointmentsRequest)(nil),        // 7: producerflow.appointment.v1.ListAppointmentsRequest
+	(*ListAppointmentsResponse)(nil),       // 8: producerflow.appointment.v1.ListAppointmentsResponse
+	(*TerminateAppointmentRequest)(nil),    // 9: producerflow.appointment.v1.TerminateAppointmentRequest
+	(*TerminateAppointmentResponse)(nil),   // 10: producerflow.appointment.v1.TerminateAppointmentResponse
+	(*ListEligibleLicensesRequest)(nil),    // 11: producerflow.appointment.v1.ListEligibleLicensesRequest
+	(*ListEligibleLicensesResponse)(nil),   // 12: producerflow.appointment.v1.ListEligibleLicensesResponse
+	(*GetAppointmentFeesRequest)(nil),      // 13: producerflow.appointment.v1.GetAppointmentFeesRequest
+	(*GetAppointmentFeesResponse)(nil),     // 14: producerflow.appointment.v1.GetAppointmentFeesResponse
+	(*GetTerminationFeesRequest)(nil),      // 15: producerflow.appointment.v1.GetTerminationFeesRequest
+	(*GetTerminationFeesResponse)(nil),     // 16: producerflow.appointment.v1.GetTerminationFeesResponse
+	(*GetAppointableCarriersRequest)(nil),  // 17: producerflow.appointment.v1.GetAppointableCarriersRequest
+	(*GetAppointableCarriersResponse)(nil), // 18: producerflow.appointment.v1.GetAppointableCarriersResponse
+	(*Carrier)(nil),                        // 19: producerflow.appointment.v1.Carrier
+	(*Appointment)(nil),                    // 20: producerflow.appointment.v1.Appointment
+	(*License)(nil),                        // 21: producerflow.appointment.v1.License
+	(*timestamppb.Timestamp)(nil),          // 22: google.protobuf.Timestamp
 }
 var file_producerflow_appointment_v1_appointment_proto_depIdxs = []int32{
 	1,  // 0: producerflow.appointment.v1.RequestAppointmentResponse.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
@@ -1488,7 +1488,7 @@ var file_producerflow_appointment_v1_appointment_proto_depIdxs = []int32{
 	1,  // 2: producerflow.appointment.v1.ListAppointmentsRequest.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
 	20, // 3: producerflow.appointment.v1.ListAppointmentsResponse.appointments:type_name -> producerflow.appointment.v1.Appointment
 	21, // 4: producerflow.appointment.v1.ListEligibleLicensesResponse.licenses:type_name -> producerflow.appointment.v1.License
-	19, // 5: producerflow.appointment.v1.GetCarriersResponse.carriers:type_name -> producerflow.appointment.v1.Carrier
+	19, // 5: producerflow.appointment.v1.GetAppointableCarriersResponse.carriers:type_name -> producerflow.appointment.v1.Carrier
 	21, // 6: producerflow.appointment.v1.Appointment.license:type_name -> producerflow.appointment.v1.License
 	2,  // 7: producerflow.appointment.v1.Appointment.appointment_type:type_name -> producerflow.appointment.v1.AppointmentType
 	0,  // 8: producerflow.appointment.v1.Appointment.eligibility_status:type_name -> producerflow.appointment.v1.EligibilityStatus
@@ -1497,7 +1497,7 @@ var file_producerflow_appointment_v1_appointment_proto_depIdxs = []int32{
 	22, // 11: producerflow.appointment.v1.Appointment.updated_at:type_name -> google.protobuf.Timestamp
 	5,  // 12: producerflow.appointment.v1.AppointmentService.GetAppointment:input_type -> producerflow.appointment.v1.GetAppointmentRequest
 	13, // 13: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:input_type -> producerflow.appointment.v1.GetAppointmentFeesRequest
-	17, // 14: producerflow.appointment.v1.AppointmentService.GetCarriers:input_type -> producerflow.appointment.v1.GetCarriersRequest
+	17, // 14: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:input_type -> producerflow.appointment.v1.GetAppointableCarriersRequest
 	15, // 15: producerflow.appointment.v1.AppointmentService.GetTerminationFees:input_type -> producerflow.appointment.v1.GetTerminationFeesRequest
 	7,  // 16: producerflow.appointment.v1.AppointmentService.ListAppointments:input_type -> producerflow.appointment.v1.ListAppointmentsRequest
 	11, // 17: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:input_type -> producerflow.appointment.v1.ListEligibleLicensesRequest
@@ -1505,7 +1505,7 @@ var file_producerflow_appointment_v1_appointment_proto_depIdxs = []int32{
 	9,  // 19: producerflow.appointment.v1.AppointmentService.TerminateAppointment:input_type -> producerflow.appointment.v1.TerminateAppointmentRequest
 	6,  // 20: producerflow.appointment.v1.AppointmentService.GetAppointment:output_type -> producerflow.appointment.v1.GetAppointmentResponse
 	14, // 21: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:output_type -> producerflow.appointment.v1.GetAppointmentFeesResponse
-	18, // 22: producerflow.appointment.v1.AppointmentService.GetCarriers:output_type -> producerflow.appointment.v1.GetCarriersResponse
+	18, // 22: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:output_type -> producerflow.appointment.v1.GetAppointableCarriersResponse
 	16, // 23: producerflow.appointment.v1.AppointmentService.GetTerminationFees:output_type -> producerflow.appointment.v1.GetTerminationFeesResponse
 	8,  // 24: producerflow.appointment.v1.AppointmentService.ListAppointments:output_type -> producerflow.appointment.v1.ListAppointmentsResponse
 	12, // 25: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:output_type -> producerflow.appointment.v1.ListEligibleLicensesResponse

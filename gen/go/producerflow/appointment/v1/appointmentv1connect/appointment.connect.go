@@ -39,9 +39,9 @@ const (
 	// AppointmentServiceGetAppointmentFeesProcedure is the fully-qualified name of the
 	// AppointmentService's GetAppointmentFees RPC.
 	AppointmentServiceGetAppointmentFeesProcedure = "/producerflow.appointment.v1.AppointmentService/GetAppointmentFees"
-	// AppointmentServiceGetCarriersProcedure is the fully-qualified name of the AppointmentService's
-	// GetCarriers RPC.
-	AppointmentServiceGetCarriersProcedure = "/producerflow.appointment.v1.AppointmentService/GetCarriers"
+	// AppointmentServiceGetAppointableCarriersProcedure is the fully-qualified name of the
+	// AppointmentService's GetAppointableCarriers RPC.
+	AppointmentServiceGetAppointableCarriersProcedure = "/producerflow.appointment.v1.AppointmentService/GetAppointableCarriers"
 	// AppointmentServiceGetTerminationFeesProcedure is the fully-qualified name of the
 	// AppointmentService's GetTerminationFees RPC.
 	AppointmentServiceGetTerminationFeesProcedure = "/producerflow.appointment.v1.AppointmentService/GetTerminationFees"
@@ -68,7 +68,7 @@ type AppointmentServiceClient interface {
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
-	GetCarriers(context.Context, *connect.Request[v1.GetCarriersRequest]) (*connect.Response[v1.GetCarriersResponse], error)
+	GetAppointableCarriers(context.Context, *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error)
 	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(context.Context, *connect.Request[v1.GetTerminationFeesRequest]) (*connect.Response[v1.GetTerminationFeesResponse], error)
@@ -111,10 +111,10 @@ func NewAppointmentServiceClient(httpClient connect.HTTPClient, baseURL string, 
 			connect.WithSchema(appointmentServiceMethods.ByName("GetAppointmentFees")),
 			connect.WithClientOptions(opts...),
 		),
-		getCarriers: connect.NewClient[v1.GetCarriersRequest, v1.GetCarriersResponse](
+		getAppointableCarriers: connect.NewClient[v1.GetAppointableCarriersRequest, v1.GetAppointableCarriersResponse](
 			httpClient,
-			baseURL+AppointmentServiceGetCarriersProcedure,
-			connect.WithSchema(appointmentServiceMethods.ByName("GetCarriers")),
+			baseURL+AppointmentServiceGetAppointableCarriersProcedure,
+			connect.WithSchema(appointmentServiceMethods.ByName("GetAppointableCarriers")),
 			connect.WithClientOptions(opts...),
 		),
 		getTerminationFees: connect.NewClient[v1.GetTerminationFeesRequest, v1.GetTerminationFeesResponse](
@@ -152,14 +152,14 @@ func NewAppointmentServiceClient(httpClient connect.HTTPClient, baseURL string, 
 
 // appointmentServiceClient implements AppointmentServiceClient.
 type appointmentServiceClient struct {
-	getAppointment       *connect.Client[v1.GetAppointmentRequest, v1.GetAppointmentResponse]
-	getAppointmentFees   *connect.Client[v1.GetAppointmentFeesRequest, v1.GetAppointmentFeesResponse]
-	getCarriers          *connect.Client[v1.GetCarriersRequest, v1.GetCarriersResponse]
-	getTerminationFees   *connect.Client[v1.GetTerminationFeesRequest, v1.GetTerminationFeesResponse]
-	listAppointments     *connect.Client[v1.ListAppointmentsRequest, v1.ListAppointmentsResponse]
-	listEligibleLicenses *connect.Client[v1.ListEligibleLicensesRequest, v1.ListEligibleLicensesResponse]
-	requestAppointment   *connect.Client[v1.RequestAppointmentRequest, v1.RequestAppointmentResponse]
-	terminateAppointment *connect.Client[v1.TerminateAppointmentRequest, v1.TerminateAppointmentResponse]
+	getAppointment         *connect.Client[v1.GetAppointmentRequest, v1.GetAppointmentResponse]
+	getAppointmentFees     *connect.Client[v1.GetAppointmentFeesRequest, v1.GetAppointmentFeesResponse]
+	getAppointableCarriers *connect.Client[v1.GetAppointableCarriersRequest, v1.GetAppointableCarriersResponse]
+	getTerminationFees     *connect.Client[v1.GetTerminationFeesRequest, v1.GetTerminationFeesResponse]
+	listAppointments       *connect.Client[v1.ListAppointmentsRequest, v1.ListAppointmentsResponse]
+	listEligibleLicenses   *connect.Client[v1.ListEligibleLicensesRequest, v1.ListEligibleLicensesResponse]
+	requestAppointment     *connect.Client[v1.RequestAppointmentRequest, v1.RequestAppointmentResponse]
+	terminateAppointment   *connect.Client[v1.TerminateAppointmentRequest, v1.TerminateAppointmentResponse]
 }
 
 // GetAppointment calls producerflow.appointment.v1.AppointmentService.GetAppointment.
@@ -172,9 +172,10 @@ func (c *appointmentServiceClient) GetAppointmentFees(ctx context.Context, req *
 	return c.getAppointmentFees.CallUnary(ctx, req)
 }
 
-// GetCarriers calls producerflow.appointment.v1.AppointmentService.GetCarriers.
-func (c *appointmentServiceClient) GetCarriers(ctx context.Context, req *connect.Request[v1.GetCarriersRequest]) (*connect.Response[v1.GetCarriersResponse], error) {
-	return c.getCarriers.CallUnary(ctx, req)
+// GetAppointableCarriers calls
+// producerflow.appointment.v1.AppointmentService.GetAppointableCarriers.
+func (c *appointmentServiceClient) GetAppointableCarriers(ctx context.Context, req *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error) {
+	return c.getAppointableCarriers.CallUnary(ctx, req)
 }
 
 // GetTerminationFees calls producerflow.appointment.v1.AppointmentService.GetTerminationFees.
@@ -211,7 +212,7 @@ type AppointmentServiceHandler interface {
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
-	GetCarriers(context.Context, *connect.Request[v1.GetCarriersRequest]) (*connect.Response[v1.GetCarriersResponse], error)
+	GetAppointableCarriers(context.Context, *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error)
 	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
 	// as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(context.Context, *connect.Request[v1.GetTerminationFeesRequest]) (*connect.Response[v1.GetTerminationFeesResponse], error)
@@ -249,10 +250,10 @@ func NewAppointmentServiceHandler(svc AppointmentServiceHandler, opts ...connect
 		connect.WithSchema(appointmentServiceMethods.ByName("GetAppointmentFees")),
 		connect.WithHandlerOptions(opts...),
 	)
-	appointmentServiceGetCarriersHandler := connect.NewUnaryHandler(
-		AppointmentServiceGetCarriersProcedure,
-		svc.GetCarriers,
-		connect.WithSchema(appointmentServiceMethods.ByName("GetCarriers")),
+	appointmentServiceGetAppointableCarriersHandler := connect.NewUnaryHandler(
+		AppointmentServiceGetAppointableCarriersProcedure,
+		svc.GetAppointableCarriers,
+		connect.WithSchema(appointmentServiceMethods.ByName("GetAppointableCarriers")),
 		connect.WithHandlerOptions(opts...),
 	)
 	appointmentServiceGetTerminationFeesHandler := connect.NewUnaryHandler(
@@ -291,8 +292,8 @@ func NewAppointmentServiceHandler(svc AppointmentServiceHandler, opts ...connect
 			appointmentServiceGetAppointmentHandler.ServeHTTP(w, r)
 		case AppointmentServiceGetAppointmentFeesProcedure:
 			appointmentServiceGetAppointmentFeesHandler.ServeHTTP(w, r)
-		case AppointmentServiceGetCarriersProcedure:
-			appointmentServiceGetCarriersHandler.ServeHTTP(w, r)
+		case AppointmentServiceGetAppointableCarriersProcedure:
+			appointmentServiceGetAppointableCarriersHandler.ServeHTTP(w, r)
 		case AppointmentServiceGetTerminationFeesProcedure:
 			appointmentServiceGetTerminationFeesHandler.ServeHTTP(w, r)
 		case AppointmentServiceListAppointmentsProcedure:
@@ -320,8 +321,8 @@ func (UnimplementedAppointmentServiceHandler) GetAppointmentFees(context.Context
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.GetAppointmentFees is not implemented"))
 }
 
-func (UnimplementedAppointmentServiceHandler) GetCarriers(context.Context, *connect.Request[v1.GetCarriersRequest]) (*connect.Response[v1.GetCarriersResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.GetCarriers is not implemented"))
+func (UnimplementedAppointmentServiceHandler) GetAppointableCarriers(context.Context, *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.appointment.v1.AppointmentService.GetAppointableCarriers is not implemented"))
 }
 
 func (UnimplementedAppointmentServiceHandler) GetTerminationFees(context.Context, *connect.Request[v1.GetTerminationFeesRequest]) (*connect.Response[v1.GetTerminationFeesResponse], error) {
