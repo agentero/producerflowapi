@@ -98,7 +98,6 @@
       ]
     }
   ],
-
   "agency_nipr_addresses": [
     {
       "address_type": "Business",
@@ -108,5 +107,6 @@
       "street": "123 Insurance Ave",
       "zip_code": "60601"
     }
-  ]
+  ],
+  "requested_appointment_states": ["OH", "FL"]
 }

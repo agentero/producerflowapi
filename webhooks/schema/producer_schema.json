@@ -148,6 +148,13 @@
           "zip_code": { "type": "string" }
         }
       }
+    },
+    "requested_appointment_states": {
+      "type": "array",
+      "description": "The list of requested appointment states for the producer when the producer was onboarded",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": ["id", "timestamp", "producer_id"],

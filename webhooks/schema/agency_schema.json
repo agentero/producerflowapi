@@ -169,6 +169,13 @@
           "zip_code": { "type": "string" }
         }
       }
+    },
+    "requested_appointment_states": {
+      "type": "array",
+      "description": "The list of requested appointment states for the agency when the agency was onboarded",
+      "items": {
+        "type": "string"
+      }
     }
   },
   "required": ["id", "timestamp", "agency_id"],

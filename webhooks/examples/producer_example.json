@@ -90,5 +90,6 @@
       "street": "456 Mission Street",
       "zip_code": "94105"
     }
-  ]
+  ],
+  "requested_appointment_states": ["OH", "FL"]
 }
