@@ -113,8 +113,8 @@ All webhook payloads share a common base structure with the following fields:
 - `agency.updated` - Existing agency record modified  
 - `agency.synced` - Agency data synchronized from NIPR (equivalent to "Resync")
 
-**Schema Reference**: [`webhooks/schema/agency_schema.json`](../webhooks/schema/agency_schema.json)  
-**Example Payload**: [`webhooks/examples/agency_example.json`](../webhooks/examples/agency_example.json)
+**Schema Reference**: [agency_schema.json](../webhooks/schema/agency_schema.json)  
+**Example Payload**: [agency_example.json](../webhooks/examples/agency_example.json)
 
 #### Producer Webhooks
 
@@ -124,8 +124,8 @@ All webhook payloads share a common base structure with the following fields:
 - `producer.updated` - Existing producer record modified
 - `producer.synced` - Producer data synchronized from NIPR (equivalent to "Resync")
 
-**Schema Reference**: [`webhooks/schema/producer_schema.json`](../webhooks/schema/producer_schema.json)  
-**Example Payload**: [`webhooks/examples/producer_example.json`](../webhooks/examples/producer_example.json)
+**Schema Reference**: [producer_schema.json](../webhooks/schema/producer_schema.json)  
+**Example Payload**: [producer_example.json](../webhooks/examples/producer_example.json)
 
 #### Contact Webhooks
 
@@ -135,8 +135,8 @@ All webhook payloads share a common base structure with the following fields:
 - `contact.updated` - Existing contact record modified
 - `contact.deleted` - Contact record removed
 
-**Schema Reference**: [`webhooks/schema/contact_schema.json`](../webhooks/schema/contact_schema.json)  
-**Example Payload**: [`webhooks/examples/contact_example.json`](../webhooks/examples/contact_example.json)
+**Schema Reference**: [contact_schema.json](../webhooks/schema/contact_schema.json)  
+**Example Payload**: [contact_example.json](../webhooks/examples/contact_example.json)
 
 ### Key Elements
 
