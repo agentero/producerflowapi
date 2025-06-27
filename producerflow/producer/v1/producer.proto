@@ -831,6 +831,9 @@ message Agency {
   // IVANS account information for electronic carrier communication.
   // This is optional and only used if the agency uses IVANS.
   IvansAccount ivans_account = 8;
+
+  // The list of requested appointments for the agency.
+  repeated string requested_appointments = 9;
 }
 
 // Producer represents a producer that has been onboarded.
@@ -1041,6 +1044,9 @@ message Producer {
   // Indicates whether this producer is the principal of an agency.
   // A principal producer has additional responsibilities and permissions.
   bool is_principal = 12;
+
+  // The list of requested appointments for the producer.
+  repeated string requested_appointments = 14;
 }
 
 // NewProducer represents the data needed to create a new producer in the system.
