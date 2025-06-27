@@ -569,6 +569,7 @@ Agency represents a complete agency entity with all associated information.
 | eo_info | [Agency.EOInfo](#producerflow-producer-v1-Agency-EOInfo) |  |  |
 | principal | [Agency.Principal](#producerflow-producer-v1-Agency-Principal) |  | Information about the agency&#39;s principal. This is a required field as each agency must have a principal. |
 | ivans_account | [Agency.IvansAccount](#producerflow-producer-v1-Agency-IvansAccount) |  | IVANS account information for electronic carrier communication. This is optional and only used if the agency uses IVANS. |
+| requested_appointments | [string](#string) | repeated | The list of requested appointments for the agency. |
 
 
 
@@ -1460,6 +1461,7 @@ Internal ID of the producer.
 | nipr | [Producer.NIPR](#producerflow-producer-v1-Producer-NIPR) |  | Data synchronized from the NIPR service. Contains license information, biographic data, regulatory actions, and carrier appointments. |
 | onboarding_status | [ProducerOnboardingState](#producerflow-producer-v1-ProducerOnboardingState) |  | **Deprecated.** The status of the producer onboarding process. This field is deprecated and should not be used in new code. |
 | is_principal | [bool](#bool) |  | Indicates whether this producer is the principal of an agency. A principal producer has additional responsibilities and permissions. |
+| requested_appointments | [string](#string) | repeated | The list of requested appointments for the producer. |
 
 
 

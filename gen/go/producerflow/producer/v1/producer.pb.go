@@ -1453,9 +1453,11 @@ type Agency struct {
 	Principal *Agency_Principal `protobuf:"bytes,7,opt,name=principal,proto3" json:"principal,omitempty"`
 	// IVANS account information for electronic carrier communication.
 	// This is optional and only used if the agency uses IVANS.
-	IvansAccount  *Agency_IvansAccount `protobuf:"bytes,8,opt,name=ivans_account,json=ivansAccount,proto3" json:"ivans_account,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	IvansAccount *Agency_IvansAccount `protobuf:"bytes,8,opt,name=ivans_account,json=ivansAccount,proto3" json:"ivans_account,omitempty"`
+	// The list of requested appointments for the agency.
+	RequestedAppointments []string `protobuf:"bytes,9,rep,name=requested_appointments,json=requestedAppointments,proto3" json:"requested_appointments,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *Agency) Reset() {
@@ -1544,6 +1546,13 @@ func (x *Agency) GetIvansAccount() *Agency_IvansAccount {
 	return nil
 }
 
+func (x *Agency) GetRequestedAppointments() []string {
+	if x != nil {
+		return x.RequestedAppointments
+	}
+	return nil
+}
+
 // Producer represents a producer that has been onboarded.
 type Producer struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1573,9 +1582,11 @@ type Producer struct {
 	OnboardingStatus ProducerOnboardingState `protobuf:"varint,11,opt,name=onboarding_status,json=onboardingStatus,proto3,enum=producerflow.producer.v1.ProducerOnboardingState" json:"onboarding_status,omitempty"`
 	// Indicates whether this producer is the principal of an agency.
 	// A principal producer has additional responsibilities and permissions.
-	IsPrincipal   bool `protobuf:"varint,12,opt,name=is_principal,json=isPrincipal,proto3" json:"is_principal,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	IsPrincipal bool `protobuf:"varint,12,opt,name=is_principal,json=isPrincipal,proto3" json:"is_principal,omitempty"`
+	// The list of requested appointments for the producer.
+	RequestedAppointments []string `protobuf:"bytes,14,rep,name=requested_appointments,json=requestedAppointments,proto3" json:"requested_appointments,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *Producer) Reset() {
@@ -1670,6 +1681,13 @@ func (x *Producer) GetIsPrincipal() bool {
 		return x.IsPrincipal
 	}
 	return false
+}
+
+func (x *Producer) GetRequestedAppointments() []string {
+	if x != nil {
+		return x.RequestedAppointments
+	}
+	return nil
 }
 
 // NewProducer represents the data needed to create a new producer in the system.
@@ -6205,7 +6223,7 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\vproducer_id\x18\x01 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\n" +
 	"producerId\x12\x1f\n" +
 	"\x06reason\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06reason\"\x18\n" +
-	"\x16RejectProducerResponse\"\xf2\x0e\n" +
+	"\x16RejectProducerResponse\"\xa9\x0f\n" +
 	"\x06Agency\x12\x1b\n" +
 	"\tagency_id\x18\x01 \x01(\tR\bagencyId\x12L\n" +
 	"\vagency_info\x18\x02 \x01(\v2+.producerflow.producer.v1.Agency.AgencyInfoR\n" +
@@ -6215,7 +6233,8 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\fbank_account\x18\x05 \x01(\v2,.producerflow.producer.v1.Agency.BankAccountR\vbankAccount\x12@\n" +
 	"\aeo_info\x18\x06 \x01(\v2'.producerflow.producer.v1.Agency.EOInfoR\x06eoInfo\x12H\n" +
 	"\tprincipal\x18\a \x01(\v2*.producerflow.producer.v1.Agency.PrincipalR\tprincipal\x12R\n" +
-	"\rivans_account\x18\b \x01(\v2-.producerflow.producer.v1.Agency.IvansAccountR\fivansAccount\x1a\xc6\x02\n" +
+	"\rivans_account\x18\b \x01(\v2-.producerflow.producer.v1.Agency.IvansAccountR\fivansAccount\x125\n" +
+	"\x16requested_appointments\x18\t \x03(\tR\x15requestedAppointments\x1a\xc6\x02\n" +
 	"\n" +
 	"AgencyInfo\x12#\n" +
 	"\ronboarding_id\x18\x01 \x01(\tR\fonboardingId\x120\n" +
@@ -6265,7 +6284,7 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\fams_software\x18\x02 \x01(\tR\vamsSoftware\x12\x1f\n" +
 	"\vams_version\x18\x03 \x01(\tR\n" +
 	"amsVersion\x12%\n" +
-	"\x0emailbox_number\x18\x04 \x01(\tR\rmailboxNumber\"\xc5\x17\n" +
+	"\x0emailbox_number\x18\x04 \x01(\tR\rmailboxNumber\"\xfc\x17\n" +
 	"\bProducer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
@@ -6275,7 +6294,8 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\x06agency\x18\a \x01(\v2).producerflow.producer.v1.Producer.AgencyR\x06agency\x12;\n" +
 	"\x04nipr\x18\x06 \x01(\v2'.producerflow.producer.v1.Producer.NIPRR\x04nipr\x12b\n" +
 	"\x11onboarding_status\x18\v \x01(\x0e21.producerflow.producer.v1.ProducerOnboardingStateB\x02\x18\x01R\x10onboardingStatus\x12!\n" +
-	"\fis_principal\x18\f \x01(\bR\visPrincipal\x1a9\n" +
+	"\fis_principal\x18\f \x01(\bR\visPrincipal\x125\n" +
+	"\x16requested_appointments\x18\x0e \x03(\tR\x15requestedAppointments\x1a9\n" +
 	"\x06Agency\x12\x1b\n" +
 	"\tagency_id\x18\x01 \x01(\tR\bagencyId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x1a\xf3\x13\n" +
