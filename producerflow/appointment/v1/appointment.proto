@@ -49,8 +49,41 @@ service AppointmentService {
   // If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
   rpc RequestAppointment(RequestAppointmentRequest) returns (RequestAppointmentResponse);
 
-  // Terminates an existing appointment by ID, providing a reason.
+  // Terminates an existing appointment, permanently ending the relationship between
+  // the license holder and the carrier.
+  //
+  // Before calling this method, you must:
+  // 1. Ensure the appointment exists and is in APPOINTED status
+  // 2. Call ListTerminationReasons to get valid termination reasons for the license's state
+  // 3. Select an appropriate termination reason from the state-specific list
+  //
+  // The termination process works as follows:
+  // - The request is submitted to NIPR for processing
+  // - Once NIPR completes processing, the status becomes TERMINATED
+  // - If rejected by NIPR, the appointment remains in its current status
+  //
+  // Important considerations:
+  // - Termination is permanent and cannot be undone
+  // - Termination reasons must be valid for the specific state where the license is issued
+  // - Some terminations may incur fees (check GetTerminationFees first)
+  // - You will receive webhook notifications when the termination is processed by NIPR
+  //
+  // The response indicates whether the termination request was successfully submitted,
+  // not whether the actual termination was completed (since NIPR processes asynchronously).
   rpc TerminateAppointment(TerminateAppointmentRequest) returns (TerminateAppointmentResponse);
+
+  // Lists the valid termination reasons for appointments in a specific state.
+  //
+  // When terminating an appointment, you must provide a valid termination reason that is
+  // accepted by NIPR for the state where the license is issued. Termination reasons vary
+  // by state, so you should call this method first to retrieve the list of valid reasons
+  // before calling TerminateAppointment.
+  //
+  // The termination reasons returned are based on NIPR's valid termination codes for the
+  // specified state. Each reason corresponds to a specific business scenario for why an
+  // appointment might be terminated (e.g., voluntary termination, inadequate production,
+  // company merger, etc.).
+  rpc ListTerminationReasons(ListTerminationReasonsRequest) returns (ListTerminationReasonsResponse);
 }
 
 // Request to create a new appointment.
@@ -104,14 +137,20 @@ message ListAppointmentsResponse {
 
 // Request to terminate an appointment.
 message TerminateAppointmentRequest {
-  // Required. ID of the appointment to terminate.
-  string appointment_id = 1 [(buf.validate.field).string.min_len = 1];
-  // Required. Reason for termination.
-  string reason = 2 [(buf.validate.field).string.min_len = 1];
+  // ID of the appointment to terminate.
+  string appointment_id = 1 [(buf.validate.field).string.uuid = true];
+  // Reason for termination. This must be a valid termination reason
+  // for the state where the license is issued. Call ListTerminationReasons
+  // first to get the list of valid reasons for the specific state.
+  TerminationReason reason = 2 [(buf.validate.field).enum.defined_only = true];
 }
 
 message TerminateAppointmentResponse {
-  // Indicates whether the termination was successful.
+  // Indicates whether the termination request was successfully submitted to NIPR.
+  // This does not indicate that the appointment has been terminated, only that
+  // the request has been accepted for processing. The actual termination will
+  // be processed asynchronously by NIPR, and you will be notified via webhook
+  // when the process completes.
   bool success = 1;
 }
 
@@ -253,4 +292,43 @@ message License {
 
   // The license class.
   string license_class = 6;
+}
+
+message ListTerminationReasonsRequest {
+  // Required. The two-letter state code of the license for which you want to retrieve
+  // valid termination reasons. Different states may have different sets of valid
+  // termination reasons accepted by NIPR.
+  string state = 1 [(buf.validate.field).string.len = 2];
+}
+
+message ListTerminationReasonsResponse {
+  // The list of valid termination reasons for the specified state.
+  // These reasons can be used when calling TerminateAppointment for licenses
+  // issued in this state.
+  repeated TerminationReason termination_reasons = 1;
+}
+
+// TerminationReason represents the reason for the termination of an appointment.
+// These reasons correspond to NIPR's valid termination codes and vary by state.
+// Use ListTerminationReasons to get the valid reasons for a specific state
+// before terminating an appointment.
+//
+// Reference: https://pdb.nipr.com/Gateway/ValidTerms
+enum TerminationReason {
+  TERMINATION_REASON_UNSPECIFIED = 0;
+  TERMINATION_REASON_VOLUNTARY_TERMINATION = 1;
+  TERMINATION_REASON_INADEQUATE_PRODUCTION = 2;
+  TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT = 3;
+  TERMINATION_REASON_DEATH = 4;
+  TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION = 5;
+  TERMINATION_REASON_COMPANY_INDEBTEDNESS = 6;
+  TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE = 7;
+  TERMINATION_REASON_AGENT_MOVED = 8;
+  TERMINATION_REASON_APPOINTED_IN_ERROR = 9;
+  TERMINATION_REASON_CANCELLED = 10;
+  TERMINATION_REASON_CANCELLED_FOR_CAUSE = 11;
+  TERMINATION_REASON_COMPANY_MERGER = 12;
+  TERMINATION_REASON_REVOKED = 13;
+  TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE = 14;
+  TERMINATION_REASON_REQUEST_REGULATORY_REVIEW = 15;
 }
