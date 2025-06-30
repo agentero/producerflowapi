@@ -24,15 +24,15 @@ service AppointmentService {
   // Retrieves the details of an appointment by its ID.
   rpc GetAppointment(GetAppointmentRequest) returns (GetAppointmentResponse);
 
-  // Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-  // as integer values in cents. E.g. $10.34 is sent as 1034.
+  // Retrieves the total fees associated with requesting an appointment for the given license.
+  // Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
   rpc GetAppointmentFees(GetAppointmentFeesRequest) returns (GetAppointmentFeesResponse);
 
   // Retrieves the carriers that are available to appoint licenses for the tenant.
   rpc GetAppointableCarriers(GetAppointableCarriersRequest) returns (GetAppointableCarriersResponse);
 
-  // Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-  // as integer values in cents. E.g. $10.34 is sent as 1034.
+  // Retrieves the total fees associated with terminating an appointment for the given license.
+  // Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
   rpc GetTerminationFees(GetTerminationFeesRequest) returns (GetTerminationFeesResponse);
 
   // Lists appointments for the tenant, optionally filtered by processing status.
@@ -132,8 +132,8 @@ message ListEligibleLicensesResponse {
 
 // Request to get appointment fees.
 message GetAppointmentFeesRequest {
-  // Required. License number to appoint.
-  string license_number = 1 [(buf.validate.field).string.min_len = 1];
+  // Required. The ID of the license to get the appointment fee for.
+  string license_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetAppointmentFeesResponse {
@@ -143,8 +143,8 @@ message GetAppointmentFeesResponse {
 
 // Request to get termination fees.
 message GetTerminationFeesRequest {
-  // Required. Appointment ID.
-  string appointment_id = 1 [(buf.validate.field).string.min_len = 1];
+  // Required. The ID of the license to get the termination fee for.
+  string license_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetTerminationFeesResponse {
@@ -179,7 +179,7 @@ message Appointment {
   // Unique identifier for the appointment.
   string appointment_id = 1;
 
-  // The license number of the license being appointed.
+  // Information about the license being appointed.
   License license = 2;
 
   // Type of appointment (e.g., up-front, registry).
