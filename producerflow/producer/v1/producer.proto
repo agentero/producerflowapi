@@ -15,6 +15,9 @@ service ProducerService {
 
   // CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency.
   // The URL contains encoded information about the agency defaults and tenant context.
+  // All fields in the request are optional - you can provide as much or as little
+  // information as available. Any missing information will be collected during
+  // the onboarding process.
   // Returns a URL string that can be shared with the agency for self-onboarding.
   rpc CreateAgencyOnboardingURL(CreateAgencyOnboardingURLRequest) returns (CreateAgencyOnboardingURLResponse);
 
@@ -188,14 +191,16 @@ message Address {
 
 // CreateAgencyOnboardingURLRequest contains information needed to generate
 // an agency onboarding URL. This includes basic agency information and defaults.
+//
+// All fields in this request are optional. You can provide as much or as little
+// information as you have available. Any missing information will be collected
+// from the user during the onboarding process through the generated URL.
 message CreateAgencyOnboardingURLRequest {
-  // Agency contains the information about the agency to be onboarded
+  // Agency contains the information about the agency to be onboarded.
+  // All fields within the Agency message are also optional.
   message Agency {
     // Name of the agency
-    string name = 1 [
-      (buf.validate.field).required = true,
-      (buf.validate.field).string.min_len = 1
-    ];
+    string name = 1 [(buf.validate.field).string.min_len = 1];
     // Entity type of the agency: Sole Proprietor, Agency or Ask during onboarding
     EntityType entity_type = 2 [(buf.validate.field).enum = {
       in: [
@@ -231,7 +236,8 @@ message CreateAgencyOnboardingURLRequest {
     // To get valid organization IDs, use the ListOrganizations RPC.
     string organization_id = 15;
 
-    // Principal is the person responsible for the agency
+    // Principal is the person responsible for the agency.
+    // All fields within the Principal message are also optional.
     message Principal {
       // Tenant ID of the principal
       string tenant_id = 1;
