@@ -745,8 +745,8 @@ func (x *ListEligibleLicensesResponse) GetLicenses() []*License {
 // Request to get appointment fees.
 type GetAppointmentFeesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. License number to appoint.
-	LicenseNumber string `protobuf:"bytes,1,opt,name=license_number,json=licenseNumber,proto3" json:"license_number,omitempty"`
+	// Required. The ID of the license to get the appointment fee for.
+	LicenseId     string `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -781,9 +781,9 @@ func (*GetAppointmentFeesRequest) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetAppointmentFeesRequest) GetLicenseNumber() string {
+func (x *GetAppointmentFeesRequest) GetLicenseId() string {
 	if x != nil {
-		return x.LicenseNumber
+		return x.LicenseId
 	}
 	return ""
 }
@@ -836,8 +836,8 @@ func (x *GetAppointmentFeesResponse) GetFeeInCents() int64 {
 // Request to get termination fees.
 type GetTerminationFeesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. Appointment ID.
-	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
+	// Required. The ID of the license to get the termination fee for.
+	LicenseId     string `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -872,9 +872,9 @@ func (*GetTerminationFeesRequest) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *GetTerminationFeesRequest) GetAppointmentId() string {
+func (x *GetTerminationFeesRequest) GetLicenseId() string {
 	if x != nil {
-		return x.AppointmentId
+		return x.LicenseId
 	}
 	return ""
 }
@@ -1083,7 +1083,7 @@ type Appointment struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the appointment.
 	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
-	// The license number of the license being appointed.
+	// Information about the license being appointed.
 	License *License `protobuf:"bytes,2,opt,name=license,proto3" json:"license,omitempty"`
 	// Type of appointment (e.g., up-front, registry).
 	AppointmentType AppointmentType `protobuf:"varint,4,opt,name=appointment_type,json=appointmentType,proto3,enum=producerflow.appointment.v1.AppointmentType" json:"appointment_type,omitempty"`
@@ -1371,14 +1371,16 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\tagency_id\x18\x02 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01H\x00R\bagencyIdB\x12\n" +
 	"\tapplicant\x12\x05\xbaH\x02\b\x01\"`\n" +
 	"\x1cListEligibleLicensesResponse\x12@\n" +
-	"\blicenses\x18\x01 \x03(\v2$.producerflow.appointment.v1.LicenseR\blicenses\"K\n" +
-	"\x19GetAppointmentFeesRequest\x12.\n" +
-	"\x0elicense_number\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rlicenseNumber\">\n" +
+	"\blicenses\x18\x01 \x03(\v2$.producerflow.appointment.v1.LicenseR\blicenses\"C\n" +
+	"\x19GetAppointmentFeesRequest\x12&\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlicenseId\">\n" +
 	"\x1aGetAppointmentFeesResponse\x12 \n" +
 	"\ffee_in_cents\x18\x01 \x01(\x03R\n" +
-	"feeInCents\"K\n" +
-	"\x19GetTerminationFeesRequest\x12.\n" +
-	"\x0eappointment_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rappointmentId\">\n" +
+	"feeInCents\"C\n" +
+	"\x19GetTerminationFeesRequest\x12&\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlicenseId\">\n" +
 	"\x1aGetTerminationFeesResponse\x12 \n" +
 	"\ffee_in_cents\x18\x01 \x01(\x03R\n" +
 	"feeInCents\"\x1f\n" +

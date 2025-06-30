@@ -64,13 +64,13 @@ const (
 type AppointmentServiceClient interface {
 	// Retrieves the details of an appointment by its ID.
 	GetAppointment(context.Context, *connect.Request[v1.GetAppointmentRequest]) (*connect.Response[v1.GetAppointmentResponse], error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with requesting an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
 	GetAppointableCarriers(context.Context, *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with terminating an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(context.Context, *connect.Request[v1.GetTerminationFeesRequest]) (*connect.Response[v1.GetTerminationFeesResponse], error)
 	// Lists appointments for the tenant, optionally filtered by processing status.
 	ListAppointments(context.Context, *connect.Request[v1.ListAppointmentsRequest]) (*connect.Response[v1.ListAppointmentsResponse], error)
@@ -208,13 +208,13 @@ func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, req
 type AppointmentServiceHandler interface {
 	// Retrieves the details of an appointment by its ID.
 	GetAppointment(context.Context, *connect.Request[v1.GetAppointmentRequest]) (*connect.Response[v1.GetAppointmentResponse], error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with requesting an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *connect.Request[v1.GetAppointmentFeesRequest]) (*connect.Response[v1.GetAppointmentFeesResponse], error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
 	GetAppointableCarriers(context.Context, *connect.Request[v1.GetAppointableCarriersRequest]) (*connect.Response[v1.GetAppointableCarriersResponse], error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with terminating an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(context.Context, *connect.Request[v1.GetTerminationFeesRequest]) (*connect.Response[v1.GetTerminationFeesResponse], error)
 	// Lists appointments for the tenant, optionally filtered by processing status.
 	ListAppointments(context.Context, *connect.Request[v1.ListAppointmentsRequest]) (*connect.Response[v1.ListAppointmentsResponse], error)
