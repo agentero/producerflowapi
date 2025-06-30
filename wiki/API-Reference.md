@@ -19,6 +19,8 @@
     - [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse)
     - [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest)
     - [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse)
+    - [ListTerminationReasonsRequest](#producerflow-appointment-v1-ListTerminationReasonsRequest)
+    - [ListTerminationReasonsResponse](#producerflow-appointment-v1-ListTerminationReasonsResponse)
     - [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest)
     - [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse)
     - [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest)
@@ -27,6 +29,7 @@
     - [AppointmentType](#producerflow-appointment-v1-AppointmentType)
     - [EligibilityStatus](#producerflow-appointment-v1-EligibilityStatus)
     - [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus)
+    - [TerminationReason](#producerflow-appointment-v1-TerminationReason)
   
     - [AppointmentService](#producerflow-appointment-v1-AppointmentService)
   
@@ -144,7 +147,7 @@ Represents an appointment for a license.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | appointment_id | [string](#string) |  | Unique identifier for the appointment. |
-| license | [License](#producerflow-appointment-v1-License) |  | The license number of the license being appointed. |
+| license | [License](#producerflow-appointment-v1-License) |  | Information about the license being appointed. |
 | appointment_type | [AppointmentType](#producerflow-appointment-v1-AppointmentType) |  | Type of appointment (e.g., up-front, registry). |
 | eligibility_status | [EligibilityStatus](#producerflow-appointment-v1-EligibilityStatus) |  | Eligibility status of the appointment (e.g., eligible, ineligible). |
 | processing_status | [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus) |  | Processing status of the appointment (e.g., in progress, appointed). |
@@ -211,7 +214,7 @@ Request to get appointment fees.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| license_number | [string](#string) |  | Required. License number to appoint. |
+| license_id | [string](#string) |  | Required. The ID of the license to get the appointment fee for. |
 
 
 
@@ -271,7 +274,7 @@ Request to get termination fees.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| appointment_id | [string](#string) |  | Required. Appointment ID. |
+| license_id | [string](#string) |  | Required. The ID of the license to get the termination fee for. |
 
 
 
@@ -377,6 +380,36 @@ Request to retrieve a list of licenses that are eligible to be appointed.
 
 
 
+<a name="producerflow-appointment-v1-ListTerminationReasonsRequest"></a>
+
+### ListTerminationReasonsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| state | [string](#string) |  | Required. The two-letter state code of the license for which you want to retrieve valid termination reasons. Different states may have different sets of valid termination reasons accepted by NIPR. |
+
+
+
+
+
+
+<a name="producerflow-appointment-v1-ListTerminationReasonsResponse"></a>
+
+### ListTerminationReasonsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| termination_reasons | [TerminationReason](#producerflow-appointment-v1-TerminationReason) | repeated | The list of valid termination reasons for the specified state. These reasons can be used when calling TerminateAppointment for licenses issued in this state. |
+
+
+
+
+
+
 <a name="producerflow-appointment-v1-RequestAppointmentRequest"></a>
 
 ### RequestAppointmentRequest
@@ -418,8 +451,8 @@ Request to terminate an appointment.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| appointment_id | [string](#string) |  | Required. ID of the appointment to terminate. |
-| reason | [string](#string) |  | Required. Reason for termination. |
+| appointment_id | [string](#string) |  | ID of the appointment to terminate. |
+| reason | [TerminationReason](#producerflow-appointment-v1-TerminationReason) |  | Reason for termination. This must be a valid termination reason for the state where the license is issued. Call ListTerminationReasons first to get the list of valid reasons for the specific state. |
 
 
 
@@ -434,7 +467,7 @@ Request to terminate an appointment.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| success | [bool](#bool) |  | Indicates whether the termination was successful. |
+| success | [bool](#bool) |  | Indicates whether the termination request was successfully submitted to NIPR. This does not indicate that the appointment has been terminated, only that the request has been accepted for processing. The actual termination will be processed asynchronously by NIPR, and you will be notified via webhook when the process completes. |
 
 
 
@@ -485,6 +518,37 @@ Processing status of the appointment.
 | PROCESSING_STATUS_MISSING_LICENSE | 5 |  |
 
 
+
+<a name="producerflow-appointment-v1-TerminationReason"></a>
+
+### TerminationReason
+TerminationReason represents the reason for the termination of an appointment.
+These reasons correspond to NIPR&#39;s valid termination codes and vary by state.
+Use ListTerminationReasons to get the valid reasons for a specific state
+before terminating an appointment.
+
+Reference: https://pdb.nipr.com/Gateway/ValidTerms
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| TERMINATION_REASON_UNSPECIFIED | 0 |  |
+| TERMINATION_REASON_VOLUNTARY_TERMINATION | 1 |  |
+| TERMINATION_REASON_INADEQUATE_PRODUCTION | 2 |  |
+| TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT | 3 |  |
+| TERMINATION_REASON_DEATH | 4 |  |
+| TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION | 5 |  |
+| TERMINATION_REASON_COMPANY_INDEBTEDNESS | 6 |  |
+| TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE | 7 |  |
+| TERMINATION_REASON_AGENT_MOVED | 8 |  |
+| TERMINATION_REASON_APPOINTED_IN_ERROR | 9 |  |
+| TERMINATION_REASON_CANCELLED | 10 |  |
+| TERMINATION_REASON_CANCELLED_FOR_CAUSE | 11 |  |
+| TERMINATION_REASON_COMPANY_MERGER | 12 |  |
+| TERMINATION_REASON_REVOKED | 13 |  |
+| TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE | 14 |  |
+| TERMINATION_REASON_REQUEST_REGULATORY_REVIEW | 15 |  |
+
+
  
 
  
@@ -512,15 +576,28 @@ that is making the request.
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | GetAppointment | [GetAppointmentRequest](#producerflow-appointment-v1-GetAppointmentRequest) | [GetAppointmentResponse](#producerflow-appointment-v1-GetAppointmentResponse) | Retrieves the details of an appointment by its ID. |
-| GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
+| GetAppointmentFees | [GetAppointmentFeesRequest](#producerflow-appointment-v1-GetAppointmentFeesRequest) | [GetAppointmentFeesResponse](#producerflow-appointment-v1-GetAppointmentFeesResponse) | Retrieves the total fees associated with requesting an appointment for the given license. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 | GetAppointableCarriers | [GetAppointableCarriersRequest](#producerflow-appointment-v1-GetAppointableCarriersRequest) | [GetAppointableCarriersResponse](#producerflow-appointment-v1-GetAppointableCarriersResponse) | Retrieves the carriers that are available to appoint licenses for the tenant. |
-| GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
+| GetTerminationFees | [GetTerminationFeesRequest](#producerflow-appointment-v1-GetTerminationFeesRequest) | [GetTerminationFeesResponse](#producerflow-appointment-v1-GetTerminationFeesResponse) | Retrieves the total fees associated with terminating an appointment for the given license. Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034. |
 | ListAppointments | [ListAppointmentsRequest](#producerflow-appointment-v1-ListAppointmentsRequest) | [ListAppointmentsResponse](#producerflow-appointment-v1-ListAppointmentsResponse) | Lists appointments for the tenant, optionally filtered by processing status. |
 | ListEligibleLicenses | [ListEligibleLicensesRequest](#producerflow-appointment-v1-ListEligibleLicensesRequest) | [ListEligibleLicensesResponse](#producerflow-appointment-v1-ListEligibleLicensesResponse) | Returns a list of licenses that are eligible to be appointed. |
 | RequestAppointment | [RequestAppointmentRequest](#producerflow-appointment-v1-RequestAppointmentRequest) | [RequestAppointmentResponse](#producerflow-appointment-v1-RequestAppointmentResponse) | Requests a new appointment for a license that is eligible to be appointed. The simpler way to do this is to call ListEligibleLicenses to get a list of licenses that are eligible to be appointed. Then, call RequestAppointment for the licenses in the list that you want to appoint.
 
 If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status. If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons. |
-| TerminateAppointment | [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest) | [TerminateAppointmentResponse](#producerflow-appointment-v1-TerminateAppointmentResponse) | Terminates an existing appointment by ID, providing a reason. |
+| TerminateAppointment | [TerminateAppointmentRequest](#producerflow-appointment-v1-TerminateAppointmentRequest) | [TerminateAppointmentResponse](#producerflow-appointment-v1-TerminateAppointmentResponse) | Terminates an existing appointment, permanently ending the relationship between the license holder and the carrier.
+
+Before calling this method, you must: 1. Ensure the appointment exists and is in APPOINTED status 2. Call ListTerminationReasons to get valid termination reasons for the license&#39;s state 3. Select an appropriate termination reason from the state-specific list
+
+The termination process works as follows: - The request is submitted to NIPR for processing - Once NIPR completes processing, the status becomes TERMINATED - If rejected by NIPR, the appointment remains in its current status
+
+Important considerations: - Termination is permanent and cannot be undone - Termination reasons must be valid for the specific state where the license is issued - Some terminations may incur fees (check GetTerminationFees first) - You will receive webhook notifications when the termination is processed by NIPR
+
+The response indicates whether the termination request was successfully submitted, not whether the actual termination was completed (since NIPR processes asynchronously). |
+| ListTerminationReasons | [ListTerminationReasonsRequest](#producerflow-appointment-v1-ListTerminationReasonsRequest) | [ListTerminationReasonsResponse](#producerflow-appointment-v1-ListTerminationReasonsResponse) | Lists the valid termination reasons for appointments in a specific state.
+
+When terminating an appointment, you must provide a valid termination reason that is accepted by NIPR for the state where the license is issued. Termination reasons vary by state, so you should call this method first to retrieve the list of valid reasons before calling TerminateAppointment.
+
+The termination reasons returned are based on NIPR&#39;s valid termination codes for the specified state. Each reason corresponds to a specific business scenario for why an appointment might be terminated (e.g., voluntary termination, inadequate production, company merger, etc.). |
 
  
 

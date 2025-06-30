@@ -185,6 +185,100 @@ func (AppointmentType) EnumDescriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{2}
 }
 
+// TerminationReason represents the reason for the termination of an appointment.
+// These reasons correspond to NIPR's valid termination codes and vary by state.
+// Use ListTerminationReasons to get the valid reasons for a specific state
+// before terminating an appointment.
+//
+// Reference: https://pdb.nipr.com/Gateway/ValidTerms
+type TerminationReason int32
+
+const (
+	TerminationReason_TERMINATION_REASON_UNSPECIFIED                    TerminationReason = 0
+	TerminationReason_TERMINATION_REASON_VOLUNTARY_TERMINATION          TerminationReason = 1
+	TerminationReason_TERMINATION_REASON_INADEQUATE_PRODUCTION          TerminationReason = 2
+	TerminationReason_TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT     TerminationReason = 3
+	TerminationReason_TERMINATION_REASON_DEATH                          TerminationReason = 4
+	TerminationReason_TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION TerminationReason = 5
+	TerminationReason_TERMINATION_REASON_COMPANY_INDEBTEDNESS           TerminationReason = 6
+	TerminationReason_TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE      TerminationReason = 7
+	TerminationReason_TERMINATION_REASON_AGENT_MOVED                    TerminationReason = 8
+	TerminationReason_TERMINATION_REASON_APPOINTED_IN_ERROR             TerminationReason = 9
+	TerminationReason_TERMINATION_REASON_CANCELLED                      TerminationReason = 10
+	TerminationReason_TERMINATION_REASON_CANCELLED_FOR_CAUSE            TerminationReason = 11
+	TerminationReason_TERMINATION_REASON_COMPANY_MERGER                 TerminationReason = 12
+	TerminationReason_TERMINATION_REASON_REVOKED                        TerminationReason = 13
+	TerminationReason_TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE       TerminationReason = 14
+	TerminationReason_TERMINATION_REASON_REQUEST_REGULATORY_REVIEW      TerminationReason = 15
+)
+
+// Enum value maps for TerminationReason.
+var (
+	TerminationReason_name = map[int32]string{
+		0:  "TERMINATION_REASON_UNSPECIFIED",
+		1:  "TERMINATION_REASON_VOLUNTARY_TERMINATION",
+		2:  "TERMINATION_REASON_INADEQUATE_PRODUCTION",
+		3:  "TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT",
+		4:  "TERMINATION_REASON_DEATH",
+		5:  "TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION",
+		6:  "TERMINATION_REASON_COMPANY_INDEBTEDNESS",
+		7:  "TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE",
+		8:  "TERMINATION_REASON_AGENT_MOVED",
+		9:  "TERMINATION_REASON_APPOINTED_IN_ERROR",
+		10: "TERMINATION_REASON_CANCELLED",
+		11: "TERMINATION_REASON_CANCELLED_FOR_CAUSE",
+		12: "TERMINATION_REASON_COMPANY_MERGER",
+		13: "TERMINATION_REASON_REVOKED",
+		14: "TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE",
+		15: "TERMINATION_REASON_REQUEST_REGULATORY_REVIEW",
+	}
+	TerminationReason_value = map[string]int32{
+		"TERMINATION_REASON_UNSPECIFIED":                    0,
+		"TERMINATION_REASON_VOLUNTARY_TERMINATION":          1,
+		"TERMINATION_REASON_INADEQUATE_PRODUCTION":          2,
+		"TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT":     3,
+		"TERMINATION_REASON_DEATH":                          4,
+		"TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION": 5,
+		"TERMINATION_REASON_COMPANY_INDEBTEDNESS":           6,
+		"TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE":      7,
+		"TERMINATION_REASON_AGENT_MOVED":                    8,
+		"TERMINATION_REASON_APPOINTED_IN_ERROR":             9,
+		"TERMINATION_REASON_CANCELLED":                      10,
+		"TERMINATION_REASON_CANCELLED_FOR_CAUSE":            11,
+		"TERMINATION_REASON_COMPANY_MERGER":                 12,
+		"TERMINATION_REASON_REVOKED":                        13,
+		"TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE":       14,
+		"TERMINATION_REASON_REQUEST_REGULATORY_REVIEW":      15,
+	}
+)
+
+func (x TerminationReason) Enum() *TerminationReason {
+	p := new(TerminationReason)
+	*p = x
+	return p
+}
+
+func (x TerminationReason) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TerminationReason) Descriptor() protoreflect.EnumDescriptor {
+	return file_producerflow_appointment_v1_appointment_proto_enumTypes[3].Descriptor()
+}
+
+func (TerminationReason) Type() protoreflect.EnumType {
+	return &file_producerflow_appointment_v1_appointment_proto_enumTypes[3]
+}
+
+func (x TerminationReason) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TerminationReason.Descriptor instead.
+func (TerminationReason) EnumDescriptor() ([]byte, []int) {
+	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{3}
+}
+
 // Request to create a new appointment.
 type RequestAppointmentRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -515,10 +609,12 @@ func (x *ListAppointmentsResponse) GetNextPageToken() string {
 // Request to terminate an appointment.
 type TerminateAppointmentRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. ID of the appointment to terminate.
+	// ID of the appointment to terminate.
 	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
-	// Required. Reason for termination.
-	Reason        string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	// Reason for termination. This must be a valid termination reason
+	// for the state where the license is issued. Call ListTerminationReasons
+	// first to get the list of valid reasons for the specific state.
+	Reason        TerminationReason `protobuf:"varint,2,opt,name=reason,proto3,enum=producerflow.appointment.v1.TerminationReason" json:"reason,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -560,16 +656,20 @@ func (x *TerminateAppointmentRequest) GetAppointmentId() string {
 	return ""
 }
 
-func (x *TerminateAppointmentRequest) GetReason() string {
+func (x *TerminateAppointmentRequest) GetReason() TerminationReason {
 	if x != nil {
 		return x.Reason
 	}
-	return ""
+	return TerminationReason_TERMINATION_REASON_UNSPECIFIED
 }
 
 type TerminateAppointmentResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Indicates whether the termination was successful.
+	// Indicates whether the termination request was successfully submitted to NIPR.
+	// This does not indicate that the appointment has been terminated, only that
+	// the request has been accepted for processing. The actual termination will
+	// be processed asynchronously by NIPR, and you will be notified via webhook
+	// when the process completes.
 	Success       bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -745,8 +845,8 @@ func (x *ListEligibleLicensesResponse) GetLicenses() []*License {
 // Request to get appointment fees.
 type GetAppointmentFeesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. License number to appoint.
-	LicenseNumber string `protobuf:"bytes,1,opt,name=license_number,json=licenseNumber,proto3" json:"license_number,omitempty"`
+	// Required. The ID of the license to get the appointment fee for.
+	LicenseId     string `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -781,9 +881,9 @@ func (*GetAppointmentFeesRequest) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetAppointmentFeesRequest) GetLicenseNumber() string {
+func (x *GetAppointmentFeesRequest) GetLicenseId() string {
 	if x != nil {
-		return x.LicenseNumber
+		return x.LicenseId
 	}
 	return ""
 }
@@ -836,8 +936,8 @@ func (x *GetAppointmentFeesResponse) GetFeeInCents() int64 {
 // Request to get termination fees.
 type GetTerminationFeesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. Appointment ID.
-	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
+	// Required. The ID of the license to get the termination fee for.
+	LicenseId     string `protobuf:"bytes,1,opt,name=license_id,json=licenseId,proto3" json:"license_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -872,9 +972,9 @@ func (*GetTerminationFeesRequest) Descriptor() ([]byte, []int) {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *GetTerminationFeesRequest) GetAppointmentId() string {
+func (x *GetTerminationFeesRequest) GetLicenseId() string {
 	if x != nil {
-		return x.AppointmentId
+		return x.LicenseId
 	}
 	return ""
 }
@@ -1083,7 +1183,7 @@ type Appointment struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the appointment.
 	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
-	// The license number of the license being appointed.
+	// Information about the license being appointed.
 	License *License `protobuf:"bytes,2,opt,name=license,proto3" json:"license,omitempty"`
 	// Type of appointment (e.g., up-front, registry).
 	AppointmentType AppointmentType `protobuf:"varint,4,opt,name=appointment_type,json=appointmentType,proto3,enum=producerflow.appointment.v1.AppointmentType" json:"appointment_type,omitempty"`
@@ -1334,6 +1434,100 @@ func (*License_ProducerId) isLicense_LicenseOwner() {}
 
 func (*License_AgencyId) isLicense_LicenseOwner() {}
 
+type ListTerminationReasonsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The two-letter state code of the license for which you want to retrieve
+	// valid termination reasons. Different states may have different sets of valid
+	// termination reasons accepted by NIPR.
+	State         string `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTerminationReasonsRequest) Reset() {
+	*x = ListTerminationReasonsRequest{}
+	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTerminationReasonsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTerminationReasonsRequest) ProtoMessage() {}
+
+func (x *ListTerminationReasonsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTerminationReasonsRequest.ProtoReflect.Descriptor instead.
+func (*ListTerminationReasonsRequest) Descriptor() ([]byte, []int) {
+	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListTerminationReasonsRequest) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+type ListTerminationReasonsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The list of valid termination reasons for the specified state.
+	// These reasons can be used when calling TerminateAppointment for licenses
+	// issued in this state.
+	TerminationReasons []TerminationReason `protobuf:"varint,1,rep,packed,name=termination_reasons,json=terminationReasons,proto3,enum=producerflow.appointment.v1.TerminationReason" json:"termination_reasons,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *ListTerminationReasonsResponse) Reset() {
+	*x = ListTerminationReasonsResponse{}
+	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTerminationReasonsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTerminationReasonsResponse) ProtoMessage() {}
+
+func (x *ListTerminationReasonsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_producerflow_appointment_v1_appointment_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTerminationReasonsResponse.ProtoReflect.Descriptor instead.
+func (*ListTerminationReasonsResponse) Descriptor() ([]byte, []int) {
+	return file_producerflow_appointment_v1_appointment_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ListTerminationReasonsResponse) GetTerminationReasons() []TerminationReason {
+	if x != nil {
+		return x.TerminationReasons
+	}
+	return nil
+}
+
 var File_producerflow_appointment_v1_appointment_proto protoreflect.FileDescriptor
 
 const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
@@ -1359,10 +1553,10 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"page_token\x18\x03 \x01(\tR\tpageToken\"\x90\x01\n" +
 	"\x18ListAppointmentsResponse\x12L\n" +
 	"\fappointments\x18\x01 \x03(\v2(.producerflow.appointment.v1.AppointmentR\fappointments\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"n\n" +
-	"\x1bTerminateAppointmentRequest\x12.\n" +
-	"\x0eappointment_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rappointmentId\x12\x1f\n" +
-	"\x06reason\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06reason\"8\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa0\x01\n" +
+	"\x1bTerminateAppointmentRequest\x12/\n" +
+	"\x0eappointment_id\x18\x01 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\rappointmentId\x12P\n" +
+	"\x06reason\x18\x02 \x01(\x0e2..producerflow.appointment.v1.TerminationReasonB\b\xbaH\x05\x82\x01\x02\x10\x01R\x06reason\"8\n" +
 	"\x1cTerminateAppointmentResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x87\x01\n" +
 	"\x1bListEligibleLicensesRequest\x12+\n" +
@@ -1371,14 +1565,16 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\tagency_id\x18\x02 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01H\x00R\bagencyIdB\x12\n" +
 	"\tapplicant\x12\x05\xbaH\x02\b\x01\"`\n" +
 	"\x1cListEligibleLicensesResponse\x12@\n" +
-	"\blicenses\x18\x01 \x03(\v2$.producerflow.appointment.v1.LicenseR\blicenses\"K\n" +
-	"\x19GetAppointmentFeesRequest\x12.\n" +
-	"\x0elicense_number\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rlicenseNumber\">\n" +
+	"\blicenses\x18\x01 \x03(\v2$.producerflow.appointment.v1.LicenseR\blicenses\"C\n" +
+	"\x19GetAppointmentFeesRequest\x12&\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlicenseId\">\n" +
 	"\x1aGetAppointmentFeesResponse\x12 \n" +
 	"\ffee_in_cents\x18\x01 \x01(\x03R\n" +
-	"feeInCents\"K\n" +
-	"\x19GetTerminationFeesRequest\x12.\n" +
-	"\x0eappointment_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rappointmentId\">\n" +
+	"feeInCents\"C\n" +
+	"\x19GetTerminationFeesRequest\x12&\n" +
+	"\n" +
+	"license_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tlicenseId\">\n" +
 	"\x1aGetTerminationFeesResponse\x12 \n" +
 	"\ffee_in_cents\x18\x01 \x01(\x03R\n" +
 	"feeInCents\"\x1f\n" +
@@ -1415,7 +1611,11 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\tagency_id\x18\x04 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01H\x00R\bagencyId\x12\x14\n" +
 	"\x05state\x18\x05 \x01(\tR\x05state\x12#\n" +
 	"\rlicense_class\x18\x06 \x01(\tR\flicenseClassB\x0f\n" +
-	"\rlicense_owner*{\n" +
+	"\rlicense_owner\"?\n" +
+	"\x1dListTerminationReasonsRequest\x12\x1e\n" +
+	"\x05state\x18\x01 \x01(\tB\b\xbaH\x05r\x03\x98\x01\x02R\x05state\"\x81\x01\n" +
+	"\x1eListTerminationReasonsResponse\x12_\n" +
+	"\x13termination_reasons\x18\x01 \x03(\x0e2..producerflow.appointment.v1.TerminationReasonR\x12terminationReasons*{\n" +
 	"\x11EligibilityStatus\x12\"\n" +
 	"\x1eELIGIBILITY_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bELIGIBILITY_STATUS_ELIGIBLE\x10\x01\x12!\n" +
@@ -1431,7 +1631,25 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x1cAPPOINTMENT_TYPE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19APPOINTMENT_TYPE_REGISTRY\x10\x01\x12\x1d\n" +
 	"\x19APPOINTMENT_TYPE_UP_FRONT\x10\x02\x12!\n" +
-	"\x1dAPPOINTMENT_TYPE_JUST_IN_TIME\x10\x032\xd8\b\n" +
+	"\x1dAPPOINTMENT_TYPE_JUST_IN_TIME\x10\x03*\xc1\x05\n" +
+	"\x11TerminationReason\x12\"\n" +
+	"\x1eTERMINATION_REASON_UNSPECIFIED\x10\x00\x12,\n" +
+	"(TERMINATION_REASON_VOLUNTARY_TERMINATION\x10\x01\x12,\n" +
+	"(TERMINATION_REASON_INADEQUATE_PRODUCTION\x10\x02\x121\n" +
+	"-TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT\x10\x03\x12\x1c\n" +
+	"\x18TERMINATION_REASON_DEATH\x10\x04\x125\n" +
+	"1TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION\x10\x05\x12+\n" +
+	"'TERMINATION_REASON_COMPANY_INDEBTEDNESS\x10\x06\x120\n" +
+	",TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE\x10\a\x12\"\n" +
+	"\x1eTERMINATION_REASON_AGENT_MOVED\x10\b\x12)\n" +
+	"%TERMINATION_REASON_APPOINTED_IN_ERROR\x10\t\x12 \n" +
+	"\x1cTERMINATION_REASON_CANCELLED\x10\n" +
+	"\x12*\n" +
+	"&TERMINATION_REASON_CANCELLED_FOR_CAUSE\x10\v\x12%\n" +
+	"!TERMINATION_REASON_COMPANY_MERGER\x10\f\x12\x1e\n" +
+	"\x1aTERMINATION_REASON_REVOKED\x10\r\x12/\n" +
+	"+TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE\x10\x0e\x120\n" +
+	",TERMINATION_REASON_REQUEST_REGULATORY_REVIEW\x10\x0f2\xec\t\n" +
 	"\x12AppointmentService\x12y\n" +
 	"\x0eGetAppointment\x122.producerflow.appointment.v1.GetAppointmentRequest\x1a3.producerflow.appointment.v1.GetAppointmentResponse\x12\x85\x01\n" +
 	"\x12GetAppointmentFees\x126.producerflow.appointment.v1.GetAppointmentFeesRequest\x1a7.producerflow.appointment.v1.GetAppointmentFeesResponse\x12\x91\x01\n" +
@@ -1440,7 +1658,8 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x10ListAppointments\x124.producerflow.appointment.v1.ListAppointmentsRequest\x1a5.producerflow.appointment.v1.ListAppointmentsResponse\x12\x8b\x01\n" +
 	"\x14ListEligibleLicenses\x128.producerflow.appointment.v1.ListEligibleLicensesRequest\x1a9.producerflow.appointment.v1.ListEligibleLicensesResponse\x12\x85\x01\n" +
 	"\x12RequestAppointment\x126.producerflow.appointment.v1.RequestAppointmentRequest\x1a7.producerflow.appointment.v1.RequestAppointmentResponse\x12\x8b\x01\n" +
-	"\x14TerminateAppointment\x128.producerflow.appointment.v1.TerminateAppointmentRequest\x1a9.producerflow.appointment.v1.TerminateAppointmentResponseB\x97\x02\n" +
+	"\x14TerminateAppointment\x128.producerflow.appointment.v1.TerminateAppointmentRequest\x1a9.producerflow.appointment.v1.TerminateAppointmentResponse\x12\x91\x01\n" +
+	"\x16ListTerminationReasons\x12:.producerflow.appointment.v1.ListTerminationReasonsRequest\x1a;.producerflow.appointment.v1.ListTerminationReasonsResponseB\x97\x02\n" +
 	"\x1fcom.producerflow.appointment.v1B\x10AppointmentProtoP\x01ZTgithub.com/agentero/producerflowapi/gen/go/producerflow/appointment/v1;appointmentv1\xa2\x02\x03PAX\xaa\x02\x1bProducerflow.Appointment.V1\xca\x02\x1bProducerflow\\Appointment\\V1\xe2\x02'Producerflow\\Appointment\\V1\\GPBMetadata\xea\x02\x1dProducerflow::Appointment::V1b\x06proto3"
 
 var (
@@ -1455,67 +1674,74 @@ func file_producerflow_appointment_v1_appointment_proto_rawDescGZIP() []byte {
 	return file_producerflow_appointment_v1_appointment_proto_rawDescData
 }
 
-var file_producerflow_appointment_v1_appointment_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_producerflow_appointment_v1_appointment_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_producerflow_appointment_v1_appointment_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_producerflow_appointment_v1_appointment_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_producerflow_appointment_v1_appointment_proto_goTypes = []any{
 	(EligibilityStatus)(0),                 // 0: producerflow.appointment.v1.EligibilityStatus
 	(ProcessingStatus)(0),                  // 1: producerflow.appointment.v1.ProcessingStatus
 	(AppointmentType)(0),                   // 2: producerflow.appointment.v1.AppointmentType
-	(*RequestAppointmentRequest)(nil),      // 3: producerflow.appointment.v1.RequestAppointmentRequest
-	(*RequestAppointmentResponse)(nil),     // 4: producerflow.appointment.v1.RequestAppointmentResponse
-	(*GetAppointmentRequest)(nil),          // 5: producerflow.appointment.v1.GetAppointmentRequest
-	(*GetAppointmentResponse)(nil),         // 6: producerflow.appointment.v1.GetAppointmentResponse
-	(*ListAppointmentsRequest)(nil),        // 7: producerflow.appointment.v1.ListAppointmentsRequest
-	(*ListAppointmentsResponse)(nil),       // 8: producerflow.appointment.v1.ListAppointmentsResponse
-	(*TerminateAppointmentRequest)(nil),    // 9: producerflow.appointment.v1.TerminateAppointmentRequest
-	(*TerminateAppointmentResponse)(nil),   // 10: producerflow.appointment.v1.TerminateAppointmentResponse
-	(*ListEligibleLicensesRequest)(nil),    // 11: producerflow.appointment.v1.ListEligibleLicensesRequest
-	(*ListEligibleLicensesResponse)(nil),   // 12: producerflow.appointment.v1.ListEligibleLicensesResponse
-	(*GetAppointmentFeesRequest)(nil),      // 13: producerflow.appointment.v1.GetAppointmentFeesRequest
-	(*GetAppointmentFeesResponse)(nil),     // 14: producerflow.appointment.v1.GetAppointmentFeesResponse
-	(*GetTerminationFeesRequest)(nil),      // 15: producerflow.appointment.v1.GetTerminationFeesRequest
-	(*GetTerminationFeesResponse)(nil),     // 16: producerflow.appointment.v1.GetTerminationFeesResponse
-	(*GetAppointableCarriersRequest)(nil),  // 17: producerflow.appointment.v1.GetAppointableCarriersRequest
-	(*GetAppointableCarriersResponse)(nil), // 18: producerflow.appointment.v1.GetAppointableCarriersResponse
-	(*Carrier)(nil),                        // 19: producerflow.appointment.v1.Carrier
-	(*Appointment)(nil),                    // 20: producerflow.appointment.v1.Appointment
-	(*License)(nil),                        // 21: producerflow.appointment.v1.License
-	(*timestamppb.Timestamp)(nil),          // 22: google.protobuf.Timestamp
+	(TerminationReason)(0),                 // 3: producerflow.appointment.v1.TerminationReason
+	(*RequestAppointmentRequest)(nil),      // 4: producerflow.appointment.v1.RequestAppointmentRequest
+	(*RequestAppointmentResponse)(nil),     // 5: producerflow.appointment.v1.RequestAppointmentResponse
+	(*GetAppointmentRequest)(nil),          // 6: producerflow.appointment.v1.GetAppointmentRequest
+	(*GetAppointmentResponse)(nil),         // 7: producerflow.appointment.v1.GetAppointmentResponse
+	(*ListAppointmentsRequest)(nil),        // 8: producerflow.appointment.v1.ListAppointmentsRequest
+	(*ListAppointmentsResponse)(nil),       // 9: producerflow.appointment.v1.ListAppointmentsResponse
+	(*TerminateAppointmentRequest)(nil),    // 10: producerflow.appointment.v1.TerminateAppointmentRequest
+	(*TerminateAppointmentResponse)(nil),   // 11: producerflow.appointment.v1.TerminateAppointmentResponse
+	(*ListEligibleLicensesRequest)(nil),    // 12: producerflow.appointment.v1.ListEligibleLicensesRequest
+	(*ListEligibleLicensesResponse)(nil),   // 13: producerflow.appointment.v1.ListEligibleLicensesResponse
+	(*GetAppointmentFeesRequest)(nil),      // 14: producerflow.appointment.v1.GetAppointmentFeesRequest
+	(*GetAppointmentFeesResponse)(nil),     // 15: producerflow.appointment.v1.GetAppointmentFeesResponse
+	(*GetTerminationFeesRequest)(nil),      // 16: producerflow.appointment.v1.GetTerminationFeesRequest
+	(*GetTerminationFeesResponse)(nil),     // 17: producerflow.appointment.v1.GetTerminationFeesResponse
+	(*GetAppointableCarriersRequest)(nil),  // 18: producerflow.appointment.v1.GetAppointableCarriersRequest
+	(*GetAppointableCarriersResponse)(nil), // 19: producerflow.appointment.v1.GetAppointableCarriersResponse
+	(*Carrier)(nil),                        // 20: producerflow.appointment.v1.Carrier
+	(*Appointment)(nil),                    // 21: producerflow.appointment.v1.Appointment
+	(*License)(nil),                        // 22: producerflow.appointment.v1.License
+	(*ListTerminationReasonsRequest)(nil),  // 23: producerflow.appointment.v1.ListTerminationReasonsRequest
+	(*ListTerminationReasonsResponse)(nil), // 24: producerflow.appointment.v1.ListTerminationReasonsResponse
+	(*timestamppb.Timestamp)(nil),          // 25: google.protobuf.Timestamp
 }
 var file_producerflow_appointment_v1_appointment_proto_depIdxs = []int32{
 	1,  // 0: producerflow.appointment.v1.RequestAppointmentResponse.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
-	20, // 1: producerflow.appointment.v1.GetAppointmentResponse.appointment:type_name -> producerflow.appointment.v1.Appointment
+	21, // 1: producerflow.appointment.v1.GetAppointmentResponse.appointment:type_name -> producerflow.appointment.v1.Appointment
 	1,  // 2: producerflow.appointment.v1.ListAppointmentsRequest.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
-	20, // 3: producerflow.appointment.v1.ListAppointmentsResponse.appointments:type_name -> producerflow.appointment.v1.Appointment
-	21, // 4: producerflow.appointment.v1.ListEligibleLicensesResponse.licenses:type_name -> producerflow.appointment.v1.License
-	19, // 5: producerflow.appointment.v1.GetAppointableCarriersResponse.carriers:type_name -> producerflow.appointment.v1.Carrier
-	21, // 6: producerflow.appointment.v1.Appointment.license:type_name -> producerflow.appointment.v1.License
-	2,  // 7: producerflow.appointment.v1.Appointment.appointment_type:type_name -> producerflow.appointment.v1.AppointmentType
-	0,  // 8: producerflow.appointment.v1.Appointment.eligibility_status:type_name -> producerflow.appointment.v1.EligibilityStatus
-	1,  // 9: producerflow.appointment.v1.Appointment.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
-	22, // 10: producerflow.appointment.v1.Appointment.created_at:type_name -> google.protobuf.Timestamp
-	22, // 11: producerflow.appointment.v1.Appointment.updated_at:type_name -> google.protobuf.Timestamp
-	5,  // 12: producerflow.appointment.v1.AppointmentService.GetAppointment:input_type -> producerflow.appointment.v1.GetAppointmentRequest
-	13, // 13: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:input_type -> producerflow.appointment.v1.GetAppointmentFeesRequest
-	17, // 14: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:input_type -> producerflow.appointment.v1.GetAppointableCarriersRequest
-	15, // 15: producerflow.appointment.v1.AppointmentService.GetTerminationFees:input_type -> producerflow.appointment.v1.GetTerminationFeesRequest
-	7,  // 16: producerflow.appointment.v1.AppointmentService.ListAppointments:input_type -> producerflow.appointment.v1.ListAppointmentsRequest
-	11, // 17: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:input_type -> producerflow.appointment.v1.ListEligibleLicensesRequest
-	3,  // 18: producerflow.appointment.v1.AppointmentService.RequestAppointment:input_type -> producerflow.appointment.v1.RequestAppointmentRequest
-	9,  // 19: producerflow.appointment.v1.AppointmentService.TerminateAppointment:input_type -> producerflow.appointment.v1.TerminateAppointmentRequest
-	6,  // 20: producerflow.appointment.v1.AppointmentService.GetAppointment:output_type -> producerflow.appointment.v1.GetAppointmentResponse
-	14, // 21: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:output_type -> producerflow.appointment.v1.GetAppointmentFeesResponse
-	18, // 22: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:output_type -> producerflow.appointment.v1.GetAppointableCarriersResponse
-	16, // 23: producerflow.appointment.v1.AppointmentService.GetTerminationFees:output_type -> producerflow.appointment.v1.GetTerminationFeesResponse
-	8,  // 24: producerflow.appointment.v1.AppointmentService.ListAppointments:output_type -> producerflow.appointment.v1.ListAppointmentsResponse
-	12, // 25: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:output_type -> producerflow.appointment.v1.ListEligibleLicensesResponse
-	4,  // 26: producerflow.appointment.v1.AppointmentService.RequestAppointment:output_type -> producerflow.appointment.v1.RequestAppointmentResponse
-	10, // 27: producerflow.appointment.v1.AppointmentService.TerminateAppointment:output_type -> producerflow.appointment.v1.TerminateAppointmentResponse
-	20, // [20:28] is the sub-list for method output_type
-	12, // [12:20] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	21, // 3: producerflow.appointment.v1.ListAppointmentsResponse.appointments:type_name -> producerflow.appointment.v1.Appointment
+	3,  // 4: producerflow.appointment.v1.TerminateAppointmentRequest.reason:type_name -> producerflow.appointment.v1.TerminationReason
+	22, // 5: producerflow.appointment.v1.ListEligibleLicensesResponse.licenses:type_name -> producerflow.appointment.v1.License
+	20, // 6: producerflow.appointment.v1.GetAppointableCarriersResponse.carriers:type_name -> producerflow.appointment.v1.Carrier
+	22, // 7: producerflow.appointment.v1.Appointment.license:type_name -> producerflow.appointment.v1.License
+	2,  // 8: producerflow.appointment.v1.Appointment.appointment_type:type_name -> producerflow.appointment.v1.AppointmentType
+	0,  // 9: producerflow.appointment.v1.Appointment.eligibility_status:type_name -> producerflow.appointment.v1.EligibilityStatus
+	1,  // 10: producerflow.appointment.v1.Appointment.processing_status:type_name -> producerflow.appointment.v1.ProcessingStatus
+	25, // 11: producerflow.appointment.v1.Appointment.created_at:type_name -> google.protobuf.Timestamp
+	25, // 12: producerflow.appointment.v1.Appointment.updated_at:type_name -> google.protobuf.Timestamp
+	3,  // 13: producerflow.appointment.v1.ListTerminationReasonsResponse.termination_reasons:type_name -> producerflow.appointment.v1.TerminationReason
+	6,  // 14: producerflow.appointment.v1.AppointmentService.GetAppointment:input_type -> producerflow.appointment.v1.GetAppointmentRequest
+	14, // 15: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:input_type -> producerflow.appointment.v1.GetAppointmentFeesRequest
+	18, // 16: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:input_type -> producerflow.appointment.v1.GetAppointableCarriersRequest
+	16, // 17: producerflow.appointment.v1.AppointmentService.GetTerminationFees:input_type -> producerflow.appointment.v1.GetTerminationFeesRequest
+	8,  // 18: producerflow.appointment.v1.AppointmentService.ListAppointments:input_type -> producerflow.appointment.v1.ListAppointmentsRequest
+	12, // 19: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:input_type -> producerflow.appointment.v1.ListEligibleLicensesRequest
+	4,  // 20: producerflow.appointment.v1.AppointmentService.RequestAppointment:input_type -> producerflow.appointment.v1.RequestAppointmentRequest
+	10, // 21: producerflow.appointment.v1.AppointmentService.TerminateAppointment:input_type -> producerflow.appointment.v1.TerminateAppointmentRequest
+	23, // 22: producerflow.appointment.v1.AppointmentService.ListTerminationReasons:input_type -> producerflow.appointment.v1.ListTerminationReasonsRequest
+	7,  // 23: producerflow.appointment.v1.AppointmentService.GetAppointment:output_type -> producerflow.appointment.v1.GetAppointmentResponse
+	15, // 24: producerflow.appointment.v1.AppointmentService.GetAppointmentFees:output_type -> producerflow.appointment.v1.GetAppointmentFeesResponse
+	19, // 25: producerflow.appointment.v1.AppointmentService.GetAppointableCarriers:output_type -> producerflow.appointment.v1.GetAppointableCarriersResponse
+	17, // 26: producerflow.appointment.v1.AppointmentService.GetTerminationFees:output_type -> producerflow.appointment.v1.GetTerminationFeesResponse
+	9,  // 27: producerflow.appointment.v1.AppointmentService.ListAppointments:output_type -> producerflow.appointment.v1.ListAppointmentsResponse
+	13, // 28: producerflow.appointment.v1.AppointmentService.ListEligibleLicenses:output_type -> producerflow.appointment.v1.ListEligibleLicensesResponse
+	5,  // 29: producerflow.appointment.v1.AppointmentService.RequestAppointment:output_type -> producerflow.appointment.v1.RequestAppointmentResponse
+	11, // 30: producerflow.appointment.v1.AppointmentService.TerminateAppointment:output_type -> producerflow.appointment.v1.TerminateAppointmentResponse
+	24, // 31: producerflow.appointment.v1.AppointmentService.ListTerminationReasons:output_type -> producerflow.appointment.v1.ListTerminationReasonsResponse
+	23, // [23:32] is the sub-list for method output_type
+	14, // [14:23] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_producerflow_appointment_v1_appointment_proto_init() }
@@ -1536,8 +1762,8 @@ func file_producerflow_appointment_v1_appointment_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_producerflow_appointment_v1_appointment_proto_rawDesc), len(file_producerflow_appointment_v1_appointment_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   19,
+			NumEnums:      4,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

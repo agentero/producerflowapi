@@ -27,6 +27,7 @@ const (
 	AppointmentService_ListEligibleLicenses_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/ListEligibleLicenses"
 	AppointmentService_RequestAppointment_FullMethodName     = "/producerflow.appointment.v1.AppointmentService/RequestAppointment"
 	AppointmentService_TerminateAppointment_FullMethodName   = "/producerflow.appointment.v1.AppointmentService/TerminateAppointment"
+	AppointmentService_ListTerminationReasons_FullMethodName = "/producerflow.appointment.v1.AppointmentService/ListTerminationReasons"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -51,13 +52,13 @@ const (
 type AppointmentServiceClient interface {
 	// Retrieves the details of an appointment by its ID.
 	GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*GetAppointmentResponse, error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with requesting an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(ctx context.Context, in *GetAppointmentFeesRequest, opts ...grpc.CallOption) (*GetAppointmentFeesResponse, error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
 	GetAppointableCarriers(ctx context.Context, in *GetAppointableCarriersRequest, opts ...grpc.CallOption) (*GetAppointableCarriersResponse, error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with terminating an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(ctx context.Context, in *GetTerminationFeesRequest, opts ...grpc.CallOption) (*GetTerminationFeesResponse, error)
 	// Lists appointments for the tenant, optionally filtered by processing status.
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
@@ -70,8 +71,40 @@ type AppointmentServiceClient interface {
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(ctx context.Context, in *RequestAppointmentRequest, opts ...grpc.CallOption) (*RequestAppointmentResponse, error)
-	// Terminates an existing appointment by ID, providing a reason.
+	// Terminates an existing appointment, permanently ending the relationship between
+	// the license holder and the carrier.
+	//
+	// Before calling this method, you must:
+	// 1. Ensure the appointment exists and is in APPOINTED status
+	// 2. Call ListTerminationReasons to get valid termination reasons for the license's state
+	// 3. Select an appropriate termination reason from the state-specific list
+	//
+	// The termination process works as follows:
+	// - The request is submitted to NIPR for processing
+	// - Once NIPR completes processing, the status becomes TERMINATED
+	// - If rejected by NIPR, the appointment remains in its current status
+	//
+	// Important considerations:
+	// - Termination is permanent and cannot be undone
+	// - Termination reasons must be valid for the specific state where the license is issued
+	// - Some terminations may incur fees (check GetTerminationFees first)
+	// - You will receive webhook notifications when the termination is processed by NIPR
+	//
+	// The response indicates whether the termination request was successfully submitted,
+	// not whether the actual termination was completed (since NIPR processes asynchronously).
 	TerminateAppointment(ctx context.Context, in *TerminateAppointmentRequest, opts ...grpc.CallOption) (*TerminateAppointmentResponse, error)
+	// Lists the valid termination reasons for appointments in a specific state.
+	//
+	// When terminating an appointment, you must provide a valid termination reason that is
+	// accepted by NIPR for the state where the license is issued. Termination reasons vary
+	// by state, so you should call this method first to retrieve the list of valid reasons
+	// before calling TerminateAppointment.
+	//
+	// The termination reasons returned are based on NIPR's valid termination codes for the
+	// specified state. Each reason corresponds to a specific business scenario for why an
+	// appointment might be terminated (e.g., voluntary termination, inadequate production,
+	// company merger, etc.).
+	ListTerminationReasons(ctx context.Context, in *ListTerminationReasonsRequest, opts ...grpc.CallOption) (*ListTerminationReasonsResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -162,6 +195,16 @@ func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *appointmentServiceClient) ListTerminationReasons(ctx context.Context, in *ListTerminationReasonsRequest, opts ...grpc.CallOption) (*ListTerminationReasonsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTerminationReasonsResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_ListTerminationReasons_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility.
@@ -184,13 +227,13 @@ func (c *appointmentServiceClient) TerminateAppointment(ctx context.Context, in 
 type AppointmentServiceServer interface {
 	// Retrieves the details of an appointment by its ID.
 	GetAppointment(context.Context, *GetAppointmentRequest) (*GetAppointmentResponse, error)
-	// Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with requesting an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetAppointmentFees(context.Context, *GetAppointmentFeesRequest) (*GetAppointmentFeesResponse, error)
 	// Retrieves the carriers that are available to appoint licenses for the tenant.
 	GetAppointableCarriers(context.Context, *GetAppointableCarriersRequest) (*GetAppointableCarriersResponse, error)
-	// Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-	// as integer values in cents. E.g. $10.34 is sent as 1034.
+	// Retrieves the total fees associated with terminating an appointment for the given license.
+	// Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
 	GetTerminationFees(context.Context, *GetTerminationFeesRequest) (*GetTerminationFeesResponse, error)
 	// Lists appointments for the tenant, optionally filtered by processing status.
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
@@ -203,8 +246,40 @@ type AppointmentServiceServer interface {
 	// If the request is accepted by NIPR, the appointment will have IN_PROGRESS processing status.
 	// If rejected, it will have REJECTED status and reasons will be provided in not_eligible_reasons.
 	RequestAppointment(context.Context, *RequestAppointmentRequest) (*RequestAppointmentResponse, error)
-	// Terminates an existing appointment by ID, providing a reason.
+	// Terminates an existing appointment, permanently ending the relationship between
+	// the license holder and the carrier.
+	//
+	// Before calling this method, you must:
+	// 1. Ensure the appointment exists and is in APPOINTED status
+	// 2. Call ListTerminationReasons to get valid termination reasons for the license's state
+	// 3. Select an appropriate termination reason from the state-specific list
+	//
+	// The termination process works as follows:
+	// - The request is submitted to NIPR for processing
+	// - Once NIPR completes processing, the status becomes TERMINATED
+	// - If rejected by NIPR, the appointment remains in its current status
+	//
+	// Important considerations:
+	// - Termination is permanent and cannot be undone
+	// - Termination reasons must be valid for the specific state where the license is issued
+	// - Some terminations may incur fees (check GetTerminationFees first)
+	// - You will receive webhook notifications when the termination is processed by NIPR
+	//
+	// The response indicates whether the termination request was successfully submitted,
+	// not whether the actual termination was completed (since NIPR processes asynchronously).
 	TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error)
+	// Lists the valid termination reasons for appointments in a specific state.
+	//
+	// When terminating an appointment, you must provide a valid termination reason that is
+	// accepted by NIPR for the state where the license is issued. Termination reasons vary
+	// by state, so you should call this method first to retrieve the list of valid reasons
+	// before calling TerminateAppointment.
+	//
+	// The termination reasons returned are based on NIPR's valid termination codes for the
+	// specified state. Each reason corresponds to a specific business scenario for why an
+	// appointment might be terminated (e.g., voluntary termination, inadequate production,
+	// company merger, etc.).
+	ListTerminationReasons(context.Context, *ListTerminationReasonsRequest) (*ListTerminationReasonsResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -238,6 +313,9 @@ func (UnimplementedAppointmentServiceServer) RequestAppointment(context.Context,
 }
 func (UnimplementedAppointmentServiceServer) TerminateAppointment(context.Context, *TerminateAppointmentRequest) (*TerminateAppointmentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TerminateAppointment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) ListTerminationReasons(context.Context, *ListTerminationReasonsRequest) (*ListTerminationReasonsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTerminationReasons not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 func (UnimplementedAppointmentServiceServer) testEmbeddedByValue()                            {}
@@ -404,6 +482,24 @@ func _AppointmentService_TerminateAppointment_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_ListTerminationReasons_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTerminationReasonsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).ListTerminationReasons(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_ListTerminationReasons_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).ListTerminationReasons(ctx, req.(*ListTerminationReasonsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppointmentService_ServiceDesc is the grpc.ServiceDesc for AppointmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -442,6 +538,10 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TerminateAppointment",
 			Handler:    _AppointmentService_TerminateAppointment_Handler,
+		},
+		{
+			MethodName: "ListTerminationReasons",
+			Handler:    _AppointmentService_ListTerminationReasons_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
