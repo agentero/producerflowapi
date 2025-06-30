@@ -13,7 +13,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file producerflow/appointment/v1/appointment.proto.
  */
 export const file_producerflow_appointment_v1_appointment: GenFile = /*@__PURE__*/
-  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSJVChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAESGwoKY2Fycmllcl9pZBgCIAEoCUIHukgEcgIQASKcAQoaUmVxdWVzdEFwcG9pbnRtZW50UmVzcG9uc2USFgoOYXBwb2ludG1lbnRfaWQYASABKAkSSAoRcHJvY2Vzc2luZ19zdGF0dXMYAiABKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcChRub3RfZWxpZ2libGVfcmVhc29ucxgDIAMoCSI4ChVHZXRBcHBvaW50bWVudFJlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAEiVwoWR2V0QXBwb2ludG1lbnRSZXNwb25zZRI9CgthcHBvaW50bWVudBgBIAEoCzIoLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudCKVAQoXTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QSSAoRcHJvY2Vzc2luZ19zdGF0dXMYASADKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcCglwYWdlX3NpemUYAiABKAVCCbpIBhoEGGQoARISCgpwYWdlX3Rva2VuGAMgASgJInMKGExpc3RBcHBvaW50bWVudHNSZXNwb25zZRI+CgxhcHBvaW50bWVudHMYASADKAsyKC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnQSFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIlcKG1Rlcm1pbmF0ZUFwcG9pbnRtZW50UmVxdWVzdBIfCg5hcHBvaW50bWVudF9pZBgBIAEoCUIHukgEcgIQARIXCgZyZWFzb24YAiABKAlCB7pIBHICEAEiLwocVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIInEKG0xpc3RFbGlnaWJsZUxpY2Vuc2VzUmVxdWVzdBIfCgtwcm9kdWNlcl9pZBgBIAEoCUIIukgFcgOwAQFIABIdCglhZ2VuY3lfaWQYAiABKAlCCLpIBXIDsAEBSABCEgoJYXBwbGljYW50EgW6SAIIASJWChxMaXN0RWxpZ2libGVMaWNlbnNlc1Jlc3BvbnNlEjYKCGxpY2Vuc2VzGAEgAygLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2UiPAoZR2V0QXBwb2ludG1lbnRGZWVzUmVxdWVzdBIfCg5saWNlbnNlX251bWJlchgBIAEoCUIHukgEcgIQASIyChpHZXRBcHBvaW50bWVudEZlZXNSZXNwb25zZRIUCgxmZWVfaW5fY2VudHMYASABKAMiPAoZR2V0VGVybWluYXRpb25GZWVzUmVxdWVzdBIfCg5hcHBvaW50bWVudF9pZBgBIAEoCUIHukgEcgIQASIyChpHZXRUZXJtaW5hdGlvbkZlZXNSZXNwb25zZRIUCgxmZWVfaW5fY2VudHMYASABKAMiHwodR2V0QXBwb2ludGFibGVDYXJyaWVyc1JlcXVlc3QiWAoeR2V0QXBwb2ludGFibGVDYXJyaWVyc1Jlc3BvbnNlEjYKCGNhcnJpZXJzGAEgAygLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkNhcnJpZXIiRgoHQ2FycmllchISCgpjYXJyaWVyX2lkGAEgASgJEgwKBG5hbWUYAiABKAkSCwoDbnBuGAMgASgJEgwKBGZlaW4YBCABKAkijgQKC0FwcG9pbnRtZW50EhYKDmFwcG9pbnRtZW50X2lkGAEgASgJEjUKB2xpY2Vuc2UYAiABKAsyJC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGljZW5zZRJGChBhcHBvaW50bWVudF90eXBlGAQgASgOMiwucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkFwcG9pbnRtZW50VHlwZRJKChJlbGlnaWJpbGl0eV9zdGF0dXMYBSABKA4yLi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuRWxpZ2liaWxpdHlTdGF0dXMSSAoRcHJvY2Vzc2luZ19zdGF0dXMYBiABKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcChRub3RfZWxpZ2libGVfcmVhc29ucxgHIAMoCRIQCghjb21tZW50cxgIIAEoCRIgChhhcHBvaW50bWVudF9mZWVfaW5fY2VudHMYCSABKAMSIAoYdGVybWluYXRpb25fZmVlX2luX2NlbnRzGAogASgDEi4KCmNyZWF0ZWRfYXQYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYDCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wIqwBCgdMaWNlbnNlEhIKCmxpY2Vuc2VfaWQYASABKAkSFgoObGljZW5zZV9udW1iZXIYAiABKAkSHwoLcHJvZHVjZXJfaWQYAyABKAlCCLpIBXIDsAEBSAASHQoJYWdlbmN5X2lkGAQgASgJQgi6SAVyA7ABAUgAEg0KBXN0YXRlGAUgASgJEhUKDWxpY2Vuc2VfY2xhc3MYBiABKAlCDwoNbGljZW5zZV9vd25lcip7ChFFbGlnaWJpbGl0eVN0YXR1cxIiCh5FTElHSUJJTElUWV9TVEFUVVNfVU5TUEVDSUZJRUQQABIfChtFTElHSUJJTElUWV9TVEFUVVNfRUxJR0lCTEUQARIhCh1FTElHSUJJTElUWV9TVEFUVVNfSU5FTElHSUJMRRACKuIBChBQcm9jZXNzaW5nU3RhdHVzEiEKHVBST0NFU1NJTkdfU1RBVFVTX1VOU1BFQ0lGSUVEEAASIQodUFJPQ0VTU0lOR19TVEFUVVNfSU5fUFJPR1JFU1MQARIfChtQUk9DRVNTSU5HX1NUQVRVU19BUFBPSU5URUQQAhIgChxQUk9DRVNTSU5HX1NUQVRVU19URVJNSU5BVEVEEAMSHgoaUFJPQ0VTU0lOR19TVEFUVVNfUkVKRUNURUQQBBIlCiFQUk9DRVNTSU5HX1NUQVRVU19NSVNTSU5HX0xJQ0VOU0UQBSqUAQoPQXBwb2ludG1lbnRUeXBlEiAKHEFQUE9JTlRNRU5UX1RZUEVfVU5TUEVDSUZJRUQQABIdChlBUFBPSU5UTUVOVF9UWVBFX1JFR0lTVFJZEAESHQoZQVBQT0lOVE1FTlRfVFlQRV9VUF9GUk9OVBACEiEKHUFQUE9JTlRNRU5UX1RZUEVfSlVTVF9JTl9USU1FEAMy2AgKEkFwcG9pbnRtZW50U2VydmljZRJ5Cg5HZXRBcHBvaW50bWVudBIyLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudFJlcXVlc3QaMy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRSZXNwb25zZRKFAQoSR2V0QXBwb2ludG1lbnRGZWVzEjYucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50RmVlc1JlcXVlc3QaNy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRGZWVzUmVzcG9uc2USkQEKFkdldEFwcG9pbnRhYmxlQ2FycmllcnMSOi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludGFibGVDYXJyaWVyc1JlcXVlc3QaOy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludGFibGVDYXJyaWVyc1Jlc3BvbnNlEoUBChJHZXRUZXJtaW5hdGlvbkZlZXMSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0VGVybWluYXRpb25GZWVzUmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRUZXJtaW5hdGlvbkZlZXNSZXNwb25zZRJ/ChBMaXN0QXBwb2ludG1lbnRzEjQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RBcHBvaW50bWVudHNSZXF1ZXN0GjUucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RBcHBvaW50bWVudHNSZXNwb25zZRKLAQoUTGlzdEVsaWdpYmxlTGljZW5zZXMSOC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEVsaWdpYmxlTGljZW5zZXNSZXF1ZXN0GjkucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RFbGlnaWJsZUxpY2Vuc2VzUmVzcG9uc2UShQEKElJlcXVlc3RBcHBvaW50bWVudBI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5SZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlJlcXVlc3RBcHBvaW50bWVudFJlc3BvbnNlEosBChRUZXJtaW5hdGVBcHBvaW50bWVudBI4LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QaOS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZUKXAgofY29tLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MUIQQXBwb2ludG1lbnRQcm90b1ABWlRnaXRodWIuY29tL2FnZW50ZXJvL3Byb2R1Y2VyZmxvd2FwaS9nZW4vZ28vcHJvZHVjZXJmbG93L2FwcG9pbnRtZW50L3YxO2FwcG9pbnRtZW50djGiAgNQQViqAhtQcm9kdWNlcmZsb3cuQXBwb2ludG1lbnQuVjHKAhtQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjHiAidQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjFcR1BCTWV0YWRhdGHqAh1Qcm9kdWNlcmZsb3c6OkFwcG9pbnRtZW50OjpWMWIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp]);
+  fileDesc("Ci1wcm9kdWNlcmZsb3cvYXBwb2ludG1lbnQvdjEvYXBwb2ludG1lbnQucHJvdG8SG3Byb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MSJVChlSZXF1ZXN0QXBwb2ludG1lbnRSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAESGwoKY2Fycmllcl9pZBgCIAEoCUIHukgEcgIQASKcAQoaUmVxdWVzdEFwcG9pbnRtZW50UmVzcG9uc2USFgoOYXBwb2ludG1lbnRfaWQYASABKAkSSAoRcHJvY2Vzc2luZ19zdGF0dXMYAiABKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcChRub3RfZWxpZ2libGVfcmVhc29ucxgDIAMoCSI4ChVHZXRBcHBvaW50bWVudFJlcXVlc3QSHwoOYXBwb2ludG1lbnRfaWQYASABKAlCB7pIBHICEAEiVwoWR2V0QXBwb2ludG1lbnRSZXNwb25zZRI9CgthcHBvaW50bWVudBgBIAEoCzIoLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudCKVAQoXTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QSSAoRcHJvY2Vzc2luZ19zdGF0dXMYASADKA4yLS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUHJvY2Vzc2luZ1N0YXR1cxIcCglwYWdlX3NpemUYAiABKAVCCbpIBhoEGGQoARISCgpwYWdlX3Rva2VuGAMgASgJInMKGExpc3RBcHBvaW50bWVudHNSZXNwb25zZRI+CgxhcHBvaW50bWVudHMYASADKAsyKC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuQXBwb2ludG1lbnQSFwoPbmV4dF9wYWdlX3Rva2VuGAIgASgJIokBChtUZXJtaW5hdGVBcHBvaW50bWVudFJlcXVlc3QSIAoOYXBwb2ludG1lbnRfaWQYASABKAlCCLpIBXIDsAEBEkgKBnJlYXNvbhgCIAEoDjIuLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGlvblJlYXNvbkIIukgFggECEAEiLwocVGVybWluYXRlQXBwb2ludG1lbnRSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIInEKG0xpc3RFbGlnaWJsZUxpY2Vuc2VzUmVxdWVzdBIfCgtwcm9kdWNlcl9pZBgBIAEoCUIIukgFcgOwAQFIABIdCglhZ2VuY3lfaWQYAiABKAlCCLpIBXIDsAEBSABCEgoJYXBwbGljYW50EgW6SAIIASJWChxMaXN0RWxpZ2libGVMaWNlbnNlc1Jlc3BvbnNlEjYKCGxpY2Vuc2VzGAEgAygLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2UiOAoZR2V0QXBwb2ludG1lbnRGZWVzUmVxdWVzdBIbCgpsaWNlbnNlX2lkGAEgASgJQge6SARyAhABIjIKGkdldEFwcG9pbnRtZW50RmVlc1Jlc3BvbnNlEhQKDGZlZV9pbl9jZW50cxgBIAEoAyI4ChlHZXRUZXJtaW5hdGlvbkZlZXNSZXF1ZXN0EhsKCmxpY2Vuc2VfaWQYASABKAlCB7pIBHICEAEiMgoaR2V0VGVybWluYXRpb25GZWVzUmVzcG9uc2USFAoMZmVlX2luX2NlbnRzGAEgASgDIh8KHUdldEFwcG9pbnRhYmxlQ2FycmllcnNSZXF1ZXN0IlgKHkdldEFwcG9pbnRhYmxlQ2FycmllcnNSZXNwb25zZRI2CghjYXJyaWVycxgBIAMoCzIkLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5DYXJyaWVyIkYKB0NhcnJpZXISEgoKY2Fycmllcl9pZBgBIAEoCRIMCgRuYW1lGAIgASgJEgsKA25wbhgDIAEoCRIMCgRmZWluGAQgASgJIo4ECgtBcHBvaW50bWVudBIWCg5hcHBvaW50bWVudF9pZBgBIAEoCRI1CgdsaWNlbnNlGAIgASgLMiQucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpY2Vuc2USRgoQYXBwb2ludG1lbnRfdHlwZRgEIAEoDjIsLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5BcHBvaW50bWVudFR5cGUSSgoSZWxpZ2liaWxpdHlfc3RhdHVzGAUgASgOMi4ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkVsaWdpYmlsaXR5U3RhdHVzEkgKEXByb2Nlc3Npbmdfc3RhdHVzGAYgASgOMi0ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlByb2Nlc3NpbmdTdGF0dXMSHAoUbm90X2VsaWdpYmxlX3JlYXNvbnMYByADKAkSEAoIY29tbWVudHMYCCABKAkSIAoYYXBwb2ludG1lbnRfZmVlX2luX2NlbnRzGAkgASgDEiAKGHRlcm1pbmF0aW9uX2ZlZV9pbl9jZW50cxgKIAEoAxIuCgpjcmVhdGVkX2F0GAsgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAwgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKsAQoHTGljZW5zZRISCgpsaWNlbnNlX2lkGAEgASgJEhYKDmxpY2Vuc2VfbnVtYmVyGAIgASgJEh8KC3Byb2R1Y2VyX2lkGAMgASgJQgi6SAVyA7ABAUgAEh0KCWFnZW5jeV9pZBgEIAEoCUIIukgFcgOwAQFIABINCgVzdGF0ZRgFIAEoCRIVCg1saWNlbnNlX2NsYXNzGAYgASgJQg8KDWxpY2Vuc2Vfb3duZXIiOAodTGlzdFRlcm1pbmF0aW9uUmVhc29uc1JlcXVlc3QSFwoFc3RhdGUYASABKAlCCLpIBXIDmAECIm0KHkxpc3RUZXJtaW5hdGlvblJlYXNvbnNSZXNwb25zZRJLChN0ZXJtaW5hdGlvbl9yZWFzb25zGAEgAygOMi4ucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlRlcm1pbmF0aW9uUmVhc29uKnsKEUVsaWdpYmlsaXR5U3RhdHVzEiIKHkVMSUdJQklMSVRZX1NUQVRVU19VTlNQRUNJRklFRBAAEh8KG0VMSUdJQklMSVRZX1NUQVRVU19FTElHSUJMRRABEiEKHUVMSUdJQklMSVRZX1NUQVRVU19JTkVMSUdJQkxFEAIq4gEKEFByb2Nlc3NpbmdTdGF0dXMSIQodUFJPQ0VTU0lOR19TVEFUVVNfVU5TUEVDSUZJRUQQABIhCh1QUk9DRVNTSU5HX1NUQVRVU19JTl9QUk9HUkVTUxABEh8KG1BST0NFU1NJTkdfU1RBVFVTX0FQUE9JTlRFRBACEiAKHFBST0NFU1NJTkdfU1RBVFVTX1RFUk1JTkFURUQQAxIeChpQUk9DRVNTSU5HX1NUQVRVU19SRUpFQ1RFRBAEEiUKIVBST0NFU1NJTkdfU1RBVFVTX01JU1NJTkdfTElDRU5TRRAFKpQBCg9BcHBvaW50bWVudFR5cGUSIAocQVBQT0lOVE1FTlRfVFlQRV9VTlNQRUNJRklFRBAAEh0KGUFQUE9JTlRNRU5UX1RZUEVfUkVHSVNUUlkQARIdChlBUFBPSU5UTUVOVF9UWVBFX1VQX0ZST05UEAISIQodQVBQT0lOVE1FTlRfVFlQRV9KVVNUX0lOX1RJTUUQAyrBBQoRVGVybWluYXRpb25SZWFzb24SIgoeVEVSTUlOQVRJT05fUkVBU09OX1VOU1BFQ0lGSUVEEAASLAooVEVSTUlOQVRJT05fUkVBU09OX1ZPTFVOVEFSWV9URVJNSU5BVElPThABEiwKKFRFUk1JTkFUSU9OX1JFQVNPTl9JTkFERVFVQVRFX1BST0RVQ1RJT04QAhIxCi1URVJNSU5BVElPTl9SRUFTT05fQ0FOQ0VMTEVEX0JZX0dFTkVSQUxfQUdFTlQQAxIcChhURVJNSU5BVElPTl9SRUFTT05fREVBVEgQBBI1CjFURVJNSU5BVElPTl9SRUFTT05fQ09NUEFOWV9ERUZVTkNUX09SX0xJUVVJREFUSU9OEAUSKwonVEVSTUlOQVRJT05fUkVBU09OX0NPTVBBTllfSU5ERUJURURORVNTEAYSMAosVEVSTUlOQVRJT05fUkVBU09OX1BPT1JfUE9MSUNZSE9MREVSX1NFUlZJQ0UQBxIiCh5URVJNSU5BVElPTl9SRUFTT05fQUdFTlRfTU9WRUQQCBIpCiVURVJNSU5BVElPTl9SRUFTT05fQVBQT0lOVEVEX0lOX0VSUk9SEAkSIAocVEVSTUlOQVRJT05fUkVBU09OX0NBTkNFTExFRBAKEioKJlRFUk1JTkFUSU9OX1JFQVNPTl9DQU5DRUxMRURfRk9SX0NBVVNFEAsSJQohVEVSTUlOQVRJT05fUkVBU09OX0NPTVBBTllfTUVSR0VSEAwSHgoaVEVSTUlOQVRJT05fUkVBU09OX1JFVk9LRUQQDRIvCitURVJNSU5BVElPTl9SRUFTT05fU1VTUEVOREVEX0ZPUl9DT01QTElBTkNFEA4SMAosVEVSTUlOQVRJT05fUkVBU09OX1JFUVVFU1RfUkVHVUxBVE9SWV9SRVZJRVcQDzLsCQoSQXBwb2ludG1lbnRTZXJ2aWNlEnkKDkdldEFwcG9pbnRtZW50EjIucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldEFwcG9pbnRtZW50UmVxdWVzdBozLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudFJlc3BvbnNlEoUBChJHZXRBcHBvaW50bWVudEZlZXMSNi5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuR2V0QXBwb2ludG1lbnRGZWVzUmVxdWVzdBo3LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50bWVudEZlZXNSZXNwb25zZRKRAQoWR2V0QXBwb2ludGFibGVDYXJyaWVycxI6LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50YWJsZUNhcnJpZXJzUmVxdWVzdBo7LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRBcHBvaW50YWJsZUNhcnJpZXJzUmVzcG9uc2UShQEKEkdldFRlcm1pbmF0aW9uRmVlcxI2LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5HZXRUZXJtaW5hdGlvbkZlZXNSZXF1ZXN0GjcucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkdldFRlcm1pbmF0aW9uRmVlc1Jlc3BvbnNlEn8KEExpc3RBcHBvaW50bWVudHMSNC5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1JlcXVlc3QaNS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEFwcG9pbnRtZW50c1Jlc3BvbnNlEosBChRMaXN0RWxpZ2libGVMaWNlbnNlcxI4LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5MaXN0RWxpZ2libGVMaWNlbnNlc1JlcXVlc3QaOS5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuTGlzdEVsaWdpYmxlTGljZW5zZXNSZXNwb25zZRKFAQoSUmVxdWVzdEFwcG9pbnRtZW50EjYucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlJlcXVlc3RBcHBvaW50bWVudFJlcXVlc3QaNy5wcm9kdWNlcmZsb3cuYXBwb2ludG1lbnQudjEuUmVxdWVzdEFwcG9pbnRtZW50UmVzcG9uc2USiwEKFFRlcm1pbmF0ZUFwcG9pbnRtZW50EjgucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLlRlcm1pbmF0ZUFwcG9pbnRtZW50UmVxdWVzdBo5LnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MS5UZXJtaW5hdGVBcHBvaW50bWVudFJlc3BvbnNlEpEBChZMaXN0VGVybWluYXRpb25SZWFzb25zEjoucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RUZXJtaW5hdGlvblJlYXNvbnNSZXF1ZXN0GjsucHJvZHVjZXJmbG93LmFwcG9pbnRtZW50LnYxLkxpc3RUZXJtaW5hdGlvblJlYXNvbnNSZXNwb25zZUKXAgofY29tLnByb2R1Y2VyZmxvdy5hcHBvaW50bWVudC52MUIQQXBwb2ludG1lbnRQcm90b1ABWlRnaXRodWIuY29tL2FnZW50ZXJvL3Byb2R1Y2VyZmxvd2FwaS9nZW4vZ28vcHJvZHVjZXJmbG93L2FwcG9pbnRtZW50L3YxO2FwcG9pbnRtZW50djGiAgNQQViqAhtQcm9kdWNlcmZsb3cuQXBwb2ludG1lbnQuVjHKAhtQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjHiAidQcm9kdWNlcmZsb3dcQXBwb2ludG1lbnRcVjFcR1BCTWV0YWRhdGHqAh1Qcm9kdWNlcmZsb3c6OkFwcG9pbnRtZW50OjpWMWIGcHJvdG8z", [file_buf_validate_validate, file_google_protobuf_timestamp]);
 
 /**
  * Request to create a new appointment.
@@ -184,18 +184,20 @@ export const ListAppointmentsResponseSchema: GenMessage<ListAppointmentsResponse
  */
 export type TerminateAppointmentRequest = Message<"producerflow.appointment.v1.TerminateAppointmentRequest"> & {
   /**
-   * Required. ID of the appointment to terminate.
+   * ID of the appointment to terminate.
    *
    * @generated from field: string appointment_id = 1;
    */
   appointmentId: string;
 
   /**
-   * Required. Reason for termination.
+   * Reason for termination. This must be a valid termination reason
+   * for the state where the license is issued. Call ListTerminationReasons
+   * first to get the list of valid reasons for the specific state.
    *
-   * @generated from field: string reason = 2;
+   * @generated from field: producerflow.appointment.v1.TerminationReason reason = 2;
    */
-  reason: string;
+  reason: TerminationReason;
 };
 
 /**
@@ -210,7 +212,11 @@ export const TerminateAppointmentRequestSchema: GenMessage<TerminateAppointmentR
  */
 export type TerminateAppointmentResponse = Message<"producerflow.appointment.v1.TerminateAppointmentResponse"> & {
   /**
-   * Indicates whether the termination was successful.
+   * Indicates whether the termination request was successfully submitted to NIPR.
+   * This does not indicate that the appointment has been terminated, only that
+   * the request has been accepted for processing. The actual termination will
+   * be processed asynchronously by NIPR, and you will be notified via webhook
+   * when the process completes.
    *
    * @generated from field: bool success = 1;
    */
@@ -283,11 +289,11 @@ export const ListEligibleLicensesResponseSchema: GenMessage<ListEligibleLicenses
  */
 export type GetAppointmentFeesRequest = Message<"producerflow.appointment.v1.GetAppointmentFeesRequest"> & {
   /**
-   * Required. License number to appoint.
+   * Required. The ID of the license to get the appointment fee for.
    *
-   * @generated from field: string license_number = 1;
+   * @generated from field: string license_id = 1;
    */
-  licenseNumber: string;
+  licenseId: string;
 };
 
 /**
@@ -323,11 +329,11 @@ export const GetAppointmentFeesResponseSchema: GenMessage<GetAppointmentFeesResp
  */
 export type GetTerminationFeesRequest = Message<"producerflow.appointment.v1.GetTerminationFeesRequest"> & {
   /**
-   * Required. Appointment ID.
+   * Required. The ID of the license to get the termination fee for.
    *
-   * @generated from field: string appointment_id = 1;
+   * @generated from field: string license_id = 1;
    */
-  appointmentId: string;
+  licenseId: string;
 };
 
 /**
@@ -444,7 +450,7 @@ export type Appointment = Message<"producerflow.appointment.v1.Appointment"> & {
   appointmentId: string;
 
   /**
-   * The license number of the license being appointed.
+   * Information about the license being appointed.
    *
    * @generated from field: producerflow.appointment.v1.License license = 2;
    */
@@ -581,6 +587,48 @@ export const LicenseSchema: GenMessage<License> = /*@__PURE__*/
   messageDesc(file_producerflow_appointment_v1_appointment, 18);
 
 /**
+ * @generated from message producerflow.appointment.v1.ListTerminationReasonsRequest
+ */
+export type ListTerminationReasonsRequest = Message<"producerflow.appointment.v1.ListTerminationReasonsRequest"> & {
+  /**
+   * Required. The two-letter state code of the license for which you want to retrieve
+   * valid termination reasons. Different states may have different sets of valid
+   * termination reasons accepted by NIPR.
+   *
+   * @generated from field: string state = 1;
+   */
+  state: string;
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.ListTerminationReasonsRequest.
+ * Use `create(ListTerminationReasonsRequestSchema)` to create a new message.
+ */
+export const ListTerminationReasonsRequestSchema: GenMessage<ListTerminationReasonsRequest> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 19);
+
+/**
+ * @generated from message producerflow.appointment.v1.ListTerminationReasonsResponse
+ */
+export type ListTerminationReasonsResponse = Message<"producerflow.appointment.v1.ListTerminationReasonsResponse"> & {
+  /**
+   * The list of valid termination reasons for the specified state.
+   * These reasons can be used when calling TerminateAppointment for licenses
+   * issued in this state.
+   *
+   * @generated from field: repeated producerflow.appointment.v1.TerminationReason termination_reasons = 1;
+   */
+  terminationReasons: TerminationReason[];
+};
+
+/**
+ * Describes the message producerflow.appointment.v1.ListTerminationReasonsResponse.
+ * Use `create(ListTerminationReasonsResponseSchema)` to create a new message.
+ */
+export const ListTerminationReasonsResponseSchema: GenMessage<ListTerminationReasonsResponse> = /*@__PURE__*/
+  messageDesc(file_producerflow_appointment_v1_appointment, 20);
+
+/**
  * Eligibility status of the appointment.
  *
  * @generated from enum producerflow.appointment.v1.EligibilityStatus
@@ -685,6 +733,104 @@ export const AppointmentTypeSchema: GenEnum<AppointmentType> = /*@__PURE__*/
   enumDesc(file_producerflow_appointment_v1_appointment, 2);
 
 /**
+ * TerminationReason represents the reason for the termination of an appointment.
+ * These reasons correspond to NIPR's valid termination codes and vary by state.
+ * Use ListTerminationReasons to get the valid reasons for a specific state
+ * before terminating an appointment.
+ *
+ * Reference: https://pdb.nipr.com/Gateway/ValidTerms
+ *
+ * @generated from enum producerflow.appointment.v1.TerminationReason
+ */
+export enum TerminationReason {
+  /**
+   * @generated from enum value: TERMINATION_REASON_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_VOLUNTARY_TERMINATION = 1;
+   */
+  VOLUNTARY_TERMINATION = 1,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_INADEQUATE_PRODUCTION = 2;
+   */
+  INADEQUATE_PRODUCTION = 2,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_CANCELLED_BY_GENERAL_AGENT = 3;
+   */
+  CANCELLED_BY_GENERAL_AGENT = 3,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_DEATH = 4;
+   */
+  DEATH = 4,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_COMPANY_DEFUNCT_OR_LIQUIDATION = 5;
+   */
+  COMPANY_DEFUNCT_OR_LIQUIDATION = 5,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_COMPANY_INDEBTEDNESS = 6;
+   */
+  COMPANY_INDEBTEDNESS = 6,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_POOR_POLICYHOLDER_SERVICE = 7;
+   */
+  POOR_POLICYHOLDER_SERVICE = 7,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_AGENT_MOVED = 8;
+   */
+  AGENT_MOVED = 8,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_APPOINTED_IN_ERROR = 9;
+   */
+  APPOINTED_IN_ERROR = 9,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_CANCELLED = 10;
+   */
+  CANCELLED = 10,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_CANCELLED_FOR_CAUSE = 11;
+   */
+  CANCELLED_FOR_CAUSE = 11,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_COMPANY_MERGER = 12;
+   */
+  COMPANY_MERGER = 12,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_REVOKED = 13;
+   */
+  REVOKED = 13,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_SUSPENDED_FOR_COMPLIANCE = 14;
+   */
+  SUSPENDED_FOR_COMPLIANCE = 14,
+
+  /**
+   * @generated from enum value: TERMINATION_REASON_REQUEST_REGULATORY_REVIEW = 15;
+   */
+  REQUEST_REGULATORY_REVIEW = 15,
+}
+
+/**
+ * Describes the enum producerflow.appointment.v1.TerminationReason.
+ */
+export const TerminationReasonSchema: GenEnum<TerminationReason> = /*@__PURE__*/
+  enumDesc(file_producerflow_appointment_v1_appointment, 3);
+
+/**
  * AppointmentService manages license appointments through NIPR.
  *
  * The appointment flow in NIPR is as follows:
@@ -715,8 +861,8 @@ export const AppointmentService: GenService<{
     output: typeof GetAppointmentResponseSchema;
   },
   /**
-   * Retrieves the total fees associated with requesting an appointment. Fee amounts are represented
-   * as integer values in cents. E.g. $10.34 is sent as 1034.
+   * Retrieves the total fees associated with requesting an appointment for the given license.
+   * Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
    *
    * @generated from rpc producerflow.appointment.v1.AppointmentService.GetAppointmentFees
    */
@@ -736,8 +882,8 @@ export const AppointmentService: GenService<{
     output: typeof GetAppointableCarriersResponseSchema;
   },
   /**
-   * Retrieves the total fees associated with terminating an appointment. Fee amounts are represented
-   * as integer values in cents. E.g. $10.34 is sent as 1034.
+   * Retrieves the total fees associated with terminating an appointment for the given license.
+   * Fee amounts are represented as integer values in cents. E.g. $10.34 is sent as 1034.
    *
    * @generated from rpc producerflow.appointment.v1.AppointmentService.GetTerminationFees
    */
@@ -782,7 +928,27 @@ export const AppointmentService: GenService<{
     output: typeof RequestAppointmentResponseSchema;
   },
   /**
-   * Terminates an existing appointment by ID, providing a reason.
+   * Terminates an existing appointment, permanently ending the relationship between
+   * the license holder and the carrier.
+   *
+   * Before calling this method, you must:
+   * 1. Ensure the appointment exists and is in APPOINTED status
+   * 2. Call ListTerminationReasons to get valid termination reasons for the license's state
+   * 3. Select an appropriate termination reason from the state-specific list
+   *
+   * The termination process works as follows:
+   * - The request is submitted to NIPR for processing
+   * - Once NIPR completes processing, the status becomes TERMINATED
+   * - If rejected by NIPR, the appointment remains in its current status
+   *
+   * Important considerations:
+   * - Termination is permanent and cannot be undone
+   * - Termination reasons must be valid for the specific state where the license is issued
+   * - Some terminations may incur fees (check GetTerminationFees first)
+   * - You will receive webhook notifications when the termination is processed by NIPR
+   *
+   * The response indicates whether the termination request was successfully submitted,
+   * not whether the actual termination was completed (since NIPR processes asynchronously).
    *
    * @generated from rpc producerflow.appointment.v1.AppointmentService.TerminateAppointment
    */
@@ -790,6 +956,26 @@ export const AppointmentService: GenService<{
     methodKind: "unary";
     input: typeof TerminateAppointmentRequestSchema;
     output: typeof TerminateAppointmentResponseSchema;
+  },
+  /**
+   * Lists the valid termination reasons for appointments in a specific state.
+   *
+   * When terminating an appointment, you must provide a valid termination reason that is
+   * accepted by NIPR for the state where the license is issued. Termination reasons vary
+   * by state, so you should call this method first to retrieve the list of valid reasons
+   * before calling TerminateAppointment.
+   *
+   * The termination reasons returned are based on NIPR's valid termination codes for the
+   * specified state. Each reason corresponds to a specific business scenario for why an
+   * appointment might be terminated (e.g., voluntary termination, inadequate production,
+   * company merger, etc.).
+   *
+   * @generated from rpc producerflow.appointment.v1.AppointmentService.ListTerminationReasons
+   */
+  listTerminationReasons: {
+    methodKind: "unary";
+    input: typeof ListTerminationReasonsRequestSchema;
+    output: typeof ListTerminationReasonsResponseSchema;
   },
 }> = /*@__PURE__*/
   serviceDesc(file_producerflow_appointment_v1_appointment, 0);
