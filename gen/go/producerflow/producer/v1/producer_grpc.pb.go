@@ -54,6 +54,9 @@ const (
 type ProducerServiceClient interface {
 	// CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency.
 	// The URL contains encoded information about the agency defaults and tenant context.
+	// All fields in the request are optional - you can provide as much or as little
+	// information as available. Any missing information will be collected during
+	// the onboarding process.
 	// Returns a URL string that can be shared with the agency for self-onboarding.
 	CreateAgencyOnboardingURL(ctx context.Context, in *CreateAgencyOnboardingURLRequest, opts ...grpc.CallOption) (*CreateAgencyOnboardingURLResponse, error)
 	// NewAgency creates a new agency, optionally with associated producers.
@@ -415,6 +418,9 @@ func (c *producerServiceClient) StopSyncAgencyWithNIPR(ctx context.Context, in *
 type ProducerServiceServer interface {
 	// CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency.
 	// The URL contains encoded information about the agency defaults and tenant context.
+	// All fields in the request are optional - you can provide as much or as little
+	// information as available. Any missing information will be collected during
+	// the onboarding process.
 	// Returns a URL string that can be shared with the agency for self-onboarding.
 	CreateAgencyOnboardingURL(context.Context, *CreateAgencyOnboardingURLRequest) (*CreateAgencyOnboardingURLResponse, error)
 	// NewAgency creates a new agency, optionally with associated producers.
