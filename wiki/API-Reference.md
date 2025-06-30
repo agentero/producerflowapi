@@ -728,6 +728,10 @@ ApproveProducerResponse is the empty response returned after successfully approv
 CreateAgencyOnboardingURLRequest contains information needed to generate
 an agency onboarding URL. This includes basic agency information and defaults.
 
+All fields in this request are optional. You can provide as much or as little
+information as you have available. Any missing information will be collected
+from the user during the onboarding process through the generated URL.
+
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
@@ -741,7 +745,8 @@ an agency onboarding URL. This includes basic agency information and defaults.
 <a name="producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency"></a>
 
 ### CreateAgencyOnboardingURLRequest.Agency
-Agency contains the information about the agency to be onboarded
+Agency contains the information about the agency to be onboarded.
+All fields within the Agency message are also optional.
 
 
 | Field | Type | Label | Description |
@@ -770,7 +775,8 @@ Agency contains the information about the agency to be onboarded
 <a name="producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency-Principal"></a>
 
 ### CreateAgencyOnboardingURLRequest.Agency.Principal
-Principal is the person responsible for the agency
+Principal is the person responsible for the agency.
+All fields within the Principal message are also optional.
 
 
 | Field | Type | Label | Description |
@@ -2054,7 +2060,7 @@ RPCs for starting the onboarding agency process.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| CreateAgencyOnboardingURL | [CreateAgencyOnboardingURLRequest](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest) | [CreateAgencyOnboardingURLResponse](#producerflow-producer-v1-CreateAgencyOnboardingURLResponse) | CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency. The URL contains encoded information about the agency defaults and tenant context. Returns a URL string that can be shared with the agency for self-onboarding. |
+| CreateAgencyOnboardingURL | [CreateAgencyOnboardingURLRequest](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest) | [CreateAgencyOnboardingURLResponse](#producerflow-producer-v1-CreateAgencyOnboardingURLResponse) | CreateAgencyOnboardingURL generates a URL that can be used to onboard a new agency. The URL contains encoded information about the agency defaults and tenant context. All fields in the request are optional - you can provide as much or as little information as available. Any missing information will be collected during the onboarding process. Returns a URL string that can be shared with the agency for self-onboarding. |
 | NewAgency | [NewAgencyRequest](#producerflow-producer-v1-NewAgencyRequest) | [NewAgencyResponse](#producerflow-producer-v1-NewAgencyResponse) | NewAgency creates a new agency, optionally with associated producers. It performs the following validation checks: - Ensures all required fields are present and valid - Checks whether the NPN is already registered - Verifies agency and principal information with NIPR
 
 Business rules: - Sole proprietors can&#39;t have an agency NPN or additional producers - Regular agencies must provide either an NPN or a FEIN
