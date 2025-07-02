@@ -915,6 +915,24 @@ message Producer {
 
       // The last time this license information was updated from NIPR.
       google.protobuf.Timestamp updated_at = 7;
+
+      // LineOfAuthority represents a specific type of insurance coverage
+      // that a producer is authorized to sell under this license.
+      message LineOfAuthority {
+        // The Line of Authority description (e.g., "Life", "Property and Casualty", "Health").
+        // This is typically an uppercase string that describes the insurance type.
+        string loa = 1;
+
+        // Whether this Line of Authority is currently active.
+        bool active = 2;
+
+        // The date when this Line of Authority was issued.
+        google.protobuf.Timestamp issue_date = 3;
+      }
+
+      // Lines of Authority associated with this license.
+      // These define what types of insurance the producer can sell in this state.
+      repeated LineOfAuthority lines_of_authority = 8;
     }
 
     // List of all licenses held by the producer across different states.
