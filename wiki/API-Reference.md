@@ -27,7 +27,6 @@
     - [TerminateAppointmentResponse](#producerflow-appointment-v1-TerminateAppointmentResponse)
   
     - [AppointmentType](#producerflow-appointment-v1-AppointmentType)
-    - [EligibilityStatus](#producerflow-appointment-v1-EligibilityStatus)
     - [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus)
     - [TerminationReason](#producerflow-appointment-v1-TerminationReason)
   
@@ -148,14 +147,15 @@ Represents an appointment for a license.
 | ----- | ---- | ----- | ----------- |
 | appointment_id | [string](#string) |  | Unique identifier for the appointment. |
 | license | [License](#producerflow-appointment-v1-License) |  | Information about the license being appointed. |
+| name | [string](#string) |  | The license number of the license being appointed. |
+| agency_id | [string](#string) |  | The id of the agency that is appointed. |
+| producer_id | [string](#string) | optional | The id of the producer that is appointed, if any. |
+| carrier | [string](#string) |  | The name of the carrier to which the license is appointed. |
 | appointment_type | [AppointmentType](#producerflow-appointment-v1-AppointmentType) |  | Type of appointment (e.g., up-front, registry). |
-| eligibility_status | [EligibilityStatus](#producerflow-appointment-v1-EligibilityStatus) |  | Eligibility status of the appointment (e.g., eligible, ineligible). |
 | processing_status | [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus) |  | Processing status of the appointment (e.g., in progress, appointed). |
-| not_eligible_reasons | [string](#string) | repeated | If ineligible or rejected, reasons will be listed here. |
 | comments | [string](#string) |  | Optional comments or notes related to the appointment. |
-| appointment_fee_in_cents | [int64](#int64) |  | Total appointment fee in cents. |
-| termination_fee_in_cents | [int64](#int64) |  | Total termination fee in cents, if terminated or eligible for termination. |
-| created_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Timestamp when the appointment was created. |
+| effective_date | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Timestamp of the last update to the appointment. |
+| termination_date | [google.protobuf.Timestamp](#google-protobuf-Timestamp) | optional | Timestamp of the termination of the appointment. |
 | updated_at | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Timestamp of the last update to the appointment. |
 
 
@@ -325,8 +325,8 @@ Request to list appointments, optionally filtered by processing status.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | processing_status | [ProcessingStatus](#producerflow-appointment-v1-ProcessingStatus) | repeated | Optional. Filter results by processing status. |
-| page_size | [int32](#int32) |  | Optional. Maximum number of results to return. |
-| page_token | [string](#string) |  | Optional. Token for fetching the next page. |
+| producer_id | [string](#string) |  |  |
+| agency_id | [string](#string) |  |  |
 
 
 
@@ -487,19 +487,6 @@ Type of appointment.
 | APPOINTMENT_TYPE_REGISTRY | 1 |  |
 | APPOINTMENT_TYPE_UP_FRONT | 2 |  |
 | APPOINTMENT_TYPE_JUST_IN_TIME | 3 |  |
-
-
-
-<a name="producerflow-appointment-v1-EligibilityStatus"></a>
-
-### EligibilityStatus
-Eligibility status of the appointment.
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| ELIGIBILITY_STATUS_UNSPECIFIED | 0 |  |
-| ELIGIBILITY_STATUS_ELIGIBLE | 1 |  |
-| ELIGIBILITY_STATUS_INELIGIBLE | 2 |  |
 
 
 
