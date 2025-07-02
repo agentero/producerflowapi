@@ -119,13 +119,12 @@ message GetAppointmentResponse {
 message ListAppointmentsRequest {
   // Optional. Filter results by processing status.
   repeated ProcessingStatus processing_status = 1;
-  // Optional. Maximum number of results to return.
-  int32 page_size = 2 [(buf.validate.field).int32 = {
-    gte: 1
-    lte: 100
-  }];
-  // Optional. Token for fetching the next page.
-  string page_token = 3;
+  // Optional. Filter results by license owner.
+  oneof license_owner {
+    string producer_id = 2 [(buf.validate.field).string.uuid = true];
+    string agency_id = 3 [(buf.validate.field).string.uuid = true];
+    option (buf.validate.oneof).required = true;
+  }
 }
 
 message ListAppointmentsResponse {
@@ -221,39 +220,35 @@ message Appointment {
   // Information about the license being appointed.
   License license = 2;
 
-  // Type of appointment (e.g., up-front, registry).
-  AppointmentType appointment_type = 4;
+  // The license number of the license being appointed.
+  string name = 3;
 
-  // Eligibility status of the appointment (e.g., eligible, ineligible).
-  EligibilityStatus eligibility_status = 5;
+  // The id of the agency that is appointed.
+  string agency_id = 4;
+
+  // The id of the producer that is appointed, if any.
+  optional string producer_id = 5;
+
+  // The name of the carrier to which the license is appointed.
+  string carrier = 6;
+
+  // Type of appointment (e.g., up-front, registry).
+  AppointmentType appointment_type = 7;
 
   // Processing status of the appointment (e.g., in progress, appointed).
-  ProcessingStatus processing_status = 6;
-
-  // If ineligible or rejected, reasons will be listed here.
-  repeated string not_eligible_reasons = 7;
+  ProcessingStatus processing_status = 8;
 
   // Optional comments or notes related to the appointment.
-  string comments = 8;
+  string comments = 9;
 
-  // Total appointment fee in cents.
-  int64 appointment_fee_in_cents = 9;
+  // Timestamp of the last update to the appointment.
+  google.protobuf.Timestamp effective_date = 10;
 
-  // Total termination fee in cents, if terminated or eligible for termination.
-  int64 termination_fee_in_cents = 10;
-
-  // Timestamp when the appointment was created.
-  google.protobuf.Timestamp created_at = 11;
+  // Timestamp of the termination of the appointment.
+  optional google.protobuf.Timestamp termination_date = 11;
 
   // Timestamp of the last update to the appointment.
   google.protobuf.Timestamp updated_at = 12;
-}
-
-// Eligibility status of the appointment.
-enum EligibilityStatus {
-  ELIGIBILITY_STATUS_UNSPECIFIED = 0;
-  ELIGIBILITY_STATUS_ELIGIBLE = 1;
-  ELIGIBILITY_STATUS_INELIGIBLE = 2;
 }
 
 // Processing status of the appointment.
