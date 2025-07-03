@@ -4154,10 +4154,12 @@ type NewAgencyRequest_Agency_EOInfo struct {
 	Carrier string `protobuf:"bytes,1,opt,name=carrier,proto3" json:"carrier,omitempty"`
 	// Date when the E&O coverage will expire
 	ExpirationDate *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
-	// Amount of coverage provided by the E&O policy
+	// Amount of coverage provided by the E&O policy (aggregate limit)
 	CoverageAmount string `protobuf:"bytes,3,opt,name=coverage_amount,json=coverageAmount,proto3" json:"coverage_amount,omitempty"`
 	// Date when the E&O coverage will become effective
 	EffectiveDate *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=effective_date,json=effectiveDate,proto3" json:"effective_date,omitempty"`
+	// Per occurrence limit for the E&O policy
+	PerOccurrence string `protobuf:"bytes,5,opt,name=per_occurrence,json=perOccurrence,proto3" json:"per_occurrence,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -4218,6 +4220,13 @@ func (x *NewAgencyRequest_Agency_EOInfo) GetEffectiveDate() *timestamppb.Timesta
 		return x.EffectiveDate
 	}
 	return nil
+}
+
+func (x *NewAgencyRequest_Agency_EOInfo) GetPerOccurrence() string {
+	if x != nil {
+		return x.PerOccurrence
+	}
+	return ""
 }
 
 // BusinessHours contains the business hours of the agency
@@ -4969,10 +4978,12 @@ type Agency_EOInfo struct {
 	Carrier string `protobuf:"bytes,1,opt,name=carrier,proto3" json:"carrier,omitempty"`
 	// Date when the E&O coverage will expire
 	ExpirationDate *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
-	// Amount of coverage provided by the E&O policy
+	// Amount of coverage provided by the E&O policy (aggregate limit)
 	CoverageAmount string `protobuf:"bytes,3,opt,name=coverage_amount,json=coverageAmount,proto3" json:"coverage_amount,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Per occurrence limit for the E&O policy
+	PerOccurrence string `protobuf:"bytes,4,opt,name=per_occurrence,json=perOccurrence,proto3" json:"per_occurrence,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Agency_EOInfo) Reset() {
@@ -5022,6 +5033,13 @@ func (x *Agency_EOInfo) GetExpirationDate() *timestamppb.Timestamp {
 func (x *Agency_EOInfo) GetCoverageAmount() string {
 	if x != nil {
 		return x.CoverageAmount
+	}
+	return ""
+}
+
+func (x *Agency_EOInfo) GetPerOccurrence() string {
+	if x != nil {
+		return x.PerOccurrence
 	}
 	return ""
 }
@@ -6154,10 +6172,10 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\x03npn\x18\a \x01(\tR\x03npn\x12;\n" +
 	"\aaddress\x18\b \x01(\v2!.producerflow.producer.v1.AddressR\aaddress\"5\n" +
 	"!CreateAgencyOnboardingURLResponse\x12\x10\n" +
-	"\x03url\x18\x01 \x01(\tR\x03url\"\x97\x18\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\"\xc7\x18\n" +
 	"\x10NewAgencyRequest\x12Q\n" +
 	"\x06agency\x18\x01 \x01(\v21.producerflow.producer.v1.NewAgencyRequest.AgencyB\x06\xbaH\x03\xc8\x01\x01R\x06agency\x12%\n" +
-	"\fauto_approve\x18\x02 \x01(\bB\x02\x18\x01R\vautoApprove\x1a\x88\x17\n" +
+	"\fauto_approve\x18\x02 \x01(\bB\x02\x18\x01R\vautoApprove\x1a\xb8\x17\n" +
 	"\x06Agency\x12\x1b\n" +
 	"\x04name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04name\x12\x1d\n" +
 	"\x05email\x18\x02 \x01(\tB\a\xbaH\x04r\x02`\x01R\x05email\x12\x10\n" +
@@ -6199,12 +6217,13 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\vAccountType\x12\x1c\n" +
 	"\x18ACCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15ACCOUNT_TYPE_CHECKING\x10\x01\x12\x18\n" +
-	"\x14ACCOUNT_TYPE_SAVINGS\x10\x02\x1a\xf7\x01\n" +
+	"\x14ACCOUNT_TYPE_SAVINGS\x10\x02\x1a\xa7\x02\n" +
 	"\x06EOInfo\x12!\n" +
 	"\acarrier\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\acarrier\x12M\n" +
 	"\x0fexpiration_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\b\xbaH\x05\xb2\x01\x02@\x01R\x0eexpirationDate\x120\n" +
 	"\x0fcoverage_amount\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x0ecoverageAmount\x12I\n" +
-	"\x0eeffective_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\reffectiveDate\x1a\x8c\x03\n" +
+	"\x0eeffective_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\reffectiveDate\x12.\n" +
+	"\x0eper_occurrence\x18\x05 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\rperOccurrence\x1a\x8c\x03\n" +
 	"\rBusinessHours\x12#\n" +
 	"\btimezone\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\btimezone\x12{\n" +
 	"\x0ebusiness_hours\x18\x02 \x03(\v2L.producerflow.producer.v1.NewAgencyRequest.Agency.BusinessHours.BusinessHourB\x06\xbaH\x03\xc8\x01\x01R\rbusinessHours\x1a\xd8\x01\n" +
@@ -6304,7 +6323,7 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\vproducer_id\x18\x01 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\n" +
 	"producerId\x12\x1f\n" +
 	"\x06reason\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06reason\"\x18\n" +
-	"\x16RejectProducerResponse\"\xa9\x0f\n" +
+	"\x16RejectProducerResponse\"\xd0\x0f\n" +
 	"\x06Agency\x12\x1b\n" +
 	"\tagency_id\x18\x01 \x01(\tR\bagencyId\x12L\n" +
 	"\vagency_info\x18\x02 \x01(\v2+.producerflow.producer.v1.Agency.AgencyInfoR\n" +
@@ -6344,11 +6363,12 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\vAccountType\x12\x1c\n" +
 	"\x18ACCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15ACCOUNT_TYPE_CHECKING\x10\x01\x12\x18\n" +
-	"\x14ACCOUNT_TYPE_SAVINGS\x10\x02\x1a\x90\x01\n" +
+	"\x14ACCOUNT_TYPE_SAVINGS\x10\x02\x1a\xb7\x01\n" +
 	"\x06EOInfo\x12\x18\n" +
 	"\acarrier\x18\x01 \x01(\tR\acarrier\x12C\n" +
 	"\x0fexpiration_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0eexpirationDate\x12'\n" +
-	"\x0fcoverage_amount\x18\x03 \x01(\tR\x0ecoverageAmount\x1a\x89\x02\n" +
+	"\x0fcoverage_amount\x18\x03 \x01(\tR\x0ecoverageAmount\x12%\n" +
+	"\x0eper_occurrence\x18\x04 \x01(\tR\rperOccurrence\x1a\x89\x02\n" +
 	"\tPrincipal\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
