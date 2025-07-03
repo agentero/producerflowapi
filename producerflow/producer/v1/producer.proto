@@ -353,10 +353,12 @@ message NewAgencyRequest {
       string carrier = 1 [(buf.validate.field).string.min_len = 1];
       // Date when the E&O coverage will expire
       google.protobuf.Timestamp expiration_date = 2 [(buf.validate.field).timestamp.gt_now = true];
-      // Amount of coverage provided by the E&O policy
+      // Amount of coverage provided by the E&O policy (aggregate limit)
       string coverage_amount = 3 [(buf.validate.field).string.min_len = 1];
       // Date when the E&O coverage will become effective
       google.protobuf.Timestamp effective_date = 4 [(buf.validate.field).required = true];
+      // Per occurrence limit for the E&O policy
+      string per_occurrence = 5 [(buf.validate.field).string.min_len = 1];
     }
     EOInfo eo_info = 10;
 
@@ -782,8 +784,10 @@ message Agency {
     string carrier = 1;
     // Date when the E&O coverage will expire
     google.protobuf.Timestamp expiration_date = 2;
-    // Amount of coverage provided by the E&O policy
+    // Amount of coverage provided by the E&O policy (aggregate limit)
     string coverage_amount = 3;
+    // Per occurrence limit for the E&O policy
+    string per_occurrence = 4;
   }
 
   EOInfo eo_info = 6;
