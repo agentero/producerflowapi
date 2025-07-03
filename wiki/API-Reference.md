@@ -712,7 +712,8 @@ EOInfo contains Errors &amp; Omissions insurance information
 | ----- | ---- | ----- | ----------- |
 | carrier | [string](#string) |  | Insurance carrier providing the E&amp;O coverage |
 | expiration_date | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Date when the E&amp;O coverage will expire |
-| coverage_amount | [string](#string) |  | Amount of coverage provided by the E&amp;O policy |
+| coverage_amount | [string](#string) |  | Amount of coverage provided by the E&amp;O policy (aggregate limit) |
+| per_occurrence | [string](#string) |  | Per occurrence limit for the E&amp;O policy |
 
 
 
@@ -1217,8 +1218,9 @@ EOInfo contains Errors &amp; Omissions insurance information
 | ----- | ---- | ----- | ----------- |
 | carrier | [string](#string) |  | Insurance carrier providing the E&amp;O coverage |
 | expiration_date | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Date when the E&amp;O coverage will expire |
-| coverage_amount | [string](#string) |  | Amount of coverage provided by the E&amp;O policy |
+| coverage_amount | [string](#string) |  | Amount of coverage provided by the E&amp;O policy (aggregate limit) |
 | effective_date | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Date when the E&amp;O coverage will become effective |
+| per_occurrence | [string](#string) |  | Per occurrence limit for the E&amp;O policy |
 
 
 
