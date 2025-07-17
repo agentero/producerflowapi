@@ -6,7 +6,7 @@ require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250625184727-c923a0c2a132.1
 	connectrpc.com/connect v1.18.1
 	google.golang.org/genproto v0.0.0-20250603155806-513f23925822
-	google.golang.org/grpc v1.73.0
+	google.golang.org/grpc v1.74.0
 	google.golang.org/protobuf v1.36.6
 )
 
