@@ -1,10 +1,10 @@
 # Producerflow API
 
-[![GoDoc](https://godoc.org/github.com/agentero/producerflowapi?status.svg)](https://godoc.org/github.com/agentero/producerflowapi)
-[![npm version](https://img.shields.io/npm/v/@agentero/producerflowapi.svg)](https://www.npmjs.com/package/@agentero/producerflowapi)
-[![Go Build Test](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/go-build.yml)
-[![TypeScript Build Test](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/ts-build.yml)
-[![Proto Validation](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml/badge.svg)](https://github.com/agentero/producerflowapi/actions/workflows/proto-validation.yml)
+[![GoDoc](https://godoc.org/github.com/producerflow/producerflowapi?status.svg)](https://godoc.org/github.com/producerflow/producerflowapi)
+[![npm version](https://img.shields.io/npm/v/@producerflow/producerflowapi.svg)](https://www.npmjs.com/package/@producerflow/producerflowapi)
+[![Go Build Test](https://github.com/producerflow/producerflowapi/actions/workflows/go-build.yml/badge.svg)](https://github.com/producerflow/producerflowapi/actions/workflows/go-build.yml)
+[![TypeScript Build Test](https://github.com/producerflow/producerflowapi/actions/workflows/ts-build.yml/badge.svg)](https://github.com/producerflow/producerflowapi/actions/workflows/ts-build.yml)
+[![Proto Validation](https://github.com/producerflow/producerflowapi/actions/workflows/proto-validation.yml/badge.svg)](https://github.com/producerflow/producerflowapi/actions/workflows/proto-validation.yml)
 [![SOC 2 Compliant](https://img.shields.io/badge/SOC%202-Compliant-green.svg)](https://www.producerflow.com/)
 
 > **For Producerflow clients seeking seamless API integration with their services**
