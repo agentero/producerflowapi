@@ -76,13 +76,13 @@ buf generate
 #### Go Client
 
 ```bash
-go get github.com/agentero/producerflowapi/gen/go
+go get github.com/producerflow/producerflowapi/gen/go
 ```
 
 #### TypeScript Client
 
 ```bash
-npm install @agentero/producerflowapi
+npm install @producerflow/producerflowapi
 ```
 
 For detailed installation and usage instructions, see the respective client library documentation.

@@ -5,7 +5,7 @@ This package contains generated TypeScript types for the ProducerFlow API, creat
 ## Installation
 
 ```bash
-npm install @agentero/producerflowapi
+npm install @producerflow/producerflowapi
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   Agency,
   NewAgencyRequest,
   // ... other types
-} from '@agentero/producerflowapi';
+} from '@producerflow/producerflowapi';
 
 // Create a new agency request
 const agencyRequest = new NewAgencyRequest({

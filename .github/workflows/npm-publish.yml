@@ -76,5 +76,5 @@ jobs:
 
     - name: Create success comment
       run: |
-        echo "✅ Successfully published @agentero/producerflowapi@${{ steps.package-version.outputs.version }} to NPM"
-        echo "📦 Package URL: https://www.npmjs.com/package/@agentero/producerflowapi" 
+        echo "✅ Successfully published @producerflow/producerflowapi@${{ steps.package-version.outputs.version }} to NPM"
+        echo "📦 Package URL: https://www.npmjs.com/package/@producerflow/producerflowapi" 
