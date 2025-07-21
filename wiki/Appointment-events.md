@@ -301,31 +301,27 @@ When a tenant admin terminates an appointment directly in ProducerFlow:
 
 ### Event Processing
 
-1. **Integration Type Detection**: Check the `origin` field to determine integration type:
-   - `"NIPR"` = NIPR integration (asynchronous processing)
-   - `"ProducerFlowPortal"` or `"ProducerFlowAPI"` = Direct integration (immediate processing)
+1. **Status-Based Handling**: Handle webhook events based on appointment status:
+   - `in_progress` = Only appears in NIPR integration, indicates appointment request processing
+   - `appointed` = Final status in both integration types
+   - `termination_requested` = Only appears in NIPR integration, indicates termination request processing
+   - `terminated` = Final status in both integration types  
+   - `rejected` = Only appears in NIPR integration
 
-2. **Status-Based Handling**: Handle webhook events based on appointment status:
-   - `IN_PROGRESS` = Only appears in NIPR integration, indicates appointment request processing
-   - `APPOINTED` = Final status in both integration types
-   - `TERMINATION_REQUESTED` = Only appears in NIPR integration, indicates termination request processing
-   - `TERMINATED` = Final status in both integration types  
-   - `REJECTED` = Only appears in NIPR integration
+2. **Idempotency**: Always use the `id` field to handle duplicate webhook deliveries
 
-3. **Idempotency**: Always use the `id` field to handle duplicate webhook deliveries
+3. **Error Handling**: Implement retry logic for failed webhook processing
 
-4. **Error Handling**: Implement retry logic for failed webhook processing
-
-5. **Validation**: Validate payloads against the [appointment schema](../webhooks/schema/appointment_schema.json)
+4. **Validation**: Validate payloads against the [appointment schema](../webhooks/schema/appointment_schema.json)
 
 ### Key Differences Between Integration Types
 
 | Aspect | NIPR Integration | ProducerFlow Direct |
 |--------|------------------|-------------------|
 | **Processing** | Asynchronous (minutes to hours) | Immediate |
-| **Initial Status** | `IN_PROGRESS` | `APPOINTED` |
+| **Initial Status** | `in_progress` | `appointed` |
 | **Origin Values** | `ProducerFlowPortal`, `ProducerFlowAPI` | `ProducerFlowPortal`, `ProducerFlowAPI` |
-| **Possible Rejections** | Yes (`REJECTED`, `MISSING_LICENSE`) | No |
+| **Possible Rejections** | Yes (`rejected`) | No |
 | **Fees** | May include NIPR processing fees | $0 |
 | **Webhook Timing** | Delayed until NIPR processes | Immediate |
 
@@ -353,8 +349,8 @@ Handle these common error scenarios:
    - Monitor appointment status via API if needed
 
 3. **Termination Processing**: 
-   - Status moves from `APPOINTED` → `TERMINATION_REQUESTED` → `TERMINATED`
-   - Handle `TERMINATION_REQUESTED` status to notify users that termination is pending
+   - Status moves from `appointed` → `termination_requested` → `terminated`
+   - Handle `termination_requested` status to notify users that termination is pending
 
 #### ProducerFlow Direct Integration
 
