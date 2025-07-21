@@ -10,12 +10,7 @@
     },
     "event_type": {
       "type": "string",
-      "description": "Type of event that occurred (e.g., 'agency.updated', 'agency.synced')"
-    },
-    "change_type": {
-      "type": "string",
-      "enum": ["Created", "Updated", "Deleted"],
-      "description": "Type of change that occurred (deprecated, use event_type instead)"
+      "description": "Type of event that occurred (e.g., 'agency.updated')"
     },
     "origin": {
       "type": "string",

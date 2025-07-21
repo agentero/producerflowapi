@@ -1,7 +1,6 @@
 {
   "id": "evt_appointment_123456789",
   "event_type": "appointment.updated",
-  "change_type": "Updated",
   "origin": "ProducerFlowAPI",
   "timestamp": "2025-07-21T15:30:00Z",
   "appointment_id": "app_987654321",

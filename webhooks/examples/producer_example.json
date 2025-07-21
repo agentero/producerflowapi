@@ -1,7 +1,6 @@
 {
   "id": "chg_123456789",
   "event_type": "producer.updated",
-  "change_type": "Updated",
   "origin": "ProducerFlowAPI",
   "timestamp": "2024-03-20T15:30:00Z",
   "producer_id": "prod_987654321",

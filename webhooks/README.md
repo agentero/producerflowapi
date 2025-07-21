@@ -25,7 +25,6 @@ Triggered when agency data is created, updated, or synchronized from external so
 
 - `agency.created` - New agency record created
 - `agency.updated` - Existing agency record modified
-- `agency.synced` - Agency data synchronized from NIPR
 
 **Key Data Included:**
 
@@ -48,7 +47,6 @@ Triggered when producer/agent data is created, updated, or synchronized.
 
 - `producer.created` - New producer record created
 - `producer.updated` - Existing producer record modified
-- `producer.synced` - Producer data synchronized from NIPR
 
 **Key Data Included:**
 
@@ -88,7 +86,6 @@ All webhook payloads share a common base structure:
 {
   "id": "string",              // Unique identifier for this change event
   "event_type": "string",      // Specific event type (e.g., "agency.updated")
-  "change_type": "string",     // Legacy field: "Created", "Updated", "Deleted"
   "origin": "string",          // Source: "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
   "timestamp": "string",       // ISO 8601 datetime when change occurred
   // ... entity-specific data

@@ -97,8 +97,7 @@ All webhook payloads share a common base structure with the following fields:
 {
   "id": "chg_123456789",                    // Unique identifier for this change event
   "event_type": "agency.updated",           // Specific event type (e.g., "agency.updated", "producer.created")
-  "change_type": "Updated",                 // Legacy field: "Created", "Updated", "Deleted", "Resync"
-  "origin": "ProducerFlowAPI",              // Source: "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
+  "origin": "ProducerFlowAPI",              // Source: "ProducerFlowAPI", "ProducerFlowPortal"
   "timestamp": "2024-03-20T15:30:45Z",      // ISO 8601 datetime when change occurred
   // ... entity-specific data follows
 }
@@ -112,7 +111,6 @@ All webhook payloads share a common base structure with the following fields:
 
 - `agency.created` - New agency record created
 - `agency.updated` - Existing agency record modified  
-- `agency.synced` - Agency data synchronized from NIPR (equivalent to "Resync")
 
 **Schema Reference**: [agency_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/agency_schema.json)  
 **Example Payload**: [agency_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/agency_example.json)
@@ -123,7 +121,6 @@ All webhook payloads share a common base structure with the following fields:
 
 - `producer.created` - New producer record created
 - `producer.updated` - Existing producer record modified
-- `producer.synced` - Producer data synchronized from NIPR (equivalent to "Resync")
 
 **Schema Reference**: [producer_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/producer_schema.json)  
 **Example Payload**: [producer_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/producer_example.json)
@@ -141,13 +138,20 @@ All webhook payloads share a common base structure with the following fields:
 
 #### Appointment Webhooks
 
+Appointment webhooks deliver real-time notifications when license appointment statuses change due to processing by NIPR (National Insurance Producer Registry) or direct actions by tenant admins. ProducerFlow supports two types of carrier integrations:
+
+1. **NIPR Integration (Asynchronous)**: Appointments go through NIPR processing with statuses like `in_progress`, `appointed`, `termination_requested`, `terminated`, and `rejected`
+2. **ProducerFlow Direct Integration (Synchronous)**: Tenant admins create/terminate appointments directly with immediate `appointed` or `terminated` status
+
 **Event Types:**
 
-- `appointment.created` - New appointment record created
-- `appointment.updated` - Existing appointment record modified
+- `appointment.created` - New appointment record created (NIPR accepted request or direct creation)
+- `appointment.updated` - Appointment status changed (NIPR processing results or admin updates)
 
 **Schema Reference**: [appointment_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/appointment_schema.json)  
 **Example Payload**: [appointment_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/appointment_example.json)
+
+**📋 For comprehensive appointment webhook documentation, including detailed examples, integration patterns, and handling of both NIPR and direct integrations, see: [Appointment Webhook Events](Appointment-events.md)**
 
 ### Key Elements
 

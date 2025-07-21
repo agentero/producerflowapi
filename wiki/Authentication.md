@@ -68,7 +68,7 @@ func createAuthenticatedClient(apiKey string) producerconnect.ProducerServiceCli
 
     return producerconnect.NewProducerServiceClient(
         httpClient,
-        "https://producerflow-backend-840479878591.us-east4.run.app",
+        "https://api.producerflow.com",
         connect.WithGRPC(), // or WithConnect() depending on protocol
     )
 }
