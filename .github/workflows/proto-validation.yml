@@ -23,6 +23,8 @@ jobs:
         fetch-depth: 0
     - name: Setup buf
       uses: bufbuild/buf-setup-action@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Lint protobuf files
       run: |
