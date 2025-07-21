@@ -141,13 +141,20 @@ All webhook payloads share a common base structure with the following fields:
 
 #### Appointment Webhooks
 
+Appointment webhooks deliver real-time notifications when license appointment statuses change due to processing by NIPR (National Insurance Producer Registry) or direct actions by tenant admins. ProducerFlow supports two types of carrier integrations:
+
+1. **NIPR Integration (Asynchronous)**: Appointments go through NIPR processing with statuses like `in_progress`, `appointed`, `termination_requested`, `terminated`, and `rejected`
+2. **ProducerFlow Direct Integration (Synchronous)**: Tenant admins create/terminate appointments directly with immediate `appointed` or `terminated` status
+
 **Event Types:**
 
-- `appointment.created` - New appointment record created
-- `appointment.updated` - Existing appointment record modified
+- `appointment.created` - New appointment record created (NIPR accepted request or direct creation)
+- `appointment.updated` - Appointment status changed (NIPR processing results or admin updates)
 
 **Schema Reference**: [appointment_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/appointment_schema.json)  
 **Example Payload**: [appointment_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/appointment_example.json)
+
+**📋 For comprehensive appointment webhook documentation, including detailed examples, integration patterns, and handling of both NIPR and direct integrations, see: [Appointment Webhook Events](Appointment-events.md)**
 
 ### Key Elements
 
