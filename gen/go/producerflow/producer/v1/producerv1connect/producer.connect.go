@@ -102,6 +102,9 @@ const (
 	// ProducerServiceStopSyncAgencyWithNIPRProcedure is the fully-qualified name of the
 	// ProducerService's StopSyncAgencyWithNIPR RPC.
 	ProducerServiceStopSyncAgencyWithNIPRProcedure = "/producerflow.producer.v1.ProducerService/StopSyncAgencyWithNIPR"
+	// ProducerServiceCreateProducerUploadURLProcedure is the fully-qualified name of the
+	// ProducerService's CreateProducerUploadURL RPC.
+	ProducerServiceCreateProducerUploadURLProcedure = "/producerflow.producer.v1.ProducerService/CreateProducerUploadURL"
 )
 
 // ProducerServiceClient is a client for the producerflow.producer.v1.ProducerService service.
@@ -222,6 +225,22 @@ type ProducerServiceClient interface {
 	// StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
 	// Use this to prevent further automatic updates from NIPR.
 	StopSyncAgencyWithNIPR(context.Context, *connect.Request[v1.StopSyncAgencyWithNIPRRequest]) (*connect.Response[v1.StopSyncAgencyWithNIPRResponse], error)
+	// CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency.
+	// The agency is identified by its NPN, and the URL can be shared with the agency to allow them to
+	// upload producer information securely.
+	//
+	// The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+	//
+	// The agency must:
+	// - Exist and belong to the authenticated tenant
+	// - Have a valid NPN
+	//
+	// Returns a URL string that can be shared with the agency for producer uploads.
+	// Returns errors in the following cases:
+	// - INVALID_ARGUMENT: if agency NPN is empty or invalid format
+	// - NOT_FOUND: if agency NPN doesn't exist
+	// - INTERNAL: for other unexpected errors
+	CreateProducerUploadURL(context.Context, *connect.Request[v1.CreateProducerUploadURLRequest]) (*connect.Response[v1.CreateProducerUploadURLResponse], error)
 }
 
 // NewProducerServiceClient constructs a client for the producerflow.producer.v1.ProducerService
@@ -373,6 +392,12 @@ func NewProducerServiceClient(httpClient connect.HTTPClient, baseURL string, opt
 			connect.WithSchema(producerServiceMethods.ByName("StopSyncAgencyWithNIPR")),
 			connect.WithClientOptions(opts...),
 		),
+		createProducerUploadURL: connect.NewClient[v1.CreateProducerUploadURLRequest, v1.CreateProducerUploadURLResponse](
+			httpClient,
+			baseURL+ProducerServiceCreateProducerUploadURLProcedure,
+			connect.WithSchema(producerServiceMethods.ByName("CreateProducerUploadURL")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -401,6 +426,7 @@ type producerServiceClient struct {
 	syncAgencyWithNIPR        *connect.Client[v1.SyncAgencyWithNIPRRequest, v1.SyncAgencyWithNIPRResponse]
 	stopSyncProducerWithNIPR  *connect.Client[v1.StopSyncProducerWithNIPRRequest, v1.StopSyncProducerWithNIPRResponse]
 	stopSyncAgencyWithNIPR    *connect.Client[v1.StopSyncAgencyWithNIPRRequest, v1.StopSyncAgencyWithNIPRResponse]
+	createProducerUploadURL   *connect.Client[v1.CreateProducerUploadURLRequest, v1.CreateProducerUploadURLResponse]
 }
 
 // CreateAgencyOnboardingURL calls
@@ -523,6 +549,11 @@ func (c *producerServiceClient) StopSyncAgencyWithNIPR(ctx context.Context, req 
 	return c.stopSyncAgencyWithNIPR.CallUnary(ctx, req)
 }
 
+// CreateProducerUploadURL calls producerflow.producer.v1.ProducerService.CreateProducerUploadURL.
+func (c *producerServiceClient) CreateProducerUploadURL(ctx context.Context, req *connect.Request[v1.CreateProducerUploadURLRequest]) (*connect.Response[v1.CreateProducerUploadURLResponse], error) {
+	return c.createProducerUploadURL.CallUnary(ctx, req)
+}
+
 // ProducerServiceHandler is an implementation of the producerflow.producer.v1.ProducerService
 // service.
 type ProducerServiceHandler interface {
@@ -642,6 +673,22 @@ type ProducerServiceHandler interface {
 	// StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
 	// Use this to prevent further automatic updates from NIPR.
 	StopSyncAgencyWithNIPR(context.Context, *connect.Request[v1.StopSyncAgencyWithNIPRRequest]) (*connect.Response[v1.StopSyncAgencyWithNIPRResponse], error)
+	// CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency.
+	// The agency is identified by its NPN, and the URL can be shared with the agency to allow them to
+	// upload producer information securely.
+	//
+	// The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+	//
+	// The agency must:
+	// - Exist and belong to the authenticated tenant
+	// - Have a valid NPN
+	//
+	// Returns a URL string that can be shared with the agency for producer uploads.
+	// Returns errors in the following cases:
+	// - INVALID_ARGUMENT: if agency NPN is empty or invalid format
+	// - NOT_FOUND: if agency NPN doesn't exist
+	// - INTERNAL: for other unexpected errors
+	CreateProducerUploadURL(context.Context, *connect.Request[v1.CreateProducerUploadURLRequest]) (*connect.Response[v1.CreateProducerUploadURLResponse], error)
 }
 
 // NewProducerServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -789,6 +836,12 @@ func NewProducerServiceHandler(svc ProducerServiceHandler, opts ...connect.Handl
 		connect.WithSchema(producerServiceMethods.ByName("StopSyncAgencyWithNIPR")),
 		connect.WithHandlerOptions(opts...),
 	)
+	producerServiceCreateProducerUploadURLHandler := connect.NewUnaryHandler(
+		ProducerServiceCreateProducerUploadURLProcedure,
+		svc.CreateProducerUploadURL,
+		connect.WithSchema(producerServiceMethods.ByName("CreateProducerUploadURL")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/producerflow.producer.v1.ProducerService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ProducerServiceCreateAgencyOnboardingURLProcedure:
@@ -837,6 +890,8 @@ func NewProducerServiceHandler(svc ProducerServiceHandler, opts ...connect.Handl
 			producerServiceStopSyncProducerWithNIPRHandler.ServeHTTP(w, r)
 		case ProducerServiceStopSyncAgencyWithNIPRProcedure:
 			producerServiceStopSyncAgencyWithNIPRHandler.ServeHTTP(w, r)
+		case ProducerServiceCreateProducerUploadURLProcedure:
+			producerServiceCreateProducerUploadURLHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -936,4 +991,8 @@ func (UnimplementedProducerServiceHandler) StopSyncProducerWithNIPR(context.Cont
 
 func (UnimplementedProducerServiceHandler) StopSyncAgencyWithNIPR(context.Context, *connect.Request[v1.StopSyncAgencyWithNIPRRequest]) (*connect.Response[v1.StopSyncAgencyWithNIPRResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.producer.v1.ProducerService.StopSyncAgencyWithNIPR is not implemented"))
+}
+
+func (UnimplementedProducerServiceHandler) CreateProducerUploadURL(context.Context, *connect.Request[v1.CreateProducerUploadURLRequest]) (*connect.Response[v1.CreateProducerUploadURLResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("producerflow.producer.v1.ProducerService.CreateProducerUploadURL is not implemented"))
 }

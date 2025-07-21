@@ -42,6 +42,7 @@ const (
 	ProducerService_SyncAgencyWithNIPR_FullMethodName        = "/producerflow.producer.v1.ProducerService/SyncAgencyWithNIPR"
 	ProducerService_StopSyncProducerWithNIPR_FullMethodName  = "/producerflow.producer.v1.ProducerService/StopSyncProducerWithNIPR"
 	ProducerService_StopSyncAgencyWithNIPR_FullMethodName    = "/producerflow.producer.v1.ProducerService/StopSyncAgencyWithNIPR"
+	ProducerService_CreateProducerUploadURL_FullMethodName   = "/producerflow.producer.v1.ProducerService/CreateProducerUploadURL"
 )
 
 // ProducerServiceClient is the client API for ProducerService service.
@@ -166,6 +167,22 @@ type ProducerServiceClient interface {
 	// StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
 	// Use this to prevent further automatic updates from NIPR.
 	StopSyncAgencyWithNIPR(ctx context.Context, in *StopSyncAgencyWithNIPRRequest, opts ...grpc.CallOption) (*StopSyncAgencyWithNIPRResponse, error)
+	// CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency.
+	// The agency is identified by its NPN, and the URL can be shared with the agency to allow them to
+	// upload producer information securely.
+	//
+	// The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+	//
+	// The agency must:
+	// - Exist and belong to the authenticated tenant
+	// - Have a valid NPN
+	//
+	// Returns a URL string that can be shared with the agency for producer uploads.
+	// Returns errors in the following cases:
+	// - INVALID_ARGUMENT: if agency NPN is empty or invalid format
+	// - NOT_FOUND: if agency NPN doesn't exist
+	// - INTERNAL: for other unexpected errors
+	CreateProducerUploadURL(ctx context.Context, in *CreateProducerUploadURLRequest, opts ...grpc.CallOption) (*CreateProducerUploadURLResponse, error)
 }
 
 type producerServiceClient struct {
@@ -408,6 +425,16 @@ func (c *producerServiceClient) StopSyncAgencyWithNIPR(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *producerServiceClient) CreateProducerUploadURL(ctx context.Context, in *CreateProducerUploadURLRequest, opts ...grpc.CallOption) (*CreateProducerUploadURLResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateProducerUploadURLResponse)
+	err := c.cc.Invoke(ctx, ProducerService_CreateProducerUploadURL_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProducerServiceServer is the server API for ProducerService service.
 // All implementations must embed UnimplementedProducerServiceServer
 // for forward compatibility.
@@ -530,6 +557,22 @@ type ProducerServiceServer interface {
 	// StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
 	// Use this to prevent further automatic updates from NIPR.
 	StopSyncAgencyWithNIPR(context.Context, *StopSyncAgencyWithNIPRRequest) (*StopSyncAgencyWithNIPRResponse, error)
+	// CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency.
+	// The agency is identified by its NPN, and the URL can be shared with the agency to allow them to
+	// upload producer information securely.
+	//
+	// The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+	//
+	// The agency must:
+	// - Exist and belong to the authenticated tenant
+	// - Have a valid NPN
+	//
+	// Returns a URL string that can be shared with the agency for producer uploads.
+	// Returns errors in the following cases:
+	// - INVALID_ARGUMENT: if agency NPN is empty or invalid format
+	// - NOT_FOUND: if agency NPN doesn't exist
+	// - INTERNAL: for other unexpected errors
+	CreateProducerUploadURL(context.Context, *CreateProducerUploadURLRequest) (*CreateProducerUploadURLResponse, error)
 	mustEmbedUnimplementedProducerServiceServer()
 }
 
@@ -608,6 +651,9 @@ func (UnimplementedProducerServiceServer) StopSyncProducerWithNIPR(context.Conte
 }
 func (UnimplementedProducerServiceServer) StopSyncAgencyWithNIPR(context.Context, *StopSyncAgencyWithNIPRRequest) (*StopSyncAgencyWithNIPRResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopSyncAgencyWithNIPR not implemented")
+}
+func (UnimplementedProducerServiceServer) CreateProducerUploadURL(context.Context, *CreateProducerUploadURLRequest) (*CreateProducerUploadURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProducerUploadURL not implemented")
 }
 func (UnimplementedProducerServiceServer) mustEmbedUnimplementedProducerServiceServer() {}
 func (UnimplementedProducerServiceServer) testEmbeddedByValue()                         {}
@@ -1044,6 +1090,24 @@ func _ProducerService_StopSyncAgencyWithNIPR_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProducerService_CreateProducerUploadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProducerUploadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProducerServiceServer).CreateProducerUploadURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProducerService_CreateProducerUploadURL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProducerServiceServer).CreateProducerUploadURL(ctx, req.(*CreateProducerUploadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ProducerService_ServiceDesc is the grpc.ServiceDesc for ProducerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1142,6 +1206,10 @@ var ProducerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StopSyncAgencyWithNIPR",
 			Handler:    _ProducerService_StopSyncAgencyWithNIPR_Handler,
+		},
+		{
+			MethodName: "CreateProducerUploadURL",
+			Handler:    _ProducerService_CreateProducerUploadURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
