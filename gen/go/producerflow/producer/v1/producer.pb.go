@@ -6721,8 +6721,8 @@ const file_producerflow_producer_v1_producer_proto_rawDesc = "" +
 	"\x12SyncAgencyWithNIPR\x123.producerflow.producer.v1.SyncAgencyWithNIPRRequest\x1a4.producerflow.producer.v1.SyncAgencyWithNIPRResponse\x12\x91\x01\n" +
 	"\x18StopSyncProducerWithNIPR\x129.producerflow.producer.v1.StopSyncProducerWithNIPRRequest\x1a:.producerflow.producer.v1.StopSyncProducerWithNIPRResponse\x12\x8b\x01\n" +
 	"\x16StopSyncAgencyWithNIPR\x127.producerflow.producer.v1.StopSyncAgencyWithNIPRRequest\x1a8.producerflow.producer.v1.StopSyncAgencyWithNIPRResponse\x12\x8e\x01\n" +
-	"\x17CreateProducerUploadURL\x128.producerflow.producer.v1.CreateProducerUploadURLRequest\x1a9.producerflow.producer.v1.CreateProducerUploadURLResponseB\xff\x01\n" +
-	"\x1ccom.producerflow.producer.v1B\rProducerProtoP\x01ZNgithub.com/agentero/producerflowapi/gen/go/producerflow/producer/v1;producerv1\xa2\x02\x03PPX\xaa\x02\x18Producerflow.Producer.V1\xca\x02\x18Producerflow\\Producer\\V1\xe2\x02$Producerflow\\Producer\\V1\\GPBMetadata\xea\x02\x1aProducerflow::Producer::V1b\x06proto3"
+	"\x17CreateProducerUploadURL\x128.producerflow.producer.v1.CreateProducerUploadURLRequest\x1a9.producerflow.producer.v1.CreateProducerUploadURLResponseB\x83\x02\n" +
+	"\x1ccom.producerflow.producer.v1B\rProducerProtoP\x01ZRgithub.com/producerflow/producerflowapi/gen/go/producerflow/producer/v1;producerv1\xa2\x02\x03PPX\xaa\x02\x18Producerflow.Producer.V1\xca\x02\x18Producerflow\\Producer\\V1\xe2\x02$Producerflow\\Producer\\V1\\GPBMetadata\xea\x02\x1aProducerflow::Producer::V1b\x06proto3"
 
 var (
 	file_producerflow_producer_v1_producer_proto_rawDescOnce sync.Once
