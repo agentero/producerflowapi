@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Appointment Event Schema",
+  "description": "Schema for appointment events in Producerflow",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Type of event that occurred (e.g., 'appointment.updated', 'appointment.created')"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": ["Created", "Updated"],
+      "description": "Type of change that occurred (deprecated, use event_type instead)"
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["ProducerFlowAPI", "ProducerFlowPortal"],
+      "description": "Source of the change"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time when the change occurred"
+    },
+    "appointment_id": {
+      "type": "string",
+      "description": "Unique identifier for the appointment"
+    },
+    "producer_id": {
+      "type": "string",
+      "description": "Unique identifier for the producer"
+    },
+    "agency_id": {
+      "type": "string",
+      "description": "Unique identifier for the agency"
+    },
+    "external_agency_id": {
+      "type": "string",
+      "description": "External identifier for the agency"
+    },
+    "external_producer_id": {
+      "type": "string",
+      "description": "External identifier for the producer"
+    },
+    "agency_npn": {
+      "type": "string",
+      "description": "Agency National Producer Number"
+    },
+    "producer_npn": {
+      "type": "string",
+      "description": "Producer National Producer Number"
+    },
+    "appointment_data": {
+      "type": "object",
+      "description": "Core appointment information",
+      "properties": {
+        "carrier": {
+          "type": "string",
+          "description": "Insurance carrier name"
+        },
+        "state": {
+          "type": "string",
+          "description": "State where the appointment is valid"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the appointment"
+        },
+        "license_number": {
+          "type": "string",
+          "description": "License number associated with the appointment"
+        },
+        "effective_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the appointment became effective"
+        },
+        "termination_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the appointment was terminated"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Reasons for appointment termination"
+        }
+      }
+    }
+  }
+}

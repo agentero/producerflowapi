@@ -1,0 +1,21 @@
+{
+  "id": "evt_appointment_123456789",
+  "event_type": "appointment.updated",
+  "change_type": "Updated",
+  "origin": "ProducerFlowAPI",
+  "timestamp": "2025-07-21T15:30:00Z",
+  "appointment_id": "app_987654321",
+  "producer_id": "prod_456789123",
+  "agency_id": "agcy_789123456",
+  "external_agency_id": "ext_agcy_456",
+  "external_producer_id": "ext_prod_789",
+  "agency_npn": "87654321",
+  "producer_npn": "12345678",
+  "appointment_data": {
+    "carrier": "State Farm",
+    "state": "TX",
+    "status": "appointed",
+    "license_number": "TX12345",
+    "effective_date": "2025-07-21T00:00:00Z"
+  }
+}
