@@ -19,6 +19,7 @@
       - [Agency Webhooks](#agency-webhooks)
       - [Producer Webhooks](#producer-webhooks)
       - [Contact Webhooks](#contact-webhooks)
+      - [Appointment Webhooks](#appointment-webhooks)
     - [Key Elements](#key-elements)
       - [Required Fields](#required-fields)
       - [Identifier Fields](#identifier-fields)
@@ -137,6 +138,16 @@ All webhook payloads share a common base structure with the following fields:
 
 **Schema Reference**: [contact_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/contact_schema.json)  
 **Example Payload**: [contact_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/contact_example.json)
+
+#### Appointment Webhooks
+
+**Event Types:**
+
+- `appointment.created` - New appointment record created
+- `appointment.updated` - Existing appointment record modified
+
+**Schema Reference**: [appointment_schema.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/schema/appointment_schema.json)  
+**Example Payload**: [appointment_example.json](https://github.com/producerflow/producerflowapi/blob/main/webhooks/examples/appointment_example.json)
 
 ### Key Elements
 
