@@ -12,7 +12,7 @@ permissions:
   pull-requests: write
 
 env:
-  NODE_VERSION: 22
+  NODE_VERSION: 24
   GO_VERSION: 1.24.0
   PROTO_GEN_ES_VERSION: 2.6.0
   PROTO_GEN_CONNECT_ES_VERSION: 1.6.1
