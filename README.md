@@ -76,7 +76,7 @@ buf generate
 #### Go Client
 
 ```bash
-go get github.com/producerflow/producerflowapi/gen/go
+go get github.com/producerflow/producerflowapi@latest
 ```
 
 #### TypeScript Client
