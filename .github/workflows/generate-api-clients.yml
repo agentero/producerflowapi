@@ -10,6 +10,8 @@ concurrency:
 permissions:
   contents: write
   pull-requests: write
+  repository-projects: read
+  issues: write
 
 env:
   NODE_VERSION: 24
@@ -90,6 +92,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(producerflowapi): regenerate client libraries"
           title: "chore(producerflowapi): regenerate client libraries"
           body: |
@@ -105,4 +108,6 @@ jobs:
             Please review the generated code to ensure all changes are as expected.
           branch: "dev/producerflowapi/regenerate-api-clients-${{ github.run_number }}"
           delete-branch: true
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
 
