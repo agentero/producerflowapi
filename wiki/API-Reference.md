@@ -47,6 +47,8 @@
     - [CreateAgencyOnboardingURLRequest.Agency](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency)
     - [CreateAgencyOnboardingURLRequest.Agency.Principal](#producerflow-producer-v1-CreateAgencyOnboardingURLRequest-Agency-Principal)
     - [CreateAgencyOnboardingURLResponse](#producerflow-producer-v1-CreateAgencyOnboardingURLResponse)
+    - [CreateProducerUploadURLRequest](#producerflow-producer-v1-CreateProducerUploadURLRequest)
+    - [CreateProducerUploadURLResponse](#producerflow-producer-v1-CreateProducerUploadURLResponse)
     - [GetAgencyAndProducersRequest](#producerflow-producer-v1-GetAgencyAndProducersRequest)
     - [GetAgencyAndProducersResponse](#producerflow-producer-v1-GetAgencyAndProducersResponse)
     - [GetAgencyFilesRequest](#producerflow-producer-v1-GetAgencyFilesRequest)
@@ -870,6 +872,37 @@ CreateAgencyOnboardingURLResponse contains the generated URL for agency onboardi
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | url | [string](#string) |  | URL that can be shared with the agency for self-onboarding |
+
+
+
+
+
+
+<a name="producerflow-producer-v1-CreateProducerUploadURLRequest"></a>
+
+### CreateProducerUploadURLRequest
+CreateProducerUploadURLRequest contains information needed to generate
+a producer upload URL. This includes the agency NPN.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| agency_npn | [string](#string) |  | The National Producer Number (NPN) of the agency. Required and must be a valid NPN format (numeric string between 2-10 digits). |
+
+
+
+
+
+
+<a name="producerflow-producer-v1-CreateProducerUploadURLResponse"></a>
+
+### CreateProducerUploadURLResponse
+CreateProducerUploadURLResponse contains the generated URL for producer uploads
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| url | [string](#string) |  | URL that can be shared with the agency for producer uploads. The URL is time-limited and includes necessary security tokens. |
 
 
 
@@ -2181,6 +2214,13 @@ WARNING: This call counts as an extra NPN lookup against your billing. Most bill
 WARNING: This call counts as an extra NPN lookup against your billing. Most billing plans are based on unique NPNs per month, so using this method may result in additional charges. |
 | StopSyncProducerWithNIPR | [StopSyncProducerWithNIPRRequest](#producerflow-producer-v1-StopSyncProducerWithNIPRRequest) | [StopSyncProducerWithNIPRResponse](#producerflow-producer-v1-StopSyncProducerWithNIPRResponse) | StopSyncProducerWithNIPR stops the synchronization process with NIPR for a producer. Use this to prevent further automatic updates from NIPR. |
 | StopSyncAgencyWithNIPR | [StopSyncAgencyWithNIPRRequest](#producerflow-producer-v1-StopSyncAgencyWithNIPRRequest) | [StopSyncAgencyWithNIPRResponse](#producerflow-producer-v1-StopSyncAgencyWithNIPRResponse) | StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency. Use this to prevent further automatic updates from NIPR. |
+| CreateProducerUploadURL | [CreateProducerUploadURLRequest](#producerflow-producer-v1-CreateProducerUploadURLRequest) | [CreateProducerUploadURLResponse](#producerflow-producer-v1-CreateProducerUploadURLResponse) | CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency. The agency is identified by its NPN, and the URL can be shared with the agency to allow them to upload producer information securely.
+
+The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+
+The agency must: - Exist and belong to the authenticated tenant - Have a valid NPN
+
+Returns a URL string that can be shared with the agency for producer uploads. Returns errors in the following cases: - INVALID_ARGUMENT: if agency NPN is empty or invalid format - NOT_FOUND: if agency NPN doesn&#39;t exist - INTERNAL: for other unexpected errors |
 
  
 
