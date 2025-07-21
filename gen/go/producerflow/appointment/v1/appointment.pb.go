@@ -1648,8 +1648,8 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x14ListEligibleLicenses\x128.producerflow.appointment.v1.ListEligibleLicensesRequest\x1a9.producerflow.appointment.v1.ListEligibleLicensesResponse\x12\x85\x01\n" +
 	"\x12RequestAppointment\x126.producerflow.appointment.v1.RequestAppointmentRequest\x1a7.producerflow.appointment.v1.RequestAppointmentResponse\x12\x8b\x01\n" +
 	"\x14TerminateAppointment\x128.producerflow.appointment.v1.TerminateAppointmentRequest\x1a9.producerflow.appointment.v1.TerminateAppointmentResponse\x12\x91\x01\n" +
-	"\x16ListTerminationReasons\x12:.producerflow.appointment.v1.ListTerminationReasonsRequest\x1a;.producerflow.appointment.v1.ListTerminationReasonsResponseB\x97\x02\n" +
-	"\x1fcom.producerflow.appointment.v1B\x10AppointmentProtoP\x01ZTgithub.com/agentero/producerflowapi/gen/go/producerflow/appointment/v1;appointmentv1\xa2\x02\x03PAX\xaa\x02\x1bProducerflow.Appointment.V1\xca\x02\x1bProducerflow\\Appointment\\V1\xe2\x02'Producerflow\\Appointment\\V1\\GPBMetadata\xea\x02\x1dProducerflow::Appointment::V1b\x06proto3"
+	"\x16ListTerminationReasons\x12:.producerflow.appointment.v1.ListTerminationReasonsRequest\x1a;.producerflow.appointment.v1.ListTerminationReasonsResponseB\x9b\x02\n" +
+	"\x1fcom.producerflow.appointment.v1B\x10AppointmentProtoP\x01ZXgithub.com/producerflow/producerflowapi/gen/go/producerflow/appointment/v1;appointmentv1\xa2\x02\x03PAX\xaa\x02\x1bProducerflow.Appointment.V1\xca\x02\x1bProducerflow\\Appointment\\V1\xe2\x02'Producerflow\\Appointment\\V1\\GPBMetadata\xea\x02\x1dProducerflow::Appointment::V1b\x06proto3"
 
 var (
 	file_producerflow_appointment_v1_appointment_proto_rawDescOnce sync.Once

@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/agentero/producerflowapi/gen/go/producerflow/appointment/v1"
+	v1 "github.com/producerflow/producerflowapi/gen/go/producerflow/appointment/v1"
 	http "net/http"
 	strings "strings"
 )
