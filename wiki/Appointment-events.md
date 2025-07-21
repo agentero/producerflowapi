@@ -1,6 +1,6 @@
 # Appointment Webhook Events
 
-This document provides comprehensive documentation for webhook events related to license appointments in the ProducerFlow system. Appointment webhooks deliver real-time notifications when appointment statuses change due to processing by NIPR (National Insurance Producer Registry) or direct actions by the tenant admin.
+This document provides comprehensive documentation for webhook events related to license appointments in the ProducerFlow system. Appointment webhooks deliver real-time notifications when appointment statuses change due to processing by NIPR (National Insurance Producer Registry) or direct actions by the tenant admin in Producerflow's portal.
 
 ## Overview
 
