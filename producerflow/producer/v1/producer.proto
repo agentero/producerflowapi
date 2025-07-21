@@ -151,6 +151,23 @@ service ProducerService {
   // StopSyncAgencyWithNIPR stops the synchronization process with NIPR for an agency.
   // Use this to prevent further automatic updates from NIPR.
   rpc StopSyncAgencyWithNIPR(StopSyncAgencyWithNIPRRequest) returns (StopSyncAgencyWithNIPRResponse);
+
+  // CreateProducerUploadURL generates a URL that can be used to upload new producers for an existing agency.
+  // The agency is identified by its NPN, and the URL can be shared with the agency to allow them to
+  // upload producer information securely.
+  //
+  // The URL is time-limited and includes necessary security tokens. A default expiration of 7 days will be used.
+  //
+  // The agency must:
+  // - Exist and belong to the authenticated tenant
+  // - Have a valid NPN
+  //
+  // Returns a URL string that can be shared with the agency for producer uploads.
+  // Returns errors in the following cases:
+  // - INVALID_ARGUMENT: if agency NPN is empty or invalid format
+  // - NOT_FOUND: if agency NPN doesn't exist
+  // - INTERNAL: for other unexpected errors
+  rpc CreateProducerUploadURL(CreateProducerUploadURLRequest) returns (CreateProducerUploadURLResponse);
 }
 
 // EntityType defines the business entity type for an agency.
@@ -1446,4 +1463,23 @@ message ListOrganizationsResponse {
   // Each organization includes its unique identifier and display name.
   // The list may be empty if no organizations are associated with the tenant.
   repeated Organization organizations = 1;
+}
+
+// CreateProducerUploadURLRequest contains information needed to generate
+// a producer upload URL. This includes the agency NPN.
+message CreateProducerUploadURLRequest {
+  // The National Producer Number (NPN) of the agency.
+  // Required and must be a valid NPN format (numeric string between 2-10 digits).
+  string agency_npn = 1 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 10
+    pattern: "^[0-9]+$"
+  }];
+}
+
+// CreateProducerUploadURLResponse contains the generated URL for producer uploads
+message CreateProducerUploadURLResponse {
+  // URL that can be shared with the agency for producer uploads.
+  // The URL is time-limited and includes necessary security tokens.
+  string url = 1;
 }
