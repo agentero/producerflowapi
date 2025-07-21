@@ -1,4 +1,4 @@
-module github.com/agentero/producerflowapi
+module github.com/producerflow/producerflowapi
 
 go 1.24.0
 

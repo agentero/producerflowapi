@@ -57,7 +57,7 @@ To get started with the Producerflow API, you'll need to generate an API token:
 3. Generate a new API key with appropriate expiration date.
 4. Securely store your API key for use in API requests.
 
-For detailed API documentation and examples, visit our [comprehensive API documentation](https://github.com/agentero/producerflowapi/wiki).
+For detailed API documentation and examples, visit our [comprehensive API documentation](https://github.com/producerflow/producerflowapi/wiki).
 
 ## Installation & Usage
 
@@ -108,7 +108,7 @@ For other languages, use the Protocol Buffer definitions in `producerflow/` with
 - **API Definitions**: Start with `producerflow/producer/v1/producer.proto`
 - **Go Integration**: Use code in `gen/go/` directory
 - **TypeScript Integration**: Use code in `gen/ts/` directory
-- **Documentation**: Reference [comprehensive documentation](https://github.com/agentero/producerflowapi/wiki) for detailed API guides
+- **Documentation**: Reference [comprehensive documentation](https://github.com/producerflow/producerflowapi/wiki) for detailed API guides
 
 ## Build/Generation Instructions
 
@@ -159,7 +159,7 @@ For technical support, integration assistance, or general inquiries:
 
 **Email**: [support@producerflow.com](mailto:support@producerflow.com)
 
-**Documentation**: Visit our [comprehensive documentation](https://github.com/agentero/producerflowapi/wiki) for detailed guides and examples.
+**Documentation**: Visit our [comprehensive documentation](https://github.com/producerflow/producerflowapi/wiki) for detailed guides and examples.
 
 ---
 

@@ -8,7 +8,7 @@ managed:
       module: buf.build/googleapis/googleapis
   override:
     - file_option: go_package_prefix
-      value: github.com/agentero/producerflowapi/gen/go
+      value: github.com/producerflow/producerflowapi/gen/go
 plugins:
   - local: ["go", "tool", "protoc-gen-connect-go"]
     out: gen/go

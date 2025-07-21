@@ -39,8 +39,8 @@ import (
     "net/http"
 
     "connectrpc.com/connect"
-    producerpb "github.com/agentero/producerflowapi/gen/go/producerflow/producer/v1"
-    producerconnect "github.com/agentero/producerflowapi/gen/go/producerflow/producer/v1/producerv1connect"
+    producerpb "github.com/producerflow/producerflowapi/gen/go/producerflow/producer/v1"
+    producerconnect "github.com/producerflow/producerflowapi/gen/go/producerflow/producer/v1/producerv1connect"
 )
 
 // Custom transport to add authentication headers
