@@ -27,12 +27,13 @@ const (
 type ProcessingStatus int32
 
 const (
-	ProcessingStatus_PROCESSING_STATUS_UNSPECIFIED     ProcessingStatus = 0
-	ProcessingStatus_PROCESSING_STATUS_IN_PROGRESS     ProcessingStatus = 1
-	ProcessingStatus_PROCESSING_STATUS_APPOINTED       ProcessingStatus = 2
-	ProcessingStatus_PROCESSING_STATUS_TERMINATED      ProcessingStatus = 3
-	ProcessingStatus_PROCESSING_STATUS_REJECTED        ProcessingStatus = 4
-	ProcessingStatus_PROCESSING_STATUS_MISSING_LICENSE ProcessingStatus = 5
+	ProcessingStatus_PROCESSING_STATUS_UNSPECIFIED           ProcessingStatus = 0
+	ProcessingStatus_PROCESSING_STATUS_IN_PROGRESS           ProcessingStatus = 1
+	ProcessingStatus_PROCESSING_STATUS_APPOINTED             ProcessingStatus = 2
+	ProcessingStatus_PROCESSING_STATUS_TERMINATED            ProcessingStatus = 3
+	ProcessingStatus_PROCESSING_STATUS_REJECTED              ProcessingStatus = 4
+	ProcessingStatus_PROCESSING_STATUS_MISSING_LICENSE       ProcessingStatus = 5
+	ProcessingStatus_PROCESSING_STATUS_TERMINATION_REQUESTED ProcessingStatus = 6
 )
 
 // Enum value maps for ProcessingStatus.
@@ -44,14 +45,16 @@ var (
 		3: "PROCESSING_STATUS_TERMINATED",
 		4: "PROCESSING_STATUS_REJECTED",
 		5: "PROCESSING_STATUS_MISSING_LICENSE",
+		6: "PROCESSING_STATUS_TERMINATION_REQUESTED",
 	}
 	ProcessingStatus_value = map[string]int32{
-		"PROCESSING_STATUS_UNSPECIFIED":     0,
-		"PROCESSING_STATUS_IN_PROGRESS":     1,
-		"PROCESSING_STATUS_APPOINTED":       2,
-		"PROCESSING_STATUS_TERMINATED":      3,
-		"PROCESSING_STATUS_REJECTED":        4,
-		"PROCESSING_STATUS_MISSING_LICENSE": 5,
+		"PROCESSING_STATUS_UNSPECIFIED":           0,
+		"PROCESSING_STATUS_IN_PROGRESS":           1,
+		"PROCESSING_STATUS_APPOINTED":             2,
+		"PROCESSING_STATUS_TERMINATED":            3,
+		"PROCESSING_STATUS_REJECTED":              4,
+		"PROCESSING_STATUS_MISSING_LICENSE":       5,
+		"PROCESSING_STATUS_TERMINATION_REQUESTED": 6,
 	}
 )
 
@@ -1608,14 +1611,15 @@ const file_producerflow_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x1dListTerminationReasonsRequest\x12\x1e\n" +
 	"\x05state\x18\x01 \x01(\tB\b\xbaH\x05r\x03\x98\x01\x02R\x05state\"\x81\x01\n" +
 	"\x1eListTerminationReasonsResponse\x12_\n" +
-	"\x13termination_reasons\x18\x01 \x03(\x0e2..producerflow.appointment.v1.TerminationReasonR\x12terminationReasons*\xe2\x01\n" +
+	"\x13termination_reasons\x18\x01 \x03(\x0e2..producerflow.appointment.v1.TerminationReasonR\x12terminationReasons*\x8f\x02\n" +
 	"\x10ProcessingStatus\x12!\n" +
 	"\x1dPROCESSING_STATUS_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dPROCESSING_STATUS_IN_PROGRESS\x10\x01\x12\x1f\n" +
 	"\x1bPROCESSING_STATUS_APPOINTED\x10\x02\x12 \n" +
 	"\x1cPROCESSING_STATUS_TERMINATED\x10\x03\x12\x1e\n" +
 	"\x1aPROCESSING_STATUS_REJECTED\x10\x04\x12%\n" +
-	"!PROCESSING_STATUS_MISSING_LICENSE\x10\x05*\x94\x01\n" +
+	"!PROCESSING_STATUS_MISSING_LICENSE\x10\x05\x12+\n" +
+	"'PROCESSING_STATUS_TERMINATION_REQUESTED\x10\x06*\x94\x01\n" +
 	"\x0fAppointmentType\x12 \n" +
 	"\x1cAPPOINTMENT_TYPE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19APPOINTMENT_TYPE_REGISTRY\x10\x01\x12\x1d\n" +
