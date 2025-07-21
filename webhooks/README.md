@@ -86,7 +86,6 @@ All webhook payloads share a common base structure:
 {
   "id": "string",              // Unique identifier for this change event
   "event_type": "string",      // Specific event type (e.g., "agency.updated")
-  "change_type": "string",     // Legacy field: "Created", "Updated", "Deleted"
   "origin": "string",          // Source: "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
   "timestamp": "string",       // ISO 8601 datetime when change occurred
   // ... entity-specific data

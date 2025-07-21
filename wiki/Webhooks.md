@@ -97,8 +97,7 @@ All webhook payloads share a common base structure with the following fields:
 {
   "id": "chg_123456789",                    // Unique identifier for this change event
   "event_type": "agency.updated",           // Specific event type (e.g., "agency.updated", "producer.created")
-  "change_type": "Updated",                 // Legacy field: "Created", "Updated", "Deleted", "Resync"
-  "origin": "ProducerFlowAPI",              // Source: "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
+  "origin": "ProducerFlowAPI",              // Source: "ProducerFlowAPI", "ProducerFlowPortal"
   "timestamp": "2024-03-20T15:30:45Z",      // ISO 8601 datetime when change occurred
   // ... entity-specific data follows
 }

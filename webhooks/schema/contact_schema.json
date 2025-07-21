@@ -12,11 +12,6 @@
       "type": "string",
       "description": "Type of event that occurred (e.g., 'contact.updated', 'contact.created')"
     },
-    "change_type": {
-      "type": "string",
-      "description": "Type of change that occurred (deprecated, use event_type instead)",
-      "enum": ["Created", "Updated", "Deleted"]
-    },
     "origin": {
       "type": "string",
       "description": "Source of the change",

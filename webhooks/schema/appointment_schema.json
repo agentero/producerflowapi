@@ -12,11 +12,6 @@
       "type": "string",
       "description": "Type of event that occurred (e.g., 'appointment.updated', 'appointment.created')"
     },
-    "change_type": {
-      "type": "string",
-      "enum": ["Created", "Updated"],
-      "description": "Type of change that occurred (deprecated, use event_type instead)"
-    },
     "origin": {
       "type": "string",
       "enum": ["ProducerFlowAPI", "ProducerFlowPortal"],

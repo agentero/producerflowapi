@@ -85,8 +85,7 @@ All appointment webhooks follow this structure:
 {
   "id": "string",                    // Unique event identifier
   "event_type": "string",            // appointment.created|updated|terminated
-  "change_type": "string",           // Legacy: "Created", "Updated", "Deleted"
-  "origin": "string",                // "ProducerFlowAPI", "ProducerFlowPortal", "NIPR"
+  "origin": "string",                // "ProducerFlowAPI", "ProducerFlowPortal"
   "timestamp": "string",             // ISO 8601 datetime
   "appointment_id": "string",        // Appointment identifier
   "producer_id": "string",           // Producer identifier (optional)
@@ -122,7 +121,6 @@ When NIPR successfully processes an appointment request:
 {
   "id": "evt_appointment_abc123",
   "event_type": "appointment.updated",
-  "change_type": "Updated",
   "origin": "NIPR",
   "timestamp": "2025-01-15T14:30:00Z",
   "appointment_id": "app_xyz789",
@@ -152,7 +150,6 @@ When NIPR rejects an appointment request:
 {
   "id": "evt_appointment_def456",
   "event_type": "appointment.updated",
-  "change_type": "Updated", 
   "origin": "ProducerFlowAPI",
   "timestamp": "2025-01-15T14:45:00Z",
   "appointment_id": "app_xyz790",
@@ -181,7 +178,6 @@ When a termination request is submitted to NIPR but not yet processed:
 {
   "id": "evt_appointment_term_req_123",
   "event_type": "appointment.updated",
-  "change_type": "Updated",
   "origin": "ProducerFlowAPI",
   "timestamp": "2025-01-15T14:50:00Z",
   "appointment_id": "app_xyz792",
@@ -211,7 +207,6 @@ When NIPR successfully processes an appointment termination:
 {
   "id": "evt_appointment_ghi789",
   "event_type": "appointment.updated",
-  "change_type": "Updated",
   "origin": "ProducerFlowAPI", 
   "timestamp": "2025-01-15T15:00:00Z",
   "appointment_id": "app_xyz791",
@@ -244,7 +239,6 @@ When a tenant admin creates an appointment directly in ProducerFlow:
 {
   "id": "evt_appointment_direct_123",
   "event_type": "appointment.created",
-  "change_type": "Created",
   "origin": "ProducerFlowPortal",
   "timestamp": "2025-01-15T16:15:00Z",
   "appointment_id": "app_direct_456",
@@ -274,7 +268,6 @@ When a tenant admin terminates an appointment directly in ProducerFlow:
 {
   "id": "evt_appointment_direct_456",
   "event_type": "appointment.updated",
-  "change_type": "Updated",
   "origin": "ProducerFlowPortal",
   "timestamp": "2025-01-15T16:30:00Z",
   "appointment_id": "app_direct_789",
