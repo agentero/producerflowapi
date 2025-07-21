@@ -25,7 +25,6 @@ Triggered when agency data is created, updated, or synchronized from external so
 
 - `agency.created` - New agency record created
 - `agency.updated` - Existing agency record modified
-- `agency.synced` - Agency data synchronized from NIPR
 
 **Key Data Included:**
 
@@ -48,7 +47,6 @@ Triggered when producer/agent data is created, updated, or synchronized.
 
 - `producer.created` - New producer record created
 - `producer.updated` - Existing producer record modified
-- `producer.synced` - Producer data synchronized from NIPR
 
 **Key Data Included:**
 
