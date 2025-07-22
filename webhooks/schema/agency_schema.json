@@ -10,7 +10,7 @@
     },
     "event_type": {
       "type": "string",
-      "description": "Type of event that occurred (e.g., 'agency.updated')"
+      "description": "Type of event that occurred (e.g., 'agency.updated', 'agency.synced')"
     },
     "origin": {
       "type": "string",
